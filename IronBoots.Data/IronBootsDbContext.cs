@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IronBoots.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class IronBootsDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public IronBootsDbContext(DbContextOptions<IronBootsDbContext> options)
             : base(options)
         {
         }

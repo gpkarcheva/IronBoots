@@ -3,7 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronBoots", "IronBoots\IronBoots.csproj", "{A5A0FE55-A9DC-4B95-83E3-9B64419403E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IronBoots", "IronBoots\IronBoots.csproj", "{A5A0FE55-A9DC-4B95-83E3-9B64419403E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{A56006C9-114D-4874-9EA0-DFBD4966D94A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{A29A9FE0-C9A3-438F-88DD-A947714B6B5F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{C7023238-29B7-4D31-AF13-D60ED5DD25FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronBoots.Data", "IronBoots.Data\IronBoots.Data.csproj", "{B8D359B9-76AA-43D3-A985-2A46D259E0AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronBoots.Models", "IronBoots.Models\IronBoots.Models.csproj", "{E9800B3C-8EC7-4C57-A520-B95C68DFC85E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +25,22 @@ Global
 		{A5A0FE55-A9DC-4B95-83E3-9B64419403E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5A0FE55-A9DC-4B95-83E3-9B64419403E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5A0FE55-A9DC-4B95-83E3-9B64419403E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8D359B9-76AA-43D3-A985-2A46D259E0AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8D359B9-76AA-43D3-A985-2A46D259E0AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8D359B9-76AA-43D3-A985-2A46D259E0AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8D359B9-76AA-43D3-A985-2A46D259E0AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9800B3C-8EC7-4C57-A520-B95C68DFC85E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9800B3C-8EC7-4C57-A520-B95C68DFC85E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9800B3C-8EC7-4C57-A520-B95C68DFC85E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9800B3C-8EC7-4C57-A520-B95C68DFC85E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A5A0FE55-A9DC-4B95-83E3-9B64419403E8} = {A56006C9-114D-4874-9EA0-DFBD4966D94A}
+		{B8D359B9-76AA-43D3-A985-2A46D259E0AE} = {A29A9FE0-C9A3-438F-88DD-A947714B6B5F}
+		{E9800B3C-8EC7-4C57-A520-B95C68DFC85E} = {C7023238-29B7-4D31-AF13-D60ED5DD25FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F04E83F-60AB-4240-8D9B-F7B02E59C841}
