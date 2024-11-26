@@ -3,24 +3,31 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
-using UrlAttribute = System.ComponentModel.DataAnnotations.UrlAttribute;
 
 namespace IronBoots.Data.Models
 {
-    public class Material
+    public class Product
     {
         [Key]
         public Guid Id { get; set; }
         [Required]
-        [MaxLength(20)]
+        [MinLength(1)]
+        [MaxLength(50)]
         public string Name { get; set; } = null!;
         [Required]
         [Min(1)]
-        public decimal Price { get; set; }
+        public double Weight { get; set; }
         [Required]
-        [Url]
-        public string DistrubutorContact { get; set; } = null!;
+        [Min(1)]
+        public double Size { get; set; }
+        [Required]
+        [Min(1)]
+        public decimal ProductionCost { get; set; }
+        [Required]
+        [Min(1)]
+        public TimeSpan ProductionTime { get; set; }
     }
 }
