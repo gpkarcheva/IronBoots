@@ -1,0 +1,36 @@
+﻿using DataAnnotationsExtensions;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace IronBoots.Data.Models
+{
+    public class Order
+    {
+        [Key]
+        public Guid Id { get; set; }
+        [Required]
+        public Guid ClientId { get; set; }
+        [Required]
+        [ForeignKey(nameof(ClientId))]
+        public Client Client { get; set; } = null!;
+        [Required]
+        public Guid AddressId { get; set; }
+        [Required]
+        [ForeignKey(nameof(AddressId))]
+        public Address Address { get; set; } = null!;
+        [Required]
+        public DateOnly PlannedAssignedDate { get; set; }
+        [Required]
+        public DateOnly ActualAssignedDate { get; set; }
+        [Required]
+        public Guid ShipmentId { get; set; }
+        [Required]
+        [Min(1)]
+        public decimal TotalPrice { get; set; }
+    }
+}
