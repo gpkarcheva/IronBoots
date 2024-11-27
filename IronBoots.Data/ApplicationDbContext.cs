@@ -4,13 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IronBoots.Data
 {
-    public class IronBootsDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public IronBootsDbContext(DbContextOptions<IronBootsDbContext> options)
-            : base(options)
-        {
-        }
-
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
         public DbSet<Town> Towns { get; set; }
         public DbSet<Address> Adresses { get; set; }
         public DbSet<Client> Clients { get; set; }

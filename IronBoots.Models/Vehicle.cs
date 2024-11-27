@@ -1,5 +1,4 @@
-﻿using DataAnnotationsExtensions;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace IronBoots.Data.Models
 {
@@ -8,10 +7,10 @@ namespace IronBoots.Data.Models
         [Key]
         public Guid Id { get; set; }
         [Required]
-        [Min(1)]
+
         public double WeightCapacity { get; set; }
         [Required]
-        [Min(1)]
+
         public double SizeCapacity { get; set; }
     }
 }

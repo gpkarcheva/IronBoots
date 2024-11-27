@@ -1,5 +1,4 @@
-﻿using DataAnnotationsExtensions;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using UrlAttribute = System.ComponentModel.DataAnnotations.UrlAttribute;
 
 namespace IronBoots.Data.Models
@@ -12,7 +11,6 @@ namespace IronBoots.Data.Models
         [MaxLength(20)]
         public string Name { get; set; } = null!;
         [Required]
-        [Min(1)]
         public decimal Price { get; set; }
         [Required]
         [Url]

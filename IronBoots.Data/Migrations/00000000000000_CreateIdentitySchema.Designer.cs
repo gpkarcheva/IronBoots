@@ -9,7 +9,7 @@ using System;
 
 namespace IronBoots.Data.Migrations
 {
-    [DbContext(typeof(IronBootsDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("00000000000000_CreateIdentitySchema")]
     partial class CreateIdentitySchema
     {

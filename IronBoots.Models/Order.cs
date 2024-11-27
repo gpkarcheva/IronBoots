@@ -1,5 +1,4 @@
-﻿using DataAnnotationsExtensions;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IronBoots.Data.Models
@@ -25,7 +24,6 @@ namespace IronBoots.Data.Models
         [Required]
         public Guid ShipmentId { get; set; }
         [Required]
-        [Min(1)]
         public decimal TotalPrice { get; set; }
     }
 }
