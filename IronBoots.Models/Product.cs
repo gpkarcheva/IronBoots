@@ -19,7 +19,7 @@ namespace IronBoots.Data.Models
         [Required]
         public TimeSpan ProductionTime { get; set; }
         [Required]
-        ICollection<ProductMaterial> ProductMaterials = new HashSet<ProductMaterial>();
+        public ICollection<ProductMaterial> ProductMaterials = new HashSet<ProductMaterial>();
         [Required]
         public ICollection<OrderProduct> ProductOrders = new HashSet<OrderProduct>();
     }
