@@ -18,6 +18,8 @@ namespace IronBoots.Data.Models
         public Address Address { get; set; } = null!;
         [Required]
         public ICollection<Order> Orders { get; set; } = new HashSet<Order>();
+        [Required]
+        public ApplicationUser User { get; set; } = null!;
 
     }
 }

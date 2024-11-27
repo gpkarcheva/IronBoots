@@ -15,4 +15,8 @@
     <ProjectReference Include="..\IronBoots.Models\IronBoots.Data.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Configuration\" />
+  </ItemGroup>
+
 </Project>

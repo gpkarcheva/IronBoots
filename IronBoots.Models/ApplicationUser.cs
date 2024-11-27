@@ -6,6 +6,10 @@ namespace IronBoots.Data.Models
 
     public class ApplicationUser : IdentityUser<Guid>
     {
+        public ApplicationUser()
+        {
+            Id = Guid.NewGuid();
+        }
         [Required]
         public string FirstName { get; set; } = null!;
 
