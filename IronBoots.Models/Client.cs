@@ -16,6 +16,8 @@ namespace IronBoots.Data.Models
         [Required]
         [ForeignKey(nameof(AddressId))]
         public Address Address { get; set; } = null!;
+        [Required]
+        public ICollection<Order> Orders { get; set; } = new HashSet<Order>();
 
     }
 }

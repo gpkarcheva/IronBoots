@@ -25,5 +25,7 @@ namespace IronBoots.Data.Models
         public Guid ShipmentId { get; set; }
         [Required]
         public decimal TotalPrice { get; set; }
+        [Required]
+        public ICollection<OrderProduct> OrderProducts { get; set; } = new HashSet<OrderProduct>();
     }
 }

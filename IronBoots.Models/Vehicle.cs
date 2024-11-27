@@ -7,10 +7,10 @@ namespace IronBoots.Data.Models
         [Key]
         public Guid Id { get; set; }
         [Required]
-
         public double WeightCapacity { get; set; }
         [Required]
-
         public double SizeCapacity { get; set; }
+        [Required]
+        public ICollection<Order> Orders { get; set; } = new HashSet<Order>();
     }
 }

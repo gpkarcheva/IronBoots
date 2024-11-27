@@ -15,5 +15,7 @@ namespace IronBoots.Data.Models
         [Required]
         [Url]
         public string DistrubutorContact { get; set; } = null!;
+        [Required]
+        public ICollection<ProductMaterial> MaterialProducts { get; set; } = new HashSet<ProductMaterial>();
     }
 }

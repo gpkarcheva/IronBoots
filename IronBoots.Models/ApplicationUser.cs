@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace IronBoots.Data.Models
 {
 
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser : IdentityUser<Guid>
     {
         [Required]
         public string FirstName { get; set; } = null!;
