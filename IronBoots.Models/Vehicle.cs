@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IronBoots.Data.Models
 {
@@ -18,6 +19,7 @@ namespace IronBoots.Data.Models
         [Comment("Id of the shipment")]
         public Guid ShipmentId { get; set; }
         [Required]
+        [ForeignKey(nameof(ShipmentId))]
         [Comment("Shipment the order belongs to")]
         public Shipment Shipment { get; set; } = null!;
         [Required]
