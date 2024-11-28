@@ -17,8 +17,10 @@ namespace IronBoots.Data
         {
             
         }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<ApplicationRole> ApplicationRoles { get; set; }
         public DbSet<Town> Towns { get; set; }
-        public DbSet<Address> Adresses { get; set; }
+        public DbSet<Address> Addresses { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Shipment> Shipments { get; set; }
@@ -30,6 +32,8 @@ namespace IronBoots.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<ApplicationUser>().ToTable("AspNetUsers");
+            builder.Entity<ApplicationRole>().ToTable("AspNetRoles");
             base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }

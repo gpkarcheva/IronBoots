@@ -23,5 +23,8 @@ namespace IronBoots.Data.Models
         [Required]
         [Comment("A list of products that require the current material")]
         public ICollection<ProductMaterial> MaterialProducts { get; set; } = new HashSet<ProductMaterial>();
+        [Required]
+        [Comment("Soft deletion flag")]
+        public bool IsDeleted { get; set; }
     }
 }

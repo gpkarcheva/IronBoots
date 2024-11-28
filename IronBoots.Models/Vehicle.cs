@@ -17,5 +17,8 @@ namespace IronBoots.Data.Models
         [Required]
         [Comment("A list of orders to be shipped with this vehicle")]
         public ICollection<Order> Orders { get; set; } = new HashSet<Order>();
+        [Required]
+        [Comment("Soft deletion flag")]
+        public bool IsDeleted { get; set; }
     }
 }

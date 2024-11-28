@@ -71,7 +71,7 @@ namespace IronBoots.Data.Migrations
 
                     b.HasIndex("TownId");
 
-                    b.ToTable("Adresses");
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.ApplicationUser", b =>

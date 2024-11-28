@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IronBoots.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241128005209_Initial")]
+    [Migration("20241128204533_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -74,7 +74,7 @@ namespace IronBoots.Data.Migrations
 
                     b.HasIndex("TownId");
 
-                    b.ToTable("Adresses");
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.ApplicationUser", b =>

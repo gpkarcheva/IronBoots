@@ -42,5 +42,8 @@ namespace IronBoots.Data.Models
         [Required]
         [Comment("Which products are required for the order")]
         public ICollection<OrderProduct> OrderProducts { get; set; } = new HashSet<OrderProduct>();
+        [Required]
+        [Comment("Active orders flag")]
+        public bool IsActive { get; set; }
     }
 }

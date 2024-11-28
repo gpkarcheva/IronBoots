@@ -31,5 +31,8 @@ namespace IronBoots.Data.Models
         [Required]
         [Comment("Orders in which the product is required")]
         public ICollection<OrderProduct> ProductOrders = new HashSet<OrderProduct>();
+        [Required]
+        [Comment("Soft deletion flag")]
+        public bool IsDeleted { get; set; }
     }
 }

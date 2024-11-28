@@ -12,10 +12,12 @@ namespace IronBoots.Data.Models
             Id = Guid.NewGuid();
         }
         [Required]
+        [PersonalData]
         [Comment("First name of the user")]
         public string FirstName { get; set; } = null!;
 
         [Required]
+        [PersonalData]
         [Comment("Last name of the user")]
         public string LastName { get; set; } = null!;
     }

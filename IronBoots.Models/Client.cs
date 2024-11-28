@@ -27,6 +27,9 @@ namespace IronBoots.Data.Models
         [Required]
         [Comment("Current user")]
         public ApplicationUser User { get; set; } = null!;
+        [Required]
+        [Comment("Soft deletion flag")]
+        public bool IsDeleted { get; set; }
 
     }
 }

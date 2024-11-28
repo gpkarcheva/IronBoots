@@ -16,11 +16,13 @@ namespace IronBoots.Data.Configuration
 
             builder.HasOne(op => op.Order)
                 .WithMany(op => op.OrderProducts)
-                .HasForeignKey(op => op.OrderId);
+                .HasForeignKey(op => op.OrderId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(po => po.Product)
                 .WithMany(po => po.ProductOrders)
-                .HasForeignKey(po => po.ProductId);
+                .HasForeignKey(po => po.ProductId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
