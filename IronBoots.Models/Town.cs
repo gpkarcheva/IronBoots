@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace IronBoots.Data.Models
@@ -13,5 +14,8 @@ namespace IronBoots.Data.Models
         [MaxLength(60)]
         [Comment("Town name")]
         public string Name { get; set; } = null!;
+        [Required]
+        [Comment("Collection of addresses for each town")]
+        public ICollection<Address> Addresses { get; set; } = new HashSet<Address>();
     }
 }
