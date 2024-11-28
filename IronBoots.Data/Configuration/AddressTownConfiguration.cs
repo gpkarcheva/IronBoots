@@ -1,11 +1,6 @@
 ﻿using IronBoots.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IronBoots.Data.Configuration
 {
@@ -13,8 +8,21 @@ namespace IronBoots.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<AddressTown> builder)
         {
-            builder.HasOne(a => a.Address)
-                .WithMany(a => a.To)
+            builder.HasKey(at => new
+            {
+                at.AddressId,
+                at.TownId
+            });
+
+            builder.HasOne(at => at.Address)
+                .WithMany(at => at.AddressesTowns)
+                .HasForeignKey(at => at.AddressId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(ta => ta.Town)
+                .WithMany(ta => ta.TownsAddresses)
+                .HasForeignKey(ta => ta.TownId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
