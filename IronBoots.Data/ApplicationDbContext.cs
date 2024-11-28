@@ -8,7 +8,15 @@ namespace IronBoots.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public ApplicationDbContext()
+        {
+            
+        }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
+            : base(options) 
+        {
+            
+        }
         public DbSet<Town> Towns { get; set; }
         public DbSet<Address> Adresses { get; set; }
         public DbSet<Client> Clients { get; set; }
