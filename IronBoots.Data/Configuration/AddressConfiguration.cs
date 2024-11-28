@@ -9,18 +9,24 @@ using System.Threading.Tasks;
 
 namespace IronBoots.Data.Configuration
 {
-    public class AddressConfiguration : IEntityTypeConfiguration<Address>
+    public class AddressConfiguration : IEntityTypeConfiguration<AddressTown>
     {
-        public void Configure(EntityTypeBuilder<Address> builder)
+        public void Configure(EntityTypeBuilder<AddressTown> builder)
         {
-            builder.HasOne(a => a.Town)
-                .WithMany(a => a.Addresses)
-                .HasForeignKey(a => a.TownId)
+            builder.HasKey(pk => new
+            {
+                pk.AddressId,
+                pk.TownId
+            });
+
+            builder.HasOne(at => at.Address)
+                .WithMany(at => at.AddressesTowns)
+                .HasForeignKey(at => at.AddressId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasOne(a => a.Client)
-                .WithOne(a => a.Address)
-                .HasForeignKey<Address>(a => a.ClientId)
+            builder.HasOne(ta => ta.Town)
+                .WithMany(ta => ta.TownsAddresses)
+                .HasForeignKey(ta => ta.TownId)
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }

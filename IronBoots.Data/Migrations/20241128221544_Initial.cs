@@ -59,7 +59,8 @@ namespace IronBoots.Data.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Identifier"),
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false, comment: "Name/Code of the material"),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "Purchase price of the material"),
-                    DistrubutorContact = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Contact page of the distributor")
+                    DistrubutorContact = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Contact page of the distributor"),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, comment: "Soft deletion flag")
                 },
                 constraints: table =>
                 {
@@ -75,11 +76,26 @@ namespace IronBoots.Data.Migrations
                     Weight = table.Column<double>(type: "float", nullable: false, comment: "Net weight of the product"),
                     Size = table.Column<double>(type: "float", nullable: false, comment: "Net size of the product"),
                     ProductionCost = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "Cost to produce the product"),
-                    ProductionTime = table.Column<TimeSpan>(type: "time", nullable: false, comment: "Time required to produce the product")
+                    ProductionTime = table.Column<TimeSpan>(type: "time", nullable: false, comment: "Time required to produce the product"),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, comment: "Soft deletion flag")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Shipments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Identifier"),
+                    VehicleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Id of the vehicle that will handle the shipment"),
+                    ShipmentDate = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "The date the shipment started"),
+                    DeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "The date the shipment was completed")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Shipments", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,19 +108,6 @@ namespace IronBoots.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Towns", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Vehicles",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Identifier"),
-                    WeightCapacity = table.Column<double>(type: "float", nullable: false, comment: "Max weight the vehicle can carry"),
-                    SizeCapacity = table.Column<double>(type: "float", nullable: false, comment: "Max size the vehicle can carry")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Vehicles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -228,14 +231,32 @@ namespace IronBoots.Data.Migrations
                         name: "FK_ProductsMaterials_Materials_MaterialId",
                         column: x => x.MaterialId,
                         principalTable: "Materials",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ProductsMaterials_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vehicles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Identifier"),
+                    WeightCapacity = table.Column<double>(type: "float", nullable: false, comment: "Max weight the vehicle can carry"),
+                    SizeCapacity = table.Column<double>(type: "float", nullable: false, comment: "Max size the vehicle can carry"),
+                    ShipmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Id of the shipment"),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, comment: "Soft deletion flag")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vehicles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Vehicles_Shipments_ShipmentId",
+                        column: x => x.ShipmentId,
+                        principalTable: "Shipments",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -244,7 +265,8 @@ namespace IronBoots.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Identifier - GUID"),
                     AddressText = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false, comment: "Address details"),
-                    TownId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Town Id for easy tracking of orders/shipments")
+                    TownId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Town Id for easy tracking of orders/shipments"),
+                    ClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Reference to the client the address belongs to")
                 },
                 constraints: table =>
                 {
@@ -253,28 +275,7 @@ namespace IronBoots.Data.Migrations
                         name: "FK_Addresses_Towns_TownId",
                         column: x => x.TownId,
                         principalTable: "Towns",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Shipments",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Identifier"),
-                    VehicleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Id of the vehicle that will handle the shipment"),
-                    ShipmentDate = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "The date the shipment started"),
-                    DeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "The date the shipment was completed")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Shipments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Shipments_Vehicles_VehicleId",
-                        column: x => x.VehicleId,
-                        principalTable: "Vehicles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -284,7 +285,8 @@ namespace IronBoots.Data.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Identifier"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "Company name of the client"),
                     AddressId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "ID of the address"),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, comment: "Soft deletion flag")
                 },
                 constraints: table =>
                 {
@@ -293,8 +295,7 @@ namespace IronBoots.Data.Migrations
                         name: "FK_Clients_Addresses_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Addresses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Clients_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -314,7 +315,7 @@ namespace IronBoots.Data.Migrations
                     ActualAssignedDate = table.Column<DateOnly>(type: "date", nullable: false, comment: "When is the order actually assigned to a shipment"),
                     ShipmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Id of the shipment the order belongs to"),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "Total price of the order"),
-                    VehicleId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, comment: "Active orders flag")
                 },
                 constraints: table =>
                 {
@@ -323,24 +324,16 @@ namespace IronBoots.Data.Migrations
                         name: "FK_Orders_Addresses_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Addresses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Orders_Clients_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Clients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Orders_Shipments_ShipmentId",
                         column: x => x.ShipmentId,
                         principalTable: "Shipments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Orders_Vehicles_VehicleId",
-                        column: x => x.VehicleId,
-                        principalTable: "Vehicles",
                         principalColumn: "Id");
                 });
 
@@ -359,14 +352,12 @@ namespace IronBoots.Data.Migrations
                         name: "FK_OrdersProducts_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_OrdersProducts_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -416,7 +407,8 @@ namespace IronBoots.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Clients_AddressId",
                 table: "Clients",
-                column: "AddressId");
+                column: "AddressId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clients_UserId",
@@ -439,11 +431,6 @@ namespace IronBoots.Data.Migrations
                 column: "ShipmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_VehicleId",
-                table: "Orders",
-                column: "VehicleId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_OrdersProducts_ProductId",
                 table: "OrdersProducts",
                 column: "ProductId");
@@ -454,9 +441,10 @@ namespace IronBoots.Data.Migrations
                 column: "MaterialId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Shipments_VehicleId",
-                table: "Shipments",
-                column: "VehicleId");
+                name: "IX_Vehicles_ShipmentId",
+                table: "Vehicles",
+                column: "ShipmentId",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -484,6 +472,9 @@ namespace IronBoots.Data.Migrations
                 name: "ProductsMaterials");
 
             migrationBuilder.DropTable(
+                name: "Vehicles");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -506,9 +497,6 @@ namespace IronBoots.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Vehicles");
 
             migrationBuilder.DropTable(
                 name: "Towns");

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IronBoots.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241128204533_Initial")]
+    [Migration("20241128221544_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -65,6 +65,10 @@ namespace IronBoots.Data.Migrations
                         .HasMaxLength(80)
                         .HasColumnType("nvarchar(80)")
                         .HasComment("Address details");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("Reference to the client the address belongs to");
 
                     b.Property<Guid>("TownId")
                         .HasColumnType("uniqueidentifier")
@@ -164,6 +168,10 @@ namespace IronBoots.Data.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasComment("ID of the address");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasComment("Soft deletion flag");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -175,7 +183,8 @@ namespace IronBoots.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
+                    b.HasIndex("AddressId")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -193,6 +202,10 @@ namespace IronBoots.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasComment("Contact page of the distributor");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasComment("Soft deletion flag");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -228,6 +241,10 @@ namespace IronBoots.Data.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasComment("Id of the client");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit")
+                        .HasComment("Active orders flag");
+
                     b.Property<DateOnly>("PlannedAssignedDate")
                         .HasColumnType("date")
                         .HasComment("When is the order supposed to be assigned to a shipment");
@@ -240,9 +257,6 @@ namespace IronBoots.Data.Migrations
                         .HasColumnType("decimal(18,2)")
                         .HasComment("Total price of the order");
 
-                    b.Property<Guid?>("VehicleId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
@@ -250,8 +264,6 @@ namespace IronBoots.Data.Migrations
                     b.HasIndex("ClientId");
 
                     b.HasIndex("ShipmentId");
-
-                    b.HasIndex("VehicleId");
 
                     b.ToTable("Orders");
                 });
@@ -283,6 +295,10 @@ namespace IronBoots.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasComment("Identifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasComment("Soft deletion flag");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -353,8 +369,6 @@ namespace IronBoots.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("VehicleId");
-
                     b.ToTable("Shipments");
                 });
 
@@ -383,6 +397,14 @@ namespace IronBoots.Data.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasComment("Identifier");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasComment("Soft deletion flag");
+
+                    b.Property<Guid>("ShipmentId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("Id of the shipment");
+
                     b.Property<double>("SizeCapacity")
                         .HasColumnType("float")
                         .HasComment("Max size the vehicle can carry");
@@ -392,6 +414,9 @@ namespace IronBoots.Data.Migrations
                         .HasComment("Max weight the vehicle can carry");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ShipmentId")
+                        .IsUnique();
 
                     b.ToTable("Vehicles");
                 });
@@ -506,9 +531,9 @@ namespace IronBoots.Data.Migrations
             modelBuilder.Entity("IronBoots.Data.Models.Address", b =>
                 {
                     b.HasOne("IronBoots.Data.Models.Town", "Town")
-                        .WithMany()
+                        .WithMany("Addresses")
                         .HasForeignKey("TownId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Town");
@@ -517,9 +542,9 @@ namespace IronBoots.Data.Migrations
             modelBuilder.Entity("IronBoots.Data.Models.Client", b =>
                 {
                     b.HasOne("IronBoots.Data.Models.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithOne("Client")
+                        .HasForeignKey("IronBoots.Data.Models.Client", "AddressId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("IronBoots.Data.Models.ApplicationUser", "User")
@@ -536,26 +561,22 @@ namespace IronBoots.Data.Migrations
             modelBuilder.Entity("IronBoots.Data.Models.Order", b =>
                 {
                     b.HasOne("IronBoots.Data.Models.Address", "Address")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("IronBoots.Data.Models.Client", "Client")
                         .WithMany("Orders")
                         .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("IronBoots.Data.Models.Shipment", "Shipment")
-                        .WithMany()
-                        .HasForeignKey("ShipmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("IronBoots.Data.Models.Vehicle", null)
                         .WithMany("Orders")
-                        .HasForeignKey("VehicleId");
+                        .HasForeignKey("ShipmentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Address");
 
@@ -569,13 +590,13 @@ namespace IronBoots.Data.Migrations
                     b.HasOne("IronBoots.Data.Models.Order", "Order")
                         .WithMany("OrderProducts")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("IronBoots.Data.Models.Product", "Product")
                         .WithMany("ProductOrders")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Order");
@@ -588,13 +609,13 @@ namespace IronBoots.Data.Migrations
                     b.HasOne("IronBoots.Data.Models.Material", "Material")
                         .WithMany("MaterialProducts")
                         .HasForeignKey("MaterialId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("IronBoots.Data.Models.Product", "Product")
                         .WithMany("ProductMaterials")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Material");
@@ -602,15 +623,15 @@ namespace IronBoots.Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("IronBoots.Data.Models.Shipment", b =>
+            modelBuilder.Entity("IronBoots.Data.Models.Vehicle", b =>
                 {
-                    b.HasOne("IronBoots.Data.Models.Vehicle", "Vehicle")
-                        .WithMany()
-                        .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("IronBoots.Data.Models.Shipment", "Shipment")
+                        .WithOne("Vehicle")
+                        .HasForeignKey("IronBoots.Data.Models.Vehicle", "ShipmentId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Vehicle");
+                    b.Navigation("Shipment");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -664,6 +685,14 @@ namespace IronBoots.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("IronBoots.Data.Models.Address", b =>
+                {
+                    b.Navigation("Client")
+                        .IsRequired();
+
+                    b.Navigation("Orders");
+                });
+
             modelBuilder.Entity("IronBoots.Data.Models.Client", b =>
                 {
                     b.Navigation("Orders");
@@ -686,9 +715,17 @@ namespace IronBoots.Data.Migrations
                     b.Navigation("ProductOrders");
                 });
 
-            modelBuilder.Entity("IronBoots.Data.Models.Vehicle", b =>
+            modelBuilder.Entity("IronBoots.Data.Models.Shipment", b =>
                 {
                     b.Navigation("Orders");
+
+                    b.Navigation("Vehicle")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("IronBoots.Data.Models.Town", b =>
+                {
+                    b.Navigation("Addresses");
                 });
 #pragma warning restore 612, 618
         }
