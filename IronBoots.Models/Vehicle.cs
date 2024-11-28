@@ -15,8 +15,11 @@ namespace IronBoots.Data.Models
         [Comment("Max size the vehicle can carry")]
         public double SizeCapacity { get; set; }
         [Required]
-        [Comment("A list of orders to be shipped with this vehicle")]
-        public ICollection<Order> Orders { get; set; } = new HashSet<Order>();
+        [Comment("Id of the shipment")]
+        public Guid ShipmentId { get; set; }
+        [Required]
+        [Comment("Shipment the order belongs to")]
+        public Shipment Shipment { get; set; } = null!;
         [Required]
         [Comment("Soft deletion flag")]
         public bool IsDeleted { get; set; }

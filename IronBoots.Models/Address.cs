@@ -29,5 +29,9 @@ namespace IronBoots.Data.Models
         [ForeignKey(nameof(ClientId))]
         [Comment("Client that has the address")]
         public Client Client { get; set; } = null!;
+
+        [Required]
+        [Comment("All orders for this address")]
+        public ICollection<Order> Orders { get; set; } = new HashSet<Order>();
     }
 }

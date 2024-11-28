@@ -17,6 +17,9 @@ namespace IronBoots.Data.Models
         [Comment("Vehicle object")]
         public Vehicle Vehicle { get; set; } = null!;
         [Required]
+        [Comment("The orders part of the shipment")]
+        public ICollection<Order> Orders { get; set; } = new HashSet<Order>();
+        [Required]
         [Comment("The date the shipment started")]
         public DateTime ShipmentDate { get; set; }
         [Required]
