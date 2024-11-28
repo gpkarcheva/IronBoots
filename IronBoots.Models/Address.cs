@@ -22,6 +22,12 @@ namespace IronBoots.Data.Models
         [ForeignKey(nameof(TownId))]
         [Comment("Town object")]
         public Town Town { get; set; } = null!;
-
+        [Required]
+        [Comment("Reference to the client the address belongs to")]
+        public Guid ClientId { get; set; }
+        [Required]
+        [ForeignKey(nameof(ClientId))]
+        [Comment("Client that has the address")]
+        public Client Client { get; set; } = null!;
     }
 }
