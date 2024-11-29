@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static IronBoots.Common.EntityValidationConstants.OrderProduct;
+using static IronBoots.Common.EntityValidationConstants.OrderProductValidation;
 
 namespace IronBoots.Data.Models
 {

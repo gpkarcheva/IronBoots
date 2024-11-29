@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using static IronBoots.Common.EntityValidationConstants.ApplicationUser;
+using static IronBoots.Common.EntityValidationConstants.ApplicationUserValidation;
 
 namespace IronBoots.Data.Models
 {

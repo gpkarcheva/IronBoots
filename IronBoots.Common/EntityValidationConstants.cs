@@ -4,25 +4,25 @@ namespace IronBoots.Common
 {
     public static class EntityValidationConstants
     {
-        public static class Address
+        public static class AddressValidation
         {
             public const int AddressMin = 3;
             public const int AddressMax = 80;
         }
 
-        public static class ApplicationUser
+        public static class ApplicationUserValidation
         {
             public const int NameMin = 1;
             public const int NameMax = 50;
         }
 
-        public static class Client
+        public static class ClientValidation
         {
             public const int NameMin = 1;
             public const int NameMax = 50;
         }
 
-        public static class Material
+        public static class MaterialValidation
         {
             public const int NameMin = 1;
             public const int NameMax = 20;
@@ -31,19 +31,19 @@ namespace IronBoots.Common
             public const decimal PriceMax = decimal.MaxValue;
         }
 
-        public static class Order
+        public static class OrderValidation
         {
             public const decimal PriceMin = 0.01m;
             public const decimal PriceMax = decimal.MaxValue;
         }
 
-        public static class OrderProduct
+        public static class OrderProductValidation
         {
             public const int QuantityMin = 1;
             public const int QuantityMax = 200;
         }
 
-        public static class Product
+        public static class ProductValidation
         {
             public const int NameMin = 1;
             public const int NameMax = 50;
@@ -58,19 +58,19 @@ namespace IronBoots.Common
             public const decimal CostMax = decimal.MaxValue;
         }
         
-        public static class ProductMaterial
+        public static class ProductMaterialValidation
         {
             public const int QuantityMin = 1;
             public const int QuantityMax = 200;
         }
 
-        public static class Town
+        public static class TownValidation
         {
             public const int NameMin = 3;
             public const int NameMax = 60;
         }
 
-        public static class Vehicle
+        public static class VehicleValidation
         {
             public const int NameMin = 3;
             public const int NameMax = 30;

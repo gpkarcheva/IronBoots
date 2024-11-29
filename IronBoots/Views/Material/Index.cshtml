@@ -1,0 +1,23 @@
+﻿@using IronBoots.Models
+@model IEnumerable<MaterialIndexViewModel>
+
+<div class="container">
+    <div class="row mt-4">
+        @if (!Model.Any())
+        {
+            <div class="col-12">
+                <p class="fs-3">Moje i da stane ako si seednesh bazata purvo</p>
+            </div>
+        }
+        else
+        {
+            @foreach (var material in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <partial name="_CardsIndex" model="material")/>
+                </div>
+            }
+
+        }
+    </div>
+</div>

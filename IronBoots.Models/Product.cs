@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using static IronBoots.Common.EntityValidationConstants.Product;
+using static IronBoots.Common.EntityValidationConstants.ProductValidation;
 
 namespace IronBoots.Data.Models
 {
