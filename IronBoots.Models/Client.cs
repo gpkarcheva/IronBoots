@@ -7,6 +7,11 @@ namespace IronBoots.Data.Models
 {
     public class Client
     {
+        public Client()
+        {
+            Id = Guid.NewGuid();
+        }
+
         [Key]
         [Comment("Identifier")]
         public Guid Id { get; set; }

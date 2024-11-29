@@ -7,6 +7,11 @@ namespace IronBoots.Data.Models
 {
     public class Town
     {
+        public Town()
+        {
+            Id = Guid.NewGuid();
+        }
+
         [Key]
         [Comment("Identifier")]
         public Guid Id { get; set; }

@@ -6,6 +6,11 @@ namespace IronBoots.Data.Models
 {
     public class Shipment
     {
+        public Shipment()
+        {
+            Id = Guid.NewGuid();
+        }
+
         [Key]
         [Comment("Identifier")]
         public Guid Id { get; set; }

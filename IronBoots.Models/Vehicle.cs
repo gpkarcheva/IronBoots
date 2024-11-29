@@ -6,6 +6,11 @@ namespace IronBoots.Data.Models
 {
     public class Vehicle
     {
+        public Vehicle()
+        {
+            Id = Guid.NewGuid();
+        }
+
         [Key]
         [Comment("Identifier")]
         public Guid Id { get; set; }

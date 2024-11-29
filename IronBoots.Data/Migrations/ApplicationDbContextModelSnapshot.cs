@@ -73,7 +73,7 @@ namespace IronBoots.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Addresses", (string)null);
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.AddressTown", b =>
@@ -90,7 +90,7 @@ namespace IronBoots.Data.Migrations
 
                     b.HasIndex("TownId");
 
-                    b.ToTable("AddressesTowns");
+                    b.ToTable("AddressesTowns", (string)null);
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.ApplicationUser", b =>
@@ -202,7 +202,7 @@ namespace IronBoots.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Clients");
+                    b.ToTable("Clients", (string)null);
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.Material", b =>
@@ -238,7 +238,7 @@ namespace IronBoots.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Materials");
+                    b.ToTable("Materials", (string)null);
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.Order", b =>
@@ -285,7 +285,7 @@ namespace IronBoots.Data.Migrations
 
                     b.HasIndex("ShipmentId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.OrderProduct", b =>
@@ -306,7 +306,7 @@ namespace IronBoots.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrdersProducts");
+                    b.ToTable("OrdersProducts", (string)null);
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.Product", b =>
@@ -349,7 +349,7 @@ namespace IronBoots.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.ProductMaterial", b =>
@@ -370,7 +370,7 @@ namespace IronBoots.Data.Migrations
 
                     b.HasIndex("MaterialId");
 
-                    b.ToTable("ProductsMaterials");
+                    b.ToTable("ProductsMaterials", (string)null);
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.Shipment", b =>
@@ -394,7 +394,7 @@ namespace IronBoots.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Shipments");
+                    b.ToTable("Shipments", (string)null);
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.Town", b =>
@@ -412,7 +412,7 @@ namespace IronBoots.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Towns");
+                    b.ToTable("Towns", (string)null);
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.Vehicle", b =>
@@ -448,7 +448,7 @@ namespace IronBoots.Data.Migrations
                     b.HasIndex("ShipmentId")
                         .IsUnique();
 
-                    b.ToTable("Vehicles");
+                    b.ToTable("Vehicles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

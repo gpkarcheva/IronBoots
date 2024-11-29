@@ -12,12 +12,14 @@ namespace IronBoots.Data.Models
         {
             Id = Guid.NewGuid();
         }
+
         [Required]
         [MinLength(NameMin)]
         [MaxLength(NameMax)]
         [PersonalData]
         [Comment("First name of the user")]
         public string FirstName { get; set; } = null!;
+
 
         [Required]
         [MinLength(NameMin)]
