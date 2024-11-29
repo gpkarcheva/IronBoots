@@ -1,6 +1,8 @@
 ﻿@using IronBoots.Models
 @model IEnumerable<MaterialIndexViewModel>
-
+@{
+    ViewData["Title"] = "Materials";
+}
 <div class="container">
     <div class="row mt-4">
         @if (!Model.Any())
