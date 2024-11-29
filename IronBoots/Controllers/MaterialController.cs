@@ -35,9 +35,10 @@ namespace IronBoots.Controllers
             return View(model);
         }
 
+        //Details
+
         //Add
         //Remove
         //Edit
-        //Details
     }
 }

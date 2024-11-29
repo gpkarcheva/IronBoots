@@ -18,6 +18,10 @@ namespace IronBoots.Data.Models
         public string Name { get; set; } = null!;
 
 
+        [Comment("Url of product image")]
+        public string? ImageUrl { get; set; }
+
+
         [Required]
         [Range(WeightMin, WeightMax)]
         [Comment("Net weight of the product in kg")]

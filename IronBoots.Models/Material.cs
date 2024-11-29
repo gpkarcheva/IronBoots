@@ -26,6 +26,10 @@ namespace IronBoots.Data.Models
         public decimal Price { get; set; }
 
 
+        [Comment("Url of product image")]
+        public string? ImageUrl { get; set; }
+
+
         [Required]
         [Url]
         [Comment("Contact page of the distributor")]
