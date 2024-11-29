@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using static IronBoots.Common.EntityValidationConstants.Town;
 
 namespace IronBoots.Data.Models
 {
@@ -12,8 +13,8 @@ namespace IronBoots.Data.Models
 
 
         [Required]
-        [MinLength(3)]
-        [MaxLength(60)]
+        [MinLength(NameMin)]
+        [MaxLength(NameMax)]
         [Comment("Town name")]
         public string Name { get; set; } = null!;
 

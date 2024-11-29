@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.CompilerServices;
+using static IronBoots.Common.EntityValidationConstants.Address;
 
 namespace IronBoots.Data.Models
 {
@@ -14,8 +14,8 @@ namespace IronBoots.Data.Models
 
         [Comment("Address details")]
         [Required]
-        [MinLength(3)]
-        [MaxLength(80)]
+        [MinLength(AddressMin)]
+        [MaxLength(AddressMax)]
         public string AddressText { get; set; } = null!;
 
 

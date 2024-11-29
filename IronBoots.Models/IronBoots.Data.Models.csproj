@@ -15,4 +15,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IronBoots.Common\IronBoots.Common.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using static IronBoots.Common.EntityValidationConstants.Product;
 
 namespace IronBoots.Data.Models
 {
@@ -11,23 +12,27 @@ namespace IronBoots.Data.Models
 
 
         [Required]
-        [MinLength(1)]
-        [MaxLength(50)]
+        [MinLength(NameMin)]
+        [MaxLength(NameMax)]
         [Comment("Name/Code of the product")]
         public string Name { get; set; } = null!;
 
 
         [Required]
-        [Comment("Net weight of the product")]
+        [Range(WeightMin, WeightMax)]
+        [Comment("Net weight of the product in kg")]
         public double Weight { get; set; }
 
 
         [Required]
-        [Comment("Net size of the product")]
+        [Range(SizeMin, SizeMax)]
+        [Comment("Net size of the product in cm2")]
         public double Size { get; set; }
 
 
         [Required]
+        [Range(typeof(decimal), nameof(CostMin), nameof(CostMax))]
+        [Precision(18, 2)]
         [Comment("Cost to produce the product")]
         public decimal ProductionCost { get; set; }
 

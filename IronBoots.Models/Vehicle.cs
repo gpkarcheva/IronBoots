@@ -12,12 +12,18 @@ namespace IronBoots.Data.Models
 
 
         [Required]
-        [Comment("Max weight the vehicle can carry")]
+        [MinLength(1)]
+        [MaxLength(30)]
+        public string Name { get; set; } = null!;
+
+
+        [Required]
+        [Comment("Max weight the vehicle can carry in kg")]
         public double WeightCapacity { get; set; }
 
 
         [Required]
-        [Comment("Max size the vehicle can carry")]
+        [Comment("Max size the vehicle can carry in cm2")]
         public double SizeCapacity { get; set; }
 
 

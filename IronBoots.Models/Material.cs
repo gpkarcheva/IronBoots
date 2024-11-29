@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using UrlAttribute = System.ComponentModel.DataAnnotations.UrlAttribute;
+using static IronBoots.Common.EntityValidationConstants.Material;
 
 namespace IronBoots.Data.Models
 {
@@ -12,12 +13,15 @@ namespace IronBoots.Data.Models
 
 
         [Required]
-        [MaxLength(20)]
+        [MinLength(NameMin)]
+        [MaxLength(NameMax)]
         [Comment("Name/Code of the material")]
         public string Name { get; set; } = null!;
 
 
         [Required]
+        [Range(typeof(decimal), nameof(PriceMin), nameof(PriceMax))]
+        [Precision(18,2)]
         [Comment("Purchase price of the material")]
         public decimal Price { get; set; }
 

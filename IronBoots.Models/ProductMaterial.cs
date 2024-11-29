@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static IronBoots.Common.EntityValidationConstants.ProductMaterial;
 
 namespace IronBoots.Data.Models
 {
@@ -29,6 +30,7 @@ namespace IronBoots.Data.Models
 
 
         [Required]
+        [Range(QuantityMin, QuantityMax)]
         [Comment("Quantity needed to make the product")]
         public int MaterialQuantity { get; set; }
     }

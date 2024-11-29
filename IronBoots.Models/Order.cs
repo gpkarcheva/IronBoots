@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static IronBoots.Common.EntityValidationConstants.Order;
 
 namespace IronBoots.Data.Models
 {
@@ -55,6 +56,8 @@ namespace IronBoots.Data.Models
 
 
         [Required]
+        [Range(typeof(decimal), nameof(PriceMin), nameof(PriceMax))]
+        [Precision(18, 2)]
         [Comment("Total price of the order")]
         public decimal TotalPrice { get; set; }
 

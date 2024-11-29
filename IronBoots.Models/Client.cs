@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static IronBoots.Common.EntityValidationConstants.Client;
 
 namespace IronBoots.Data.Models
 {
@@ -12,8 +13,8 @@ namespace IronBoots.Data.Models
 
 
         [Required]
-        [MinLength(2)]
-        [MaxLength(50)]
+        [MinLength(NameMin)]
+        [MaxLength(NameMax)]
         [Comment("Company name of the client")]
         public string Name { get; set; } = null!;
 
