@@ -172,7 +172,7 @@ public static class Seeder
                 User = correctUser,
                 IsDeleted = false
             };
-            if (!await context.Clients.ContainsAsync(client))
+            if (await context.Clients.FirstOrDefaultAsync(c => c.Id == client.Id) == null)
             {
                 context.Clients.Add(client);
             }
@@ -180,6 +180,36 @@ public static class Seeder
         await context.SaveChangesAsync();
 
         //seed materials
+        Material material = new Material()
+        {
+            Name = "material1",
+            Price = 123.5m,
+            DistrubutorContact = "distr.com/contact",
+            IsDeleted = false
+        };
+
+        if (await context.Materials.FirstOrDefaultAsync(mt => mt.Id == material.Id) == null)
+        {
+            await context.Materials.AddAsync(material);
+            await context.SaveChangesAsync();
+        }
+
+        //seed products
+        Product product = new Product()
+        {
+            Name = "product",
+            Weight = 1.23,
+            Size = 1.56,
+            ProductionCost = 6.78m,
+            ProductionTime = TimeSpan.Parse("0.02:54:18"),
+            IsDeleted = false
+        };
+
+        if (await context.Products.FirstOrDefaultAsync(p => p.Id == product.Id) == null)
+        {
+            await context.Products.AddAsync(product);
+        }
+
 
     }
 }
