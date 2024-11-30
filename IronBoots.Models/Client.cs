@@ -37,7 +37,7 @@ namespace IronBoots.Data.Models
 
         [Required]
         [Comment("Orders the client currently has open")]
-        public ICollection<Order> Orders { get; set; } = new HashSet<Order>();
+        public IList<Order> Orders { get; set; } = new List<Order>();
 
 
         [Required]
@@ -48,6 +48,5 @@ namespace IronBoots.Data.Models
         [Required]
         [Comment("Soft deletion flag")]
         public bool IsDeleted { get; set; }
-
     }
 }

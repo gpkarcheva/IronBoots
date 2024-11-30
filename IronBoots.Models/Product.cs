@@ -53,12 +53,12 @@ namespace IronBoots.Data.Models
 
         [Required]
         [Comment("Materials required to produce")]
-        public ICollection<ProductMaterial> ProductMaterials = new HashSet<ProductMaterial>();
+        public IList<ProductMaterial> ProductMaterials = new List<ProductMaterial>();
 
 
         [Required]
         [Comment("Orders in which the product is required")]
-        public ICollection<OrderProduct> ProductOrders = new HashSet<OrderProduct>();
+        public IList<OrderProduct> ProductOrders = new List<OrderProduct>();
 
 
         [Required]

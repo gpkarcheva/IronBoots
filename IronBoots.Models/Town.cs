@@ -26,6 +26,6 @@ namespace IronBoots.Data.Models
 
         [Required]
         [Comment("Collection of addresses for each town")]
-        public ICollection<AddressTown> TownsAddresses { get; set; } = new HashSet<AddressTown>();
+        public IList<AddressTown> TownsAddresses { get; set; } = new List<AddressTown>();
     }
 }

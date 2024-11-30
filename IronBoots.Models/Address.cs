@@ -31,7 +31,7 @@ namespace IronBoots.Data.Models
 
         [Required]
         [Comment("All towns that contain the address")]
-        public ICollection<AddressTown> AddressesTowns { get; set; } = new HashSet<AddressTown>();
+        public IList<AddressTown> AddressesTowns { get; set; } = new List<AddressTown>();
 
 
         [Required]
@@ -47,6 +47,6 @@ namespace IronBoots.Data.Models
 
         [Required]
         [Comment("All orders for this address")]
-        public ICollection<Order> Orders { get; set; } = new HashSet<Order>();
+        public IList<Order> Orders { get; set; } = new List<Order>();
     }
 }
