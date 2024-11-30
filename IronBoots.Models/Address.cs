@@ -25,28 +25,7 @@ namespace IronBoots.Data.Models
 
 
         [Required]
-        [Comment("Town Id for easy tracking of orders/shipments")]
-        public Guid TownId { get; set; }
-
-
-        [Required]
         [Comment("All towns that contain the address")]
         public IList<AddressTown> AddressesTowns { get; set; } = new List<AddressTown>();
-
-
-        [Required]
-        [Comment("Reference to the client the address belongs to")]
-        public Guid ClientId { get; set; }
-
-
-        [Required]
-        [ForeignKey(nameof(ClientId))]
-        [Comment("Client that has the address")]
-        public Client Client { get; set; } = null!;
-
-
-        [Required]
-        [Comment("All orders for this address")]
-        public IList<Order> Orders { get; set; } = new List<Order>();
     }
 }

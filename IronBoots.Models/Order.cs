@@ -29,17 +29,6 @@ namespace IronBoots.Data.Models
 
 
         [Required]
-        [Comment("Id of the address town combination")]
-        public Guid AddressTownId { get; set; }
-
-
-        [Required]
-        [ForeignKey(nameof(AddressTownId))]
-        [Comment("AddressTown object")]
-        public AddressTown AddressTown { get; set; } = null!;
-
-
-        [Required]
         [Comment("When is the order supposed to be assigned to a shipment")]
         public DateTime PlannedAssignedDate { get; set; }
 

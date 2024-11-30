@@ -29,7 +29,7 @@ namespace IronBoots.Data.Models
 
         [Required]
         [Comment("The orders part of the shipment")]
-        public ICollection<Order> Orders { get; set; } = new HashSet<Order>();
+        public IList<Order> Orders { get; set; } = new List<Order>();
 
 
         [Required]

@@ -41,6 +41,12 @@ namespace IronBoots.Data.Models
 
 
         [Required]
+        [Comment("Id of the current user")]
+        public Guid UserId { get; set; }
+
+
+        [Required]
+        [ForeignKey(nameof(UserId))]
         [Comment("Current user")]
         public ApplicationUser User { get; set; } = null!;
 

@@ -13,11 +13,6 @@ namespace IronBoots.Data.Configuration
                 .HasForeignKey(o => o.ClientId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasOne(o => o.Address)
-                .WithMany(o => o.Orders)
-                .HasForeignKey(o => o.AddressId)
-                .OnDelete(DeleteBehavior.NoAction);
-
             builder.HasOne(o => o.Shipment)
                 .WithMany(o => o.Orders)
                 .HasForeignKey(o => o.ShipmentId)

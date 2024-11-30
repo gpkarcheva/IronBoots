@@ -8,9 +8,15 @@ namespace IronBoots.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Client> builder)
         {
-            builder.HasOne(c => c.Address)
+            builder.HasOne(c => c.AddressTown)
                 .WithOne(c => c.Client)
-                .HasForeignKey<Client>(c => c.AddressId)
+                .HasForeignKey<Client>(c => c.AddressTownId)
+                .OnDelete(DeleteBehavior.NoAction);
+            
+            builder
+                .HasOne(c => c.User)
+                .WithMany()          // No navigation property on ApplicationUser
+                .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }
