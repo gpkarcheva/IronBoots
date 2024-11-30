@@ -29,24 +29,24 @@ namespace IronBoots.Data.Models
 
 
         [Required]
-        [Comment("Id of the address")]
-        public Guid AddressId { get; set; }
+        [Comment("Id of the address town combination")]
+        public Guid AddressTownId { get; set; }
 
 
         [Required]
-        [ForeignKey(nameof(AddressId))]
-        [Comment("Address object")]
-        public Address Address { get; set; } = null!;
+        [ForeignKey(nameof(AddressTownId))]
+        [Comment("AddressTown object")]
+        public AddressTown AddressTown { get; set; } = null!;
 
 
         [Required]
         [Comment("When is the order supposed to be assigned to a shipment")]
-        public DateOnly PlannedAssignedDate { get; set; }
+        public DateTime PlannedAssignedDate { get; set; }
 
 
         [Required]
         [Comment("When is the order actually assigned to a shipment")]
-        public DateOnly ActualAssignedDate { get; set; }
+        public DateTime ActualAssignedDate { get; set; }
 
 
         [Required]
@@ -69,7 +69,7 @@ namespace IronBoots.Data.Models
 
         [Required]
         [Comment("Which products are required for the order")]
-        public ICollection<OrderProduct> OrderProducts { get; set; } = new HashSet<OrderProduct>();
+        public IList<OrderProduct> OrderProducts { get; set; } = new List<OrderProduct>();
 
 
         [Required]

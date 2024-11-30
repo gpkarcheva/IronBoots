@@ -8,11 +8,12 @@ namespace IronBoots.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<AddressTown> builder)
         {
-            builder.HasKey(pk => new
+            builder.HasIndex(at => new
             {
-                pk.AddressId,
-                pk.TownId
-            });
+                at.AddressId,
+                at.TownId
+            })
+                .IsUnique();
 
             builder.HasOne(at => at.Address)
                 .WithMany(at => at.AddressesTowns)

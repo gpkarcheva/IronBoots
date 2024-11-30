@@ -1,0 +1,172 @@
+{
+    "Users": [
+        {
+            "Id": "e4845574-f170-48cf-bf74-05966207d9ec",
+            "UserName": "user1",
+            "Email": "user1@example.com",
+            "PasswordHash": "hashed-password",
+            "FirstName": "FirstName1",
+            "LastName": "LastName1",
+            "IsDeleted": false
+        },
+        {
+            "Id": "80aa3ce7-1d5f-4e29-9aa9-5b1951519a18",
+            "UserName": "user2",
+            "Email": "user2@example.com",
+            "PasswordHash": "hashed-password",
+            "FirstName": "FirstName2",
+            "LastName": "LastName2",
+            "IsDeleted": false
+        }
+    ],
+    "Towns": [
+        {
+            "Id": "d21768e5-f41b-4318-9e5b-0626763d2f4c",
+            "Name": "Town 1"
+        },
+        {
+            "Id": "027bed1b-9d62-425b-b21d-a6e89eb1bc58",
+            "Name": "Town 2"
+        }
+    ],
+    "Clients": [
+        {
+            "Id": "1c9f719c-b21a-4b63-a582-78b78a0bd2bb",
+            "Name": "Client 1",
+            "AddressId": "12c85534-d403-400e-bfcc-48da69400c0b",
+            "UserId": "e4845574-f170-48cf-bf74-05966207d9ec",
+            "IsDeleted": false
+        },
+        {
+            "Id": "b077b3a7-eb77-4402-a3f8-ad9280da86a4",
+            "Name": "Client 2",
+            "AddressId": "eb7f0aa4-17f6-47d0-8fda-d7743cc20000",
+            "UserId": "80aa3ce7-1d5f-4e29-9aa9-5b1951519a18",
+            "IsDeleted": false
+        }
+    ],
+    "Addresses": [
+        {
+            "Id": "12c85534-d403-400e-bfcc-48da69400c0b",
+            "AddressText": "Address 1 Lane",
+            "TownId": "ed8b5212-6079-4615-8fc4-4573babc499d",
+            "ClientId": "1c9f719c-b21a-4b63-a582-78b78a0bd2bb"
+        },
+        {
+            "Id": "eb7f0aa4-17f6-47d0-8fda-d7743cc20000",
+            "AddressText": "Address 2 Lane",
+            "TownId": "2f9fc2cd-5943-4043-9079-31982db8118d",
+            "ClientId": "b077b3a7-eb77-4402-a3f8-ad9280da86a4"
+        }
+    ],
+    "Materials": [
+        {
+            "Id": "ab2653f1-c07d-4eb7-bf48-1daa99adb20e",
+            "Name": "Material 1"
+        },
+        {
+            "Id": "06784cd9-1882-45b7-a4c0-54a02c32150f",
+            "Name": "Material 2"
+        }
+    ],
+    "Products": [
+        {
+            "Id": "72e9f50c-575d-49bc-96d3-600e60550371",
+            "Name": "Product 1",
+            "Weight": 0.54,
+            "Size": 48.95,
+            "ProductionCost": 442.39,
+            "ProductionTime": "0.17:54:00",
+            "IsDeleted": false
+        },
+        {
+            "Id": "df2b4903-253c-4ad5-8e3c-68ac531193e7",
+            "Name": "Product 2",
+            "Weight": 1.14,
+            "Size": 10.53,
+            "ProductionCost": 472.61,
+            "ProductionTime": "0.17:50:00",
+            "IsDeleted": false
+        }
+    ],
+    "ProductMaterials": [
+        {
+            "ProductId": "72e9f50c-575d-49bc-96d3-600e60550371",
+            "MaterialId": "7b02c03a-d711-4985-b87f-e69108516351",
+            "MaterialQuantity": 13
+        },
+        {
+            "ProductId": "df2b4903-253c-4ad5-8e3c-68ac531193e7",
+            "MaterialId": "f2d90d4c-6cf0-4f27-b461-62ea612c1a8a",
+            "MaterialQuantity": 3
+        }
+    ],
+    "Orders": [
+        {
+            "Id": "b36016c7-6848-413e-9599-18a5dff9e36b",
+            "ClientId": "1c9f719c-b21a-4b63-a582-78b78a0bd2bb",
+            "AddressId": "12c85534-d403-400e-bfcc-48da69400c0b",
+            "PlannedAssignedDate": "2023-06-08T09:09:34",
+            "ActualAssignedDate": "2023-01-29T01:15:39",
+            "ShipmentId": "302a3deb-2397-4387-a07e-290de75bd168",
+            "TotalPrice": 701.11,
+            "IsActive": true
+        },
+        {
+            "Id": "a072b844-a874-4df0-a454-a4d39db45081",
+            "ClientId": "b077b3a7-eb77-4402-a3f8-ad9280da86a4",
+            "AddressId": "eb7f0aa4-17f6-47d0-8fda-d7743cc20000",
+            "PlannedAssignedDate": "2023-04-09T18:58:59",
+            "ActualAssignedDate": "2023-03-05T19:28:59",
+            "ShipmentId": "bc88e638-20be-478d-be57-b19e43b69153",
+            "TotalPrice": 282.39,
+            "IsActive": true
+        }
+    ],
+    "OrderProducts": [
+        {
+            "OrderId": "b36016c7-6848-413e-9599-18a5dff9e36b",
+            "ProductId": "72e9f50c-575d-49bc-96d3-600e60550371",
+            "ProductQuantity": 3
+        },
+        {
+            "OrderId": "a072b844-a874-4df0-a454-a4d39db45081",
+            "ProductId": "df2b4903-253c-4ad5-8e3c-68ac531193e7",
+            "ProductQuantity": 5
+        }
+    ],
+    "Shipments": [
+        {
+            "Id": "302a3deb-2397-4387-a07e-290de75bd168",
+            "VehicleId": "7aba5a86-7590-46e1-bdd2-84064f21f405",
+            "ShipmentDate": "2023-07-12T00:48:26",
+            "DeliveryDate": "2023-09-17T10:10:59"
+        },
+        {
+            "Id": "bc88e638-20be-478d-be57-b19e43b69153",
+            "VehicleId": "db7fe951-d41b-492d-a754-f40cc6758395",
+            "ShipmentDate": "2023-01-13T21:31:07",
+            "DeliveryDate": "2023-08-09T16:15:25"
+        }
+    ],
+    "Vehicles": [
+        {
+            "Id": "5ef4b94f-794a-4ab1-86d9-5863bfc2e915",
+            "Name": "Vehicle 1"
+        },
+        {
+            "Id": "a602bb73-847c-4fcb-bba4-b3de71466279",
+            "Name": "Vehicle 2"
+        }
+    ],
+    "AddressesTowns": [
+        {
+            "AddressId": "12c85534-d403-400e-bfcc-48da69400c0b",
+            "TownId": "d21768e5-f41b-4318-9e5b-0626763d2f4c"
+        },
+        {
+            "AddressId": "eb7f0aa4-17f6-47d0-8fda-d7743cc20000",
+            "TownId": "027bed1b-9d62-425b-b21d-a6e89eb1bc58"
+        }
+    ]
+}

@@ -26,13 +26,13 @@ namespace IronBoots.Data.Models
 
         [Required]
         [Comment("ID of the address")]
-        public Guid AddressId { get; set; }
+        public Guid AddressTownId { get; set; }
 
 
         [Required]
-        [ForeignKey(nameof(AddressId))]
+        [ForeignKey(nameof(AddressTownId))]
         [Comment("Address object")]
-        public Address Address { get; set; } = null!;
+        public AddressTown AddressTown { get; set; } = null!;
 
 
         [Required]

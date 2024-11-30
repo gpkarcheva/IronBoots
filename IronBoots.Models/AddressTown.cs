@@ -11,6 +11,15 @@ namespace IronBoots.Data.Models
 {
     public class AddressTown
     {
+        public AddressTown()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        [Key]
+        public Guid Id { get; set; }
+
+
         [Required]
         [Comment("Id of the address")]
         public Guid AddressId { get; set; }
