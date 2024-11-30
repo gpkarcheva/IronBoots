@@ -172,7 +172,7 @@ public static class Seeder
                 User = correctUser,
                 IsDeleted = false
             };
-            if (await context.Clients.FirstOrDefaultAsync(c => c.Id == client.Id) == null)
+            if (await context.Clients.FirstOrDefaultAsync(c => c.UserId == client.UserId) == null!)
             {
                 context.Clients.Add(client);
             }
@@ -188,7 +188,7 @@ public static class Seeder
             IsDeleted = false
         };
 
-        if (await context.Materials.FirstOrDefaultAsync(mt => mt.Id == material.Id) == null)
+        if (await context.Materials.FirstOrDefaultAsync(mt => mt.Name == material.Name) == null)
         {
             await context.Materials.AddAsync(material);
             await context.SaveChangesAsync();
@@ -205,11 +205,41 @@ public static class Seeder
             IsDeleted = false
         };
 
-        if (await context.Products.FirstOrDefaultAsync(p => p.Id == product.Id) == null)
+        if (await context.Products.FirstOrDefaultAsync(p => p.Name == product.Name) == null)
         {
             await context.Products.AddAsync(product);
         }
 
-
+        //seed productsMaterials
+        var currentProducts = await context.Products.ToListAsync();
+        var currentMaterials = await context.Materials.ToListAsync();
+        var productsMaterials = new List<ProductMaterial>();
+        foreach (var item in currentProducts)
+        {
+            foreach (var materialItem in currentMaterials)
+            {
+                Random random = new Random();
+                int quantity = random.Next(0, 10);
+                productsMaterials.Add(new ProductMaterial()
+                {
+                    ProductId = item.Id,
+                    Product = item,
+                    MaterialId = materialItem.Id,
+                    Material = materialItem,
+                    MaterialQuantity = quantity
+                });
+            }
+        }
+        foreach (var pm in productsMaterials)
+        {
+            if (await context.ProductsMaterials
+                .FirstOrDefaultAsync(prodM => prodM.ProductId == pm.ProductId) == null
+                && await context.ProductsMaterials
+                .FirstOrDefaultAsync(prodM => prodM.MaterialId == pm.MaterialId) == null)
+            {
+                await context.ProductsMaterials.AddAsync(pm);
+            }
+        }
+        await context.SaveChangesAsync();
     }
 }
