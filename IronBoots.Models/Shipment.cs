@@ -32,14 +32,18 @@ namespace IronBoots.Data.Models
         public IList<Order> Orders { get; set; } = new List<Order>();
 
 
-        [Required]
+
         [Comment("The date the shipment started")]
-        public DateTime ShipmentDate { get; set; }
+        public DateTime? ShipmentDate { get; set; }
 
+
+
+        [Comment("The date the shipment was completed")]
+        public DateTime? DeliveryDate { get; set; }
 
         [Required]
-        [Comment("The date the shipment was completed")]
-        public DateTime DeliveryDate { get; set; }
+        [Comment("The current status of the order")]
+        public Status ShipmentStatus { get; set; }
 
 
         public enum Status

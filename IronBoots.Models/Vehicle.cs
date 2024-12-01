@@ -32,15 +32,13 @@ namespace IronBoots.Data.Models
         public double SizeCapacity { get; set; }
 
 
-        [Required]
         [Comment("Id of the shipment")]
-        public Guid ShipmentId { get; set; }
+        public Guid? ShipmentId { get; set; }
 
 
-        [Required]
         [ForeignKey(nameof(ShipmentId))]
         [Comment("Shipment the order belongs to")]
-        public Shipment Shipment { get; set; } = null!;
+        public Shipment? Shipment { get; set; }
 
 
         [Required]

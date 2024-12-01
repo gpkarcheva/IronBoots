@@ -4,6 +4,7 @@ using IronBoots.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IronBoots.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241130235052_DateTimeOrderNullable")]
+    partial class DateTimeOrderNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -381,17 +384,13 @@ namespace IronBoots.Data.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasComment("Identifier");
 
-                    b.Property<DateTime?>("DeliveryDate")
+                    b.Property<DateTime>("DeliveryDate")
                         .HasColumnType("datetime2")
                         .HasComment("The date the shipment was completed");
 
-                    b.Property<DateTime?>("ShipmentDate")
+                    b.Property<DateTime>("ShipmentDate")
                         .HasColumnType("datetime2")
                         .HasComment("The date the shipment started");
-
-                    b.Property<int>("ShipmentStatus")
-                        .HasColumnType("int")
-                        .HasComment("The current status of the order");
 
                     b.Property<Guid>("VehicleId")
                         .HasColumnType("uniqueidentifier")

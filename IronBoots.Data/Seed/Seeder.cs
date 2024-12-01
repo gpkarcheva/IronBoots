@@ -1,11 +1,8 @@
-﻿using IronBoots.Data.Models;
-using IronBoots.Data;
+﻿using IronBoots.Data;
+using IronBoots.Data.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 public static class Seeder
 {
@@ -241,5 +238,51 @@ public static class Seeder
             }
         }
         await context.SaveChangesAsync();
+
+        //seed vehicles
+        Vehicle currentVehicle = new()
+        {
+            Name = "vehicle",
+            WeightCapacity = 123.5,
+            SizeCapacity = 100.05,
+            IsDeleted = false
+        };
+        if (await context.Vehicles.FirstOrDefaultAsync(v => v.Name == currentVehicle.Name) == null)
+        {
+            await context.Vehicles.AddAsync(currentVehicle);
+            await context.SaveChangesAsync();
+        }
+
+        //seed orders
+        var currentOrder = new Order()
+        {
+            ClientId = Guid.Parse("0A511CD3-889D-484D-8428-060FF4CA3850"),
+            Client = await context.Clients.FirstAsync(),
+            PlannedAssignedDate = DateTime.UtcNow,
+            TotalPrice = 123.45m,
+            IsActive = true
+        };
+        if (await context.Orders.FirstOrDefaultAsync(o => o.ClientId == currentOrder.ClientId) == null)
+        {
+            await context.Orders.AddAsync(currentOrder);
+            await context.SaveChangesAsync();
+        }
+
+        //seed shipments
+        var currentShipment = new Shipment()
+        {
+            VehicleId = Guid.Parse("EA7B32B8-F776-4E39-ACC7-2977899670BD"),
+            Vehicle = currentVehicle,
+            Orders = new List<Order>()
+            {
+                currentOrder
+            },
+            ShipmentStatus = Shipment.Status.PendingShipment
+        };
+        if (await context.Shipments.FirstOrDefaultAsync(s => s.VehicleId == currentVehicle.Id) == null)
+        {
+            await context.Shipments.AddAsync(currentShipment);
+            await context.SaveChangesAsync();
+        }
     }
 }

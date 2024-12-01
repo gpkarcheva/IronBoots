@@ -28,25 +28,21 @@ namespace IronBoots.Data.Models
         public Client Client { get; set; } = null!;
 
 
-        [Required]
         [Comment("When is the order supposed to be assigned to a shipment")]
         public DateTime PlannedAssignedDate { get; set; }
 
 
-        [Required]
         [Comment("When is the order actually assigned to a shipment")]
-        public DateTime ActualAssignedDate { get; set; }
+        public DateTime? ActualAssignedDate { get; set; }
 
 
-        [Required]
         [Comment("Id of the shipment the order belongs to")]
-        public Guid ShipmentId { get; set; }
+        public Guid? ShipmentId { get; set; }
 
 
-        [Required]
         [ForeignKey(nameof(ShipmentId))]
         [Comment("Shipment object")]
-        public Shipment Shipment { get; set; } = null!;
+        public Shipment? Shipment { get; set; }
 
 
         [Required]
