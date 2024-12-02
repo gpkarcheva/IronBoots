@@ -1,4 +1,5 @@
 ﻿using IronBoots.Data;
+using IronBoots.Data.Models;
 using IronBoots.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,8 +27,9 @@ namespace IronBoots.Controllers
                     Id = m.Id,
                     Name = m.Name,
                     Price = m.Price,
-                    DistrubutorContact = m.DistrubutorContact,
-                    MaterialProducts = m.MaterialProducts
+                    DistributorContact = m.DistrubutorContact,
+                    MaterialProducts = m.MaterialProducts,
+                    PictureUrl = m.PictureUrl
                 })
                 .AsNoTracking()
                 .ToListAsync();
@@ -36,6 +38,36 @@ namespace IronBoots.Controllers
         }
 
         //Details
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var productMaterials = context.ProductsMaterials.Where(pm => pm.MaterialId == id).ToList();
+            foreach (var pm in productMaterials)
+            {
+                pm.Product = context.Products.FirstOrDefault(p => p.Id == pm.ProductId);
+            }
+            Material? current = await context.Materials.FirstOrDefaultAsync(m => m.Id == id);
+            if (current == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            if (current.IsDeleted == true)
+            {
+                return View(nameof(Index));
+            }
+            MaterialIndexViewModel model = new MaterialIndexViewModel()
+            {
+                Id = current.Id,
+                Name = current.Name,
+                Price = current.Price,
+                PictureUrl = current.PictureUrl,
+                DistributorContact = current.DistrubutorContact,
+                MaterialProducts = productMaterials
+            };
+            return View(model);
+        }
+
+
 
         //Add
         //Remove

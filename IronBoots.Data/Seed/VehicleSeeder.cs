@@ -7,6 +7,7 @@ namespace IronBoots.Data.Seed
     {
         public async Task SeedVehiclesAsync(ApplicationDbContext context)
         {
+
             Vehicle currentVehicle = new()
             {
                 Name = "vehicle",

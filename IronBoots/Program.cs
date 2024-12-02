@@ -29,13 +29,11 @@ using (var scope = app.Services.CreateScope())
 
     try
     {
-        // Apply migrations
-        var dbContext = services.GetRequiredService<ApplicationDbContext>();
-
         // Seed data
         await Seeder.SeedAsync(services);
 
         Console.WriteLine("Database seeding completed successfully!");
+
     }
     catch (Exception ex)
     {

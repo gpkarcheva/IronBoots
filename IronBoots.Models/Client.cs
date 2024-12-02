@@ -25,14 +25,8 @@ namespace IronBoots.Data.Models
 
 
         [Required]
-        [Comment("ID of the address")]
-        public Guid AddressTownId { get; set; }
-
-
-        [Required]
-        [ForeignKey(nameof(AddressTownId))]
         [Comment("Address object")]
-        public AddressTown AddressTown { get; set; } = null!;
+        public IList<AddressTown> AddressTown { get; set; } = new List<AddressTown>();
 
 
         [Required]

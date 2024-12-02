@@ -26,6 +26,7 @@ namespace IronBoots.Data.Seed
 
             var clientUser = new ApplicationUser
             {
+                Id = Guid.Parse("9CD2BA8E-BE18-41DD-BB95-7C3477EDFDDC"),
                 UserName = "client1@abv.bg",
                 Email = "client1@abv.bg",
                 FirstName = "Client",
@@ -68,7 +69,7 @@ namespace IronBoots.Data.Seed
             if (result.Succeeded)
             {
                 await context.SaveChangesAsync();
-                await userManager.AddToRoleAsync(adminUser, "Admin");
+                await userManager.AddToRoleAsync(adminUser, "Manager");
             }
 
             await context.SaveChangesAsync();

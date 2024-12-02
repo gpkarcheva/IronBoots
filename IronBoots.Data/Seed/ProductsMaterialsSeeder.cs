@@ -10,18 +10,18 @@ namespace IronBoots.Data.Seed
             var currentProducts = await context.Products.ToListAsync();
             var currentMaterials = await context.Materials.ToListAsync();
             var productsMaterials = new List<ProductMaterial>();
-            foreach (var item in currentProducts)
+            foreach (var product in currentProducts)
             {
-                foreach (var materialItem in currentMaterials)
+                foreach (var material in currentMaterials)
                 {
                     Random random = new Random();
                     int quantity = random.Next(0, 10);
                     productsMaterials.Add(new ProductMaterial()
                     {
-                        ProductId = item.Id,
-                        Product = item,
-                        MaterialId = materialItem.Id,
-                        Material = materialItem,
+                        ProductId = product.Id,
+                        Product = product,
+                        MaterialId = material.Id,
+                        Material = material,
                         MaterialQuantity = quantity
                     });
                 }
@@ -33,10 +33,23 @@ namespace IronBoots.Data.Seed
                     && await context.ProductsMaterials
                     .FirstOrDefaultAsync(prodM => prodM.MaterialId == pm.MaterialId) == null)
                 {
-                    await context.ProductsMaterials.AddAsync(pm);
+                    var material = await context.Materials.FirstOrDefaultAsync(m => m.Id == pm.MaterialId);
+                    var product = await context.Products.FirstOrDefaultAsync(p => p.Id == pm.ProductId);
+                    if (material != null && product != null)
+                    {
+                        material.MaterialProducts.Add(pm);
+                        product.ProductMaterials.Add(pm);
+                        await context.ProductsMaterials.AddAsync(pm);
+                    }
                 }
             }
             await context.SaveChangesAsync();
+
+            foreach (var product in productsMaterials)
+            {
+                context.Products.FirstOrDefault(p => p.Id == product.ProductId).ProductMaterials.Add(product);
+                context.Materials.FirstOrDefault(m => m.Id == product.MaterialId).MaterialProducts.Add(product);
+            }
         }
     }
 }

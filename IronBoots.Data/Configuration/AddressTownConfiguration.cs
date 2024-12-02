@@ -24,6 +24,11 @@ namespace IronBoots.Data.Configuration
                 .WithMany(ta => ta.TownsAddresses)
                 .HasForeignKey(ta => ta.TownId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(at => at.Client)
+                .WithMany(c => c.AddressTown)
+                .HasForeignKey(at => at.ClientId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -4,6 +4,7 @@ using IronBoots.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IronBoots.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241201121212_PictureUrlChangedMaterial")]
+    partial class PictureUrlChangedMaterial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,7 +68,7 @@ namespace IronBoots.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Addresses", (string)null);
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.AddressTown", b =>
@@ -91,14 +94,12 @@ namespace IronBoots.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
-
                     b.HasIndex("TownId");
 
                     b.HasIndex("AddressId", "TownId")
                         .IsUnique();
 
-                    b.ToTable("AddressesTowns", (string)null);
+                    b.ToTable("AddressesTowns");
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.ApplicationUser", b =>
@@ -186,6 +187,10 @@ namespace IronBoots.Data.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasComment("Identifier");
 
+                    b.Property<Guid>("AddressTownId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("ID of the address");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit")
                         .HasComment("Soft deletion flag");
@@ -202,9 +207,12 @@ namespace IronBoots.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AddressTownId")
+                        .IsUnique();
+
                     b.HasIndex("UserId");
 
-                    b.ToTable("Clients", (string)null);
+                    b.ToTable("Clients");
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.Material", b =>
@@ -240,7 +248,7 @@ namespace IronBoots.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Materials", (string)null);
+                    b.ToTable("Materials");
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.Order", b =>
@@ -281,7 +289,7 @@ namespace IronBoots.Data.Migrations
 
                     b.HasIndex("ShipmentId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.OrderProduct", b =>
@@ -302,7 +310,7 @@ namespace IronBoots.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrdersProducts", (string)null);
+                    b.ToTable("OrdersProducts");
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.Product", b =>
@@ -345,7 +353,7 @@ namespace IronBoots.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.ProductMaterial", b =>
@@ -366,7 +374,7 @@ namespace IronBoots.Data.Migrations
 
                     b.HasIndex("MaterialId");
 
-                    b.ToTable("ProductsMaterials", (string)null);
+                    b.ToTable("ProductsMaterials");
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.Shipment", b =>
@@ -394,7 +402,7 @@ namespace IronBoots.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Shipments", (string)null);
+                    b.ToTable("Shipments");
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.Town", b =>
@@ -412,7 +420,7 @@ namespace IronBoots.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Towns", (string)null);
+                    b.ToTable("Towns");
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.Vehicle", b =>
@@ -449,7 +457,7 @@ namespace IronBoots.Data.Migrations
                         .IsUnique()
                         .HasFilter("[ShipmentId] IS NOT NULL");
 
-                    b.ToTable("Vehicles", (string)null);
+                    b.ToTable("Vehicles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -563,12 +571,6 @@ namespace IronBoots.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("IronBoots.Data.Models.Client", "Client")
-                        .WithMany("AddressTown")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("IronBoots.Data.Models.Town", "Town")
                         .WithMany("TownsAddresses")
                         .HasForeignKey("TownId")
@@ -577,18 +579,24 @@ namespace IronBoots.Data.Migrations
 
                     b.Navigation("Address");
 
-                    b.Navigation("Client");
-
                     b.Navigation("Town");
                 });
 
             modelBuilder.Entity("IronBoots.Data.Models.Client", b =>
                 {
+                    b.HasOne("IronBoots.Data.Models.AddressTown", "AddressTown")
+                        .WithOne("Client")
+                        .HasForeignKey("IronBoots.Data.Models.Client", "AddressTownId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("IronBoots.Data.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("AddressTown");
 
                     b.Navigation("User");
                 });
@@ -715,10 +723,13 @@ namespace IronBoots.Data.Migrations
                     b.Navigation("AddressesTowns");
                 });
 
+            modelBuilder.Entity("IronBoots.Data.Models.AddressTown", b =>
+                {
+                    b.Navigation("Client");
+                });
+
             modelBuilder.Entity("IronBoots.Data.Models.Client", b =>
                 {
-                    b.Navigation("AddressTown");
-
                     b.Navigation("Orders");
                 });
 

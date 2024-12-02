@@ -32,7 +32,7 @@ namespace IronBoots.Data.Models
 
 
         [Comment("Url of product image")]
-        public string? ImageUrl { get; set; }
+        public string? PictureUrl { get; set; }
 
 
         [Required]

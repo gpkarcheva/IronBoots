@@ -1,0 +1,38 @@
+﻿@model MaterialIndexViewModel
+
+<div class="card" style="border: 1px solid #ccc; padding: 20px; border-radius: 10px; display: flex; flex-direction: row; align-items: flex-start;">
+
+    <div style="flex: 1; text-align: center;">
+        <img src="@Model.PictureUrl" alt="opravi si snimkite deeeeeeee" style="width: 100%; max-width: 300px; border-radius: 10px;">
+    </div>
+
+    <div style="flex: 2; margin-left: 20px;">
+        <h2>@Model.Name</h2>
+        <p><strong>Price:</strong> @Model.Price.ToString()</p>
+        <p><strong>Distributor Contact:</strong> <a href="@Model.DistributorContact" target="_blank">@Model.DistributorContact</a></p>
+
+        <h3>Products that use this material:</h3>
+        <ul>
+            @if (Model.MaterialProducts.Any())
+            {
+                foreach (var productMaterial in Model.MaterialProducts)
+                {
+                    <li>@productMaterial.Product.Name</li>
+                }
+            }
+            else
+            {
+                <li>seedvaneto ti neshto ne e okei mai, ama nz brat ti si znaish</li>
+            }
+        </ul>
+
+        <!-- Action buttons -->
+        <div style="margin-top: 20px;">
+            <a href="@Url.Action("Edit", "Material", new { id = Model.Id })" class="btn btn-primary" style="margin-right: 10px;">Edit</a>
+            <form asp-action="Delete" asp-controller="Material" method="post" style="display: inline;">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>

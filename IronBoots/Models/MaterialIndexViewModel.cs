@@ -22,9 +22,12 @@ namespace IronBoots.Models
         public decimal Price { get; set; }
 
 
+        public string? PictureUrl { get; set; }
+
+
         [Required]
         [Url]
-        public string DistrubutorContact { get; set; } = null!;
+        public string DistributorContact { get; set; } = null!;
 
 
         [Required]

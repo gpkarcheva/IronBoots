@@ -16,7 +16,9 @@
             @foreach (var material in Model)
             {
                 <div class="col-md-4 mb-4">
-                    <partial name="_CardsIndex" model="material")/>
+                    <a asp-action="Details" asp-controller="Material" asp-route-id="@material.Id" class="text-decoration-none">
+                        <partial name="_CardsIndex" model="material" />
+                        </a>
                 </div>
             }
 

@@ -14,12 +14,12 @@ namespace IronBoots.Data.Seed
         {
             var currentVehicle = await context.Vehicles.FirstOrDefaultAsync(v => v.Name == "vehicle");
             var currentOrder = await context.Orders
-                .FirstOrDefaultAsync(o => o.ClientId == Guid.Parse("9CD2BA8E-BE18-41DD-BB95-7C3477EDFDDC"));
+                .FirstAsync();
             if (currentVehicle != null && currentOrder != null)
             {
                 var currentShipment = new Shipment()
                 {
-                    VehicleId = Guid.Parse("EA7B32B8-F776-4E39-ACC7-2977899670BD"),
+                    VehicleId = currentVehicle.Id,
                     Vehicle = currentVehicle,
                     Orders = new List<Order>()
                     {
@@ -29,6 +29,8 @@ namespace IronBoots.Data.Seed
                 };
                 if (await context.Shipments.FirstOrDefaultAsync(s => s.VehicleId == currentVehicle.Id) == null)
                 {
+                    currentOrder.ShipmentId = currentShipment.Id;
+                    currentOrder.Shipment = currentShipment;
                     await context.Shipments.AddAsync(currentShipment);
                     await context.SaveChangesAsync();
                 }
