@@ -2,6 +2,7 @@
 using IronBoots.Data.Models;
 using IronBoots.Models.Material;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Build.Execution;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Packaging;
@@ -138,5 +139,31 @@ namespace IronBoots.Controllers
         }
 
         //Edit
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            Material? currentMaterial = await context.Materials.FirstOrDefaultAsync(m => m.Id == id);
+            if (currentMaterial == null)
+            {
+                return View("NotFound"); //TODO IMPLEMENT NOT FOUND
+            }
+            MaterialViewModel model = new MaterialViewModel()
+            {
+                Id = id,
+                Name = currentMaterial.Name,
+                Price = currentMaterial.Price,
+                PictureUrl = currentMaterial.PictureUrl,
+                DistributorContact = currentMaterial.DistrubutorContact,
+                MaterialProducts = currentMaterial.MaterialProducts,
+                SelectedProductIds = new List<Guid>(),
+                Products = new List<Product>()
+            };
+            foreach (var materialProduct in model.MaterialProducts)
+            {
+                model.SelectedProductIds.Add(materialProduct.ProductId);
+            }
+            model.Products = await context.Products.ToListAsync();
+            return View(model);
+        }
     }
 }
