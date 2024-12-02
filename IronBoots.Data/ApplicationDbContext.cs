@@ -1,7 +1,6 @@
 ﻿using IronBoots.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
 using System.Reflection;
 
 namespace IronBoots.Data
@@ -10,12 +9,12 @@ namespace IronBoots.Data
     {
         public ApplicationDbContext()
         {
-            
+
         }
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
-            : base(options) 
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
         {
-            
+
         }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<ApplicationRole> ApplicationRoles { get; set; }

@@ -2,11 +2,7 @@
 using IronBoots.Data.Models;
 using IronBoots.Models.Material;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.Build.Execution;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Packaging;
-using System.Runtime.CompilerServices;
 
 namespace IronBoots.Controllers
 {
