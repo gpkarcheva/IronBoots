@@ -31,7 +31,7 @@
             @foreach (var product in Model.Products)
             {
                 <div class="mb-2">
-                    <input type="checkbox" class="form-check-input" name="selectedProducts" value="@product.Id" />
+                    <input type="checkbox" class="form-check-input" name="SelectedProductIds" value="@product.Id" />
                     <label class="form-check-label">@product.Name</label>
                 </div>
             }

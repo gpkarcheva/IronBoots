@@ -31,7 +31,7 @@ namespace IronBoots.Models.Material
 
 
         [Required]
-        public ICollection<ProductMaterial> MaterialProducts { get; set; } = new HashSet<ProductMaterial>();
+        public ICollection<ProductMaterial> MaterialProducts { get; set; } = new List<ProductMaterial>();
 
 
         [Required]
