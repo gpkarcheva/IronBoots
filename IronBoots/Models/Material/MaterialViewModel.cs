@@ -12,7 +12,7 @@ namespace IronBoots.Models.Material
         public string Name { get; set; } = null!;
 
         [Required]
-        [Range(typeof(decimal), nameof(PriceMin), nameof(PriceMax))]
+        [Range(typeof(decimal), "0.01", "1000000000.00")] //TODO FIX MAGIC NUMBERS
         [Precision(18, 2)]
         public decimal Price { get; set; }
 
@@ -20,9 +20,13 @@ namespace IronBoots.Models.Material
 
         [Required]
         [Url]
-        public string DistrubutorContact { get; set; } = null!;
+        public string DistributorContact { get; set; } = null!;
 
         [Required]
         public ICollection<ProductMaterial> MaterialProducts { get; set; } = new HashSet<ProductMaterial>();
+
+        public List<Guid> SelectedProductIds { get; set; } = new();
+
+        public List<Product> Products { get; set; } = new();
     }
 }

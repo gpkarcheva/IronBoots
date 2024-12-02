@@ -72,8 +72,8 @@ namespace IronBoots.Controllers
         public async Task<IActionResult> Add()
         {
             var products = await context.Products.ToListAsync();
-            ViewBag.Products = products;
             var model = new MaterialViewModel();
+            model.Products = products;
             return View(model);
         }
 
