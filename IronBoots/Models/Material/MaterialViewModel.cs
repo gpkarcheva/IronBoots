@@ -7,6 +7,9 @@ namespace IronBoots.Models.Material
     public class MaterialViewModel
     {
         [Required]
+        public Guid Id { get; set; }
+
+        [Required]
         [MinLength(NameMin)]
         [MaxLength(NameMax)]
         public string Name { get; set; } = null!;

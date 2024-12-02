@@ -86,6 +86,7 @@ namespace IronBoots.Controllers
             {
                 Material material = new Material()
                 {
+                    Id = model.Id,
                     Name = model.Name,
                     Price = model.Price,
                     PictureUrl = model.PictureUrl,
@@ -117,8 +118,25 @@ namespace IronBoots.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
-            //Remove
-            //Edit
         }
+
+        //Delete
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            if (ModelState.IsValid)
+            {
+                Material? toDelete = await context.Materials.FirstOrDefaultAsync(p => p.Id == id);
+                if (toDelete == null)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                toDelete.IsDeleted = true;
+                await context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        //Edit
     }
 }
