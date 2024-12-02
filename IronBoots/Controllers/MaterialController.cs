@@ -1,6 +1,6 @@
 ﻿using IronBoots.Data;
 using IronBoots.Data.Models;
-using IronBoots.Models;
+using IronBoots.Models.Material;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
@@ -67,9 +67,16 @@ namespace IronBoots.Controllers
             return View(model);
         }
 
-
-
         //Add
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            var products = await context.Products.ToListAsync();
+            ViewBag.Products = products;
+            var model = new MaterialViewModel();
+            return View(model);
+        }
+
         //Remove
         //Edit
     }

@@ -2,20 +2,20 @@
 using IronBoots.Data.Models;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
-namespace IronBoots.Models
+namespace IronBoots.Models.Material
 {
     public class MaterialIndexViewModel
     {
         [Required]
         public Guid Id { get; set; }
-        
-        
+
+
         [Required]
         [MinLength(NameMin)]
         [MaxLength(NameMax)]
         public string Name { get; set; } = null!;
-        
-        
+
+
         [Required]
         [Range(typeof(decimal), nameof(PriceMin), nameof(PriceMax))]
         [Precision(18, 2)]
