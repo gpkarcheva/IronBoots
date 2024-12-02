@@ -147,6 +147,7 @@ namespace IronBoots.Controllers
             {
                 return View("NotFound"); //TODO IMPLEMENT NOT FOUND
             }
+            currentMaterial.MaterialProducts = await context.ProductsMaterials.Where(pm => pm.MaterialId == currentMaterial.Id).ToListAsync();
             MaterialViewModel model = new MaterialViewModel()
             {
                 Id = id,
@@ -164,6 +165,56 @@ namespace IronBoots.Controllers
             }
             model.Products = await context.Products.ToListAsync();
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Guid id, MaterialViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Material? toEdit = await context.Materials.FirstOrDefaultAsync(m => m.Id == id);
+                if (toEdit == null)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                toEdit.Name = model.Name;
+                toEdit.Price = model.Price;
+                toEdit.PictureUrl = model.PictureUrl;
+                toEdit.DistrubutorContact = model.DistributorContact;
+                List<ProductMaterial> editProductMaterial = new List<ProductMaterial>();
+                List<ProductMaterial> productMaterials = await context.ProductsMaterials.Where(pm => pm.MaterialId == id).ToListAsync();
+
+                foreach (var prodId in model.SelectedProductIds)
+                {
+                    Product? currentProd = context.Products.FirstOrDefault(p => p.Id == prodId);
+                    if (currentProd != null)
+                    {
+                        ProductMaterial pm = new()
+                        {
+                            MaterialId = id,
+                            Material = toEdit,
+                            ProductId = prodId,
+                            Product = currentProd
+                        };
+                        model.MaterialProducts.Add(pm);
+                        if (currentProd.ProductMaterials.FirstOrDefault(p => p.ProductId == prodId) != null)
+                        {
+                            currentProd.ProductMaterials.Add(pm);
+                        }
+                    }
+                }
+                toEdit.MaterialProducts = model.MaterialProducts;
+                if (!productMaterials.Any())
+                {
+                    await context.AddRangeAsync(editProductMaterial);
+                }
+                await context.SaveChangesAsync();
+                return RedirectToAction("Details", "Material", new
+                {
+                    id = toEdit.Id
+                });
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }
