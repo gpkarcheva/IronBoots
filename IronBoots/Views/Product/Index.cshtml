@@ -1,0 +1,32 @@
+﻿@using IronBoots.Models.Products
+@model IEnumerable<ProductIndexViewModel>
+@{
+    ViewData["Title"] = "Products";
+}
+<div class="container">
+    <div class="row mt-4">
+        @if (!Model.Any())
+        {
+            <div class="col-12">
+                <p class="fs-3">Moje i da stane ako si seednesh bazata purvo</p>
+            </div>
+        }
+        else
+        {
+            @foreach (var product in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <a asp-action="Details" asp-controller="Product" asp-route-id="@product.Id" class="text-decoration-none">
+                        <partial name="_CardsIndex" model="product" />
+                    </a>
+                </div>
+            }
+
+        }
+        <div class="row mt-4">
+            <div class="col-12 text-end">
+                <a asp-action="Add" asp-controller="Product" class="btn btn-success mb-3">Add Product</a>
+            </div>
+        </div>
+    </div>
+</div>
