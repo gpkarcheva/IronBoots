@@ -49,11 +49,5 @@ namespace IronBoots.Models.Products
 
         [Required]
         public List<Material> Materials { get; set; } = new();
-
-        [Required]
-		public List<Guid> SelectedOrdersIds { get; set; } = new();
-
-        [Required]
-        public List<Order> SelectedOrders { get; set; } = new();
 	}
 }

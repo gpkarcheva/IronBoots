@@ -4,6 +4,7 @@ using IronBoots.Models.Materials;
 using IronBoots.Models.Products;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 namespace IronBoots.Controllers
 {
@@ -130,5 +131,39 @@ namespace IronBoots.Controllers
             await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        //Edit
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            Product? current = await context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            if (current == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            current.ProductMaterials = await context.ProductsMaterials.Where(pm => pm.ProductId == id).ToListAsync();
+            current.ProductOrders = await context.OrdersProducts.Where(po => po.ProductId == id).ToListAsync();
+            ProductViewModel model = new ProductViewModel()
+            {
+                Id = id,
+                Name = current.Name,
+                ImageUrl = current.ImageUrl,
+                Weight = current.Weight,
+                Size = current.Size,
+                ProductionCost = current.ProductionCost,
+                ProductionTime = current.ProductionTime,
+                ProductMaterials = current.ProductMaterials,
+                ProductOrders = current.ProductOrders,
+                IsDeleted = current.IsDeleted,
+                SelectedMaterialsIds = new List<Guid>(),
+                Materials = await context.Materials.ToListAsync()
+            };
+			foreach (var productMaterial in model.ProductMaterials)
+			{
+				model.SelectedMaterialsIds.Add(productMaterial.MaterialId);
+			}
+            return View(model);
+		}
+
     }
 }

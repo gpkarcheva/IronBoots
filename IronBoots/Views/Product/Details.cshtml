@@ -73,5 +73,9 @@
 
 	<div class="mt-4">
 		<a asp-action="Index" class="btn btn-secondary">Back to Products</a>
+		<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+		<form asp-action="Delete" asp-route-id="@Model.Id" method="post" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this product?');">
+			<button type="submit" class="btn btn-danger">Delete</button>
+		</form>
 	</div>
 </div>
