@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using static IronBoots.Common.EntityValidationConstants.MaterialValidation;
-namespace IronBoots.Models.Material
+namespace IronBoots.Models.Materials
 {
     public class MaterialViewModel
     {

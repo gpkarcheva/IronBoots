@@ -2,7 +2,7 @@
 using IronBoots.Data.Models;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
-namespace IronBoots.Models.Material
+namespace IronBoots.Models.Materials
 {
     public class MaterialIndexViewModel
     {

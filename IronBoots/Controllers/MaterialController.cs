@@ -1,6 +1,6 @@
 ﻿using IronBoots.Data;
 using IronBoots.Data.Models;
-using IronBoots.Models.Material;
+using IronBoots.Models.Materials;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,7 +40,7 @@ namespace IronBoots.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
-            var productMaterials = context.ProductsMaterials.Where(pm => pm.MaterialId == id).ToList();
+            List<ProductMaterial> productMaterials = context.ProductsMaterials.Where(pm => pm.MaterialId == id).ToList();
             foreach (var pm in productMaterials)
             {
                 pm.Product = context.Products.FirstOrDefault(p => p.Id == pm.ProductId);
