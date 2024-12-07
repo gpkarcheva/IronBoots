@@ -77,5 +77,14 @@ namespace IronBoots.Controllers
             };
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+			var materials = await context.Materials.ToListAsync();
+			var model = new ProductViewModel();
+			model.Materials = materials;
+			return View(model);
+		}
     }
 }
