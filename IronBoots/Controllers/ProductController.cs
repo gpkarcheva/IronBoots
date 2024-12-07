@@ -132,6 +132,20 @@ namespace IronBoots.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //Delete
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            Product? toDelete = await context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            if (toDelete == null)
+            {
+                return NotFound(); //implement this already pls
+            }
+            toDelete.IsDeleted = true;
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
         //Edit
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
