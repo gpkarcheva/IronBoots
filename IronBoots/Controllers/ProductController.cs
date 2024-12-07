@@ -39,7 +39,7 @@ namespace IronBoots.Controllers
         public async Task<IActionResult> Details(Guid id)
         {
             Product? product = await context.Products.FirstOrDefaultAsync(p => p.Id == id);
-            if (product == null || product.IsDeleted == true) 
+            if (product == null || product.IsDeleted == true)
             {
                 return View(nameof(Index));
             }
@@ -54,7 +54,7 @@ namespace IronBoots.Controllers
             }
 
             List<OrderProduct> orderProducts = await context.OrdersProducts
-                .Where(op => op.ProductId  == id)
+                .Where(op => op.ProductId == id)
                 .ToListAsync();
 
             foreach (var op in orderProducts)
@@ -82,10 +82,53 @@ namespace IronBoots.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-			var materials = await context.Materials.ToListAsync();
-			var model = new ProductViewModel();
-			model.Materials = materials;
-			return View(model);
-		}
+            var materials = await context.Materials.ToListAsync();
+            var model = new ProductViewModel();
+            model.Materials = materials;
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(ProductViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            Product product = new Product()
+            {
+                Name = model.Name,
+                ImageUrl = model.ImageUrl,
+                Weight = model.Weight,
+                Size = model.Size,
+                ProductionCost = model.ProductionCost,
+                ProductionTime = model.ProductionTime,
+                ProductMaterials = new List<ProductMaterial>()
+            };
+
+            List<Guid> materialsIds = model.SelectedMaterialsIds;
+            List<ProductMaterial> productMaterials = new List<ProductMaterial>();
+            foreach (var id in materialsIds)
+            {
+                Material? current = await context.Materials.FirstOrDefaultAsync(m => m.Id == id);
+                if (current != null)
+                {
+                    ProductMaterial pm = new ProductMaterial()
+                    {
+                        ProductId = product.Id,
+                        Product = product,
+                        MaterialId = id,
+                        Material = current
+                    };
+                    productMaterials.Add(pm);
+                    current.MaterialProducts.Add(pm);
+                }
+            }
+            product.ProductMaterials = productMaterials;
+            await context.ProductsMaterials.AddRangeAsync(productMaterials);
+            await context.Products.AddAsync(product);
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
