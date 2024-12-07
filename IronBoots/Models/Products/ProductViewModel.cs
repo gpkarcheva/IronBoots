@@ -26,7 +26,7 @@ namespace IronBoots.Models.Products
         public double Size { get; set; }
 
         [Required]
-        [Range(typeof(decimal), nameof(CostMin), nameof(CostMax))]
+        [Range(typeof(decimal), "0.01", "100000000.00")] //TODO FIX MAGIC NUMBERS
         [Precision(18, 2)]
         public decimal ProductionCost { get; set; }
 
