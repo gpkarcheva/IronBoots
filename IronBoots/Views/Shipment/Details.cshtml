@@ -1,0 +1,68 @@
+﻿@using IronBoots.Models.Shipments
+@model ShipmentViewModel
+
+<div class="container mt-4">
+    <h1 class="mb-4">Shipment Details</h1>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h3>Shipment ID: @Model.Id</h3>
+            <dl class="row">
+                <dt class="col-sm-4">Vehicle</dt>
+                <dd class="col-sm-8">@Model.Vehicle.Name</dd>
+
+                <dt class="col-sm-4">Shipment Date</dt>
+                <dd class="col-sm-8">
+                    @if (Model.ShipmentDate.HasValue)
+                    {
+                        @Model.ShipmentDate.Value.ToShortDateString()
+                    }
+                    else
+                    {
+                        <span class="text-muted">Not Set</span>
+                    }
+                </dd>
+
+                <dt class="col-sm-4">Delivery Date</dt>
+                <dd class="col-sm-8">
+                    @if (Model.DeliveryDate.HasValue)
+                    {
+                        @Model.DeliveryDate.Value.ToShortDateString()
+                    }
+                    else
+                    {
+                        <span class="text-muted">Not Set</span>
+                    }
+                </dd>
+
+                <dt class="col-sm-4">Status</dt>
+                <dd class="col-sm-8">@Model.ShipmentStatus</dd>
+            </dl>
+        </div>
+    </div>
+
+    <h3 class="mt-5">Orders in this Shipment</h3>
+    <div class="row">
+        @if (Model.Orders == null || !Model.Orders.Any())
+        {
+            <p class="text-muted">No orders are associated with this shipment.</p>
+        }
+        else
+        {
+            <ul class="list-group">
+                @foreach (var order in Model.Orders)
+                {
+                    <li class="list-group-item">
+                        <a asp-action="Details" asp-controller="Order" asp-route-id="@order.Id" class="text-decoration-none">
+                            Order ID: @order.Id
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="Index" class="btn btn-secondary">Back to Shipments</a>
+    </div>
+</div>

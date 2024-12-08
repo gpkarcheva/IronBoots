@@ -1,4 +1,5 @@
-﻿using IronBoots.Data.Models;
+﻿using IronBoots.Common;
+using IronBoots.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace IronBoots.Data.Seed
                     {
                         currentOrder
                     },
-                    ShipmentStatus = Shipment.Status.PendingShipment
+                    ShipmentStatus = Status.PendingShipment
                 };
                 if (await context.Shipments.FirstOrDefaultAsync(s => s.VehicleId == currentVehicle.Id) == null)
                 {

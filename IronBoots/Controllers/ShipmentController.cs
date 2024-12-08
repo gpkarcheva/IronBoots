@@ -47,7 +47,7 @@ namespace IronBoots.Controllers
             {
                 Id = id,
                 VehicleId = current.VehicleId,
-                Vehicle = current.Vehicle,
+                Vehicle = await context.Vehicles.FirstOrDefaultAsync(v => v.Id == current.VehicleId),
                 Orders = current.Orders,
                 ShipmentDate = current.ShipmentDate,
                 DeliveryDate = current.DeliveryDate,
