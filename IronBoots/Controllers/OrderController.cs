@@ -1,6 +1,6 @@
 ﻿using IronBoots.Data;
 using IronBoots.Data.Models;
-using IronBoots.Models.Order;
+using IronBoots.Models.Orders;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

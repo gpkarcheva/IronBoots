@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using IronBoots.Common;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -44,14 +45,5 @@ namespace IronBoots.Data.Models
         [Required]
         [Comment("The current status of the order")]
         public Status ShipmentStatus { get; set; }
-
-
-        public enum Status
-        {
-            PendingShipment,
-            Shipped,
-            InTransit,
-            Delivered
-        }
     }
 }

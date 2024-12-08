@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-namespace IronBoots.Models.Order
+namespace IronBoots.Models.Orders
 {
     public class OrderViewModel
     {
