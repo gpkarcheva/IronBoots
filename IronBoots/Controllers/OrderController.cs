@@ -78,5 +78,27 @@ namespace IronBoots.Controllers
             }
             return View(model);
         }
+
+        
+        //Cancel order
+        public async Task<IActionResult> Cancel(Guid id)
+        {
+            Order? toCancel = await context.Orders.FirstOrDefaultAsync(o => o.Id == id);
+            if (toCancel == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            toCancel.IsActive = false;
+            if (toCancel.ShipmentId != null)
+            {
+                Shipment? currentShipment = await context.Shipments.FirstOrDefaultAsync(s => s.Id == toCancel.ShipmentId);
+                if (currentShipment != null)
+                {
+                    currentShipment.Orders.Remove(toCancel);
+                }
+            }
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
