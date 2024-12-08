@@ -42,6 +42,10 @@ namespace IronBoots.Data.Models
 
 
         [Required]
+        [Comment("Check if the vehicle is currently available")]
+        public bool IsAvailable { get; set; } = true;
+
+        [Required]
         [Comment("Soft deletion flag")]
         public bool IsDeleted { get; set; }
     }
