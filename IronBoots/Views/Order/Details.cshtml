@@ -1,0 +1,79 @@
+﻿@using IronBoots.Models.Order
+@model OrderViewModel
+
+<div class="container mt-4">
+    <h1 class="mb-4">Order Details</h1>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h3>Order ID: @Model.Id</h3>
+            <dl class="row">
+                <dt class="col-sm-4">Client</dt>
+                <dd class="col-sm-8">@Model.Client.Name</dd>
+
+                <dt class="col-sm-4">Total Price</dt>
+                <dd class="col-sm-8">$@Model.TotalPrice.ToString("F2")</dd>
+
+                <dt class="col-sm-4">Planned Assigned Date</dt>
+                <dd class="col-sm-8">@Model.PlannedAssignedDate</dd>
+
+                <dt class="col-sm-4">Actual Assigned Date</dt>
+                <dd class="col-sm-8">@Model.ActualAssignedDate</dd>
+
+                <dt class="col-sm-4">Shipment ID</dt>
+                <dd class="col-sm-8">
+                    @if (Model.ActualAssignedDate == null)
+                    {
+                        <span class="text-muted">Not Assigned</span>
+                    }
+                    else
+                    {
+                        <a asp-action="Details" asp-controller="Shipment" asp-route-id="@Model.ShipmentId">
+                            @Model.ShipmentId
+                        </a>
+                    }
+                </dd>
+
+                <dt class="col-sm-4">Active</dt>
+                <dd class="col-sm-8">
+                    @if (Model.IsActive)
+                    {
+                        <span class="badge bg-success">Yes</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">No</span>
+                    }
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <h3 class="mt-5">Products in this Order</h3>
+    <div class="row">
+        @if (Model.OrdersProducts == null || !Model.OrdersProducts.Any())
+        {
+            <p class="text-muted">No products are associated with this order.</p>
+        }
+        else
+        {
+            <ul class="list-group">
+                @foreach (var product in Model.OrdersProducts)
+                {
+                    <li class="list-group-item">
+                        <a asp-action="Details" asp-controller="Product" asp-route-id="@product.ProductId" class="text-decoration-none">
+                            @product.Product.Name
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="Index" class="btn btn-secondary">Back to Orders</a>
+        <form asp-action="Cancel" asp-route-id="@Model.Id" method="post" class="m-0" onsubmit="return confirm('Are you sure you want to cancel this order?');">
+            <button type="submit" class="btn btn-danger">Cancel Order</button>
+        </form>
+    </div>
+</div>

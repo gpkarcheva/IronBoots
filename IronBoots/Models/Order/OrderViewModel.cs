@@ -18,7 +18,7 @@ namespace IronBoots.Models.Order
         [Required]
         public DateTime PlannedAssignedDate { get; set; }
 
-        public DateTime? ActualAssignedDate { get; set; }
+        public string? ActualAssignedDate { get; set; }
 
         public Guid? ShipmentId { get; set; }
 
@@ -30,7 +30,7 @@ namespace IronBoots.Models.Order
         public decimal TotalPrice { get; set; }
 
         [Required]
-        public List<Product> Products { get; set; } = new List<Product>();
+        public List<OrderProduct> OrdersProducts { get; set; } = new List<OrderProduct>();
 
         [Required]
         public bool IsActive { get; set; }

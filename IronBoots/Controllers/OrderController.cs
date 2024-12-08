@@ -42,23 +42,40 @@ namespace IronBoots.Controllers
             {
                 return NotFound(); //implement pls ms
             }
+            Client? currentClient = await context.Clients.FirstOrDefaultAsync(c => c.Id == current.ClientId);
+            if (currentClient == null)
+            {
+                return NotFound();
+            }
+
+            List<OrderProduct> orderProducts = await context.OrdersProducts
+                .Where(op => op.OrderId == id)
+                .ToListAsync();
+
+            foreach (var op in orderProducts)
+            {
+                op.Order = await context.Orders.FirstOrDefaultAsync(o => o.Id == op.OrderId);
+                op.Product = await context.Products.FirstOrDefaultAsync(p => p.Id == op.ProductId);
+            }
 
             OrderViewModel model = new OrderViewModel()
             {
-                Id = current.Id,
-                ClientId = current.Client.Id,
-                Client = current.Client,
+                Id = id,
+                ClientId = current.ClientId,  
+                Client = currentClient,
                 TotalPrice = current.TotalPrice,
                 PlannedAssignedDate = current.PlannedAssignedDate,
-                ActualAssignedDate = current.ActualAssignedDate,
+                ActualAssignedDate = current.ActualAssignedDate.ToString(),
                 ShipmentId = current.ShipmentId,
                 Shipment = current.Shipment,
-                Products = await context.OrdersProducts
-                .Where(op => op.OrderId == id)
-                .Select(o => o.Product)
-                .ToListAsync(),
+                OrdersProducts = orderProducts,
                 IsActive = current.IsActive
             };
+
+            if (model.ShipmentId != null)
+            {
+                model.ActualAssignedDate = DateTime.Now.ToString();
+            }
             return View(model);
         }
     }
