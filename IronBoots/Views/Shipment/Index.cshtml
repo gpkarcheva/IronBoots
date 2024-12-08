@@ -1,0 +1,35 @@
+﻿@using IronBoots.Models.Shipments
+@model IEnumerable<ShipmentIndexViewModel>
+
+@{
+    ViewData["Title"] = "Shipments";
+}
+
+<div class="container mt-4">
+    <h1>Shipments</h1>
+    <div class="row mt-4">
+        @if (!Model.Any())
+        {
+            <div class="col-12">
+                <p class="fs-3">No shipments available. Add some to get started!</p>
+            </div>
+        }
+        else
+        {
+            @foreach (var shipment in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <a asp-action="Details" asp-controller="Shipment" asp-route-id="@shipment.Id" class="text-decoration-none">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">Shipment ID: @shipment.Id</h5>
+                                <p class="card-text"><strong>Vehicle:</strong> @shipment.Vehicle.Name</p>
+                                <p class="card-text"><strong>Status:</strong> @shipment.ShipmentStatus</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        }
+    </div>
+</div>
