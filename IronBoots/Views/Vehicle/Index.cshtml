@@ -1,0 +1,44 @@
+﻿@using IronBoots.Models.Vehicles
+@model IEnumerable<VehicleIndexViewModel>
+
+@{
+	ViewData["Title"] = "Vehicles";
+}
+
+<div class="container mt-4">
+	<h1>Vehicles</h1>
+	<div class="row mt-4">
+		@if (!Model.Any())
+		{
+			<div class="col-12">
+				<p class="fs-3">No vehicles available. Add some to get started!</p>
+			</div>
+		}
+		else
+		{
+			@foreach (var vehicle in Model)
+			{
+				<div class="col-md-4 mb-4">
+					<a asp-action="Details" asp-controller="Vehicle" asp-route-id="@vehicle.Id" class="text-decoration-none">
+					<div class="card shadow-sm">
+						<div class="card-body">
+							<h5 class="card-title">@vehicle.Name</h5>
+							<p class="card-text">
+								<strong>Available:</strong>
+								@if (vehicle.IsAvailable)
+								{
+									<span class="badge bg-success">Yes</span>
+								}
+								else
+								{
+									<span class="badge bg-danger">No</span>
+								}
+							</p>
+						</div>
+					</div>
+					</a>
+				</div>
+			}
+		}
+	</div>
+</div>
