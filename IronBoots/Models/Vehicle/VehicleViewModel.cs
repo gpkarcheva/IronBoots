@@ -1,7 +1,7 @@
 ﻿using IronBoots.Data.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace IronBoots.Models.Vehicle
+namespace IronBoots.Models.Vehicles
 {
 	public class VehicleViewModel
 	{
@@ -17,7 +17,9 @@ namespace IronBoots.Models.Vehicle
 		[Required]
 		public double SizeCapacity { get; set; }
 
-		public Shipment? Shipment { get; set; }
+        public Guid? ShipmentId { get; set; }
+
+        public Shipment? Shipment { get; set; }
 
 		[Required]
 		public bool IsAvailable { get; set; }
