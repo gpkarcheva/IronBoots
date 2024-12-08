@@ -21,7 +21,7 @@ namespace IronBoots.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var model = await context.Products
+            List<ProductIndexViewModel> model = await context.Products
                 .Where(p => p.IsDeleted == false)
                 .Select(p => new ProductIndexViewModel
                 {
