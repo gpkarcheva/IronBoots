@@ -1,8 +1,42 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4">Welcome to IronBoots</h1>
+        <p class="lead">Crafting excellence in metal products since 1996</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title">Food Production</h3>
+                    <p class="card-text">Precision-engineered metal solutions for food processing and production industries.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title">Transportation</h3>
+                    <p class="card-text">Robust and durable components for transportation and logistics sectors.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title">Specialized Machinery</h3>
+                    <p class="card-text">Custom metal products tailored to advanced machinery needs.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <a asp-action="AboutUs" class="btn btn-primary btn-lg">Learn More About Us</a>
+        <a asp-action="Contact" class="btn btn-secondary btn-lg ms-2">Get in Touch</a>
+    </div>
 </div>
