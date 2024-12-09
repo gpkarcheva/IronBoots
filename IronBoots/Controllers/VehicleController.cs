@@ -59,5 +59,12 @@ namespace IronBoots.Controllers
 
             return View(model);
         }
-    }
+
+		[HttpGet]
+		public IActionResult Add()
+		{
+			VehicleViewModel model = new VehicleViewModel();
+			return View(model);
+		}
+	}
 }

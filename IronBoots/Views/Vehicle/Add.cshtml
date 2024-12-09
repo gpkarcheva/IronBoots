@@ -1,0 +1,28 @@
+﻿@using IronBoots.Models.Vehicles
+@model VehicleViewModel
+
+<div class="container mt-4">
+    <h1>Add New Vehicle</h1>
+    <form asp-action="Add" method="post">
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="WeightCapacity" class="form-label">Weight Capacity (kg)</label>
+            <input asp-for="WeightCapacity" type="number" step="0.01" class="form-control" />
+            <span asp-validation-for="WeightCapacity" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="SizeCapacity" class="form-label">Size Capacity (cm²)</label>
+            <input asp-for="SizeCapacity" type="number" step="0.01" class="form-control" />
+            <span asp-validation-for="SizeCapacity" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
