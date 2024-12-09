@@ -9,7 +9,9 @@ namespace IronBoots.Data.Models
         public Product()
         {
             Id = Guid.NewGuid();
-        }
+			ProductMaterials = new List<ProductMaterial>();
+			ProductOrders = new List<OrderProduct>();
+		}
 
         [Key]
         [Comment("Identifier")]
@@ -40,8 +42,7 @@ namespace IronBoots.Data.Models
 
 
         [Required]
-        [Range(typeof(decimal), nameof(CostMin), nameof(CostMax))]
-        [Precision(18, 2)]
+        [Range(typeof(decimal), nameof(CostMin), nameof(CostMax)), Precision(18, 2)]
         [Comment("Cost to produce the product")]
         public decimal ProductionCost { get; set; }
 
@@ -53,12 +54,12 @@ namespace IronBoots.Data.Models
 
         [Required]
         [Comment("Materials required to produce")]
-        public IList<ProductMaterial> ProductMaterials = new List<ProductMaterial>();
+        public IList<ProductMaterial> ProductMaterials { get; set; }
 
 
         [Required]
         [Comment("Orders in which the product is required")]
-        public IList<OrderProduct> ProductOrders = new List<OrderProduct>();
+        public IList<OrderProduct> ProductOrders { get; set; }
 
 
         [Required]

@@ -16,7 +16,7 @@ namespace IronBoots.Data.Seed
             {
                 Name = "material1",
                 Price = 123.5m,
-                DistrubutorContact = "distr.com/contact",
+                DistributorContact = "distr.com/contact",
                 IsDeleted = false
             };
 

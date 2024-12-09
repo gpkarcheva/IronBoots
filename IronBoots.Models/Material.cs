@@ -10,7 +10,8 @@ namespace IronBoots.Data.Models
         public Material()
         {
             Id = Guid.NewGuid();
-        }
+			MaterialProducts = new List<ProductMaterial>();
+		}
 
         [Key]
         [Comment("Identifier")]
@@ -25,8 +26,7 @@ namespace IronBoots.Data.Models
 
 
         [Required]
-        [Range(typeof(decimal), nameof(PriceMin), nameof(PriceMax))]
-        [Precision(18,2)]
+        [Range(typeof(decimal), nameof(PriceMin), nameof(PriceMax)), Precision(18, 2)]
         [Comment("Purchase price of the material")]
         public decimal Price { get; set; }
 
@@ -35,15 +35,14 @@ namespace IronBoots.Data.Models
         public string? PictureUrl { get; set; }
 
 
-        [Required]
-        [Url]
+        [Required, Url]
         [Comment("Contact page of the distributor")]
-        public string DistrubutorContact { get; set; } = null!;
+        public string DistributorContact { get; set; } = null!;
 
 
         [Required]
         [Comment("A list of products that require the current material")]
-        public IList<ProductMaterial> MaterialProducts { get; set; } = new List<ProductMaterial>();
+        public IList<ProductMaterial> MaterialProducts { get; set; }
 
 
         [Required]
