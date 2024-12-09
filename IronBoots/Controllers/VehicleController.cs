@@ -16,6 +16,7 @@ namespace IronBoots.Controllers
         }
 
         //Index
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             List<VehicleIndexViewModel> model = await context.Vehicles
