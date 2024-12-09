@@ -131,5 +131,24 @@ namespace IronBoots.Controllers
             };
             return View(model);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(VehicleViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            Vehicle? toEdit = await context.Vehicles.FirstOrDefaultAsync(v => v.Id == model.Id);
+            if (toEdit == null)
+            {
+                return NotFound();
+            }
+            toEdit.Name = model.Name;
+            toEdit.WeightCapacity = model.WeightCapacity;
+            toEdit.SizeCapacity = model.SizeCapacity;
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(Details), new {id = toEdit.Id});
+        }
 	}
 }
