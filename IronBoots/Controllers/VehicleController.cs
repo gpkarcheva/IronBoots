@@ -41,8 +41,12 @@ namespace IronBoots.Controllers
             {
                 return NotFound();
             }
+			if (TempData["ErrorMessage"] != null)
+			{
+				ViewData["ErrorMessage"] = TempData["ErrorMessage"];
+			}
 
-            VehicleViewModel model = new VehicleViewModel()
+			VehicleViewModel model = new VehicleViewModel()
             {
                 Id = currentVehicle.Id,
                 Name = currentVehicle.Name,
@@ -88,5 +92,24 @@ namespace IronBoots.Controllers
             await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+		//Delete
+		[HttpPost]
+		public async Task<IActionResult> Delete(Guid id)
+		{
+			Vehicle? toDelete = await context.Vehicles.FirstOrDefaultAsync(v => v.Id == id);
+			if (toDelete == null)
+			{
+				return NotFound();
+			}
+			if (toDelete.IsAvailable == false)
+			{
+				TempData["ErrorMessage"] = "Please complete the shipment before deleting the vehicle.";
+				return RedirectToAction(nameof(Details), new {id = id});
+			}
+			toDelete.IsDeleted = true;
+			await context.SaveChangesAsync();
+			return RedirectToAction(nameof(Index));
+		}
 	}
 }
