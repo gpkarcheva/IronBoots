@@ -16,22 +16,7 @@ namespace IronBoots.Models.Materials
         public string Name { get; set; } = null!;
 
 
-        [Required]
-        [Range(typeof(decimal), nameof(PriceMin), nameof(PriceMax))]
-        [Precision(18, 2)]
-        public decimal Price { get; set; }
-
-
         public string? PictureUrl { get; set; }
-
-
-        [Required]
-        [Url]
-        public string DistributorContact { get; set; } = null!;
-
-
-        [Required]
-        public IList<ProductMaterial> MaterialProducts { get; set; } = new List<ProductMaterial>();
 
 
         [Required]

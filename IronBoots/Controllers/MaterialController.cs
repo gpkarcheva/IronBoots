@@ -25,9 +25,6 @@ namespace IronBoots.Controllers
                 {
                     Id = m.Id,
                     Name = m.Name,
-                    Price = m.Price,
-                    DistributorContact = m.DistrubutorContact,
-                    MaterialProducts = m.MaterialProducts,
                     PictureUrl = m.PictureUrl
                 })
                 .AsNoTracking()
@@ -40,7 +37,10 @@ namespace IronBoots.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
-            List<ProductMaterial> productMaterials = context.ProductsMaterials.Where(pm => pm.MaterialId == id).ToList();
+            List<ProductMaterial> productMaterials = await context.ProductsMaterials
+                .Where(pm => pm.MaterialId == id
+            && pm.Product.IsDeleted == false)
+                .ToListAsync();
             foreach (var pm in productMaterials)
             {
                 pm.Product = context.Products.FirstOrDefault(p => p.Id == pm.ProductId);
@@ -54,7 +54,7 @@ namespace IronBoots.Controllers
             {
                 return View(nameof(Index));
             }
-            MaterialIndexViewModel model = new MaterialIndexViewModel()
+            MaterialViewModel model = new MaterialViewModel()
             {
                 Id = current.Id,
                 Name = current.Name,
