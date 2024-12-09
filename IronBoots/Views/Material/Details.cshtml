@@ -22,7 +22,11 @@
 			{
 				foreach (var productMaterial in Model.MaterialProducts)
 				{
-					<li>@productMaterial.Product.Name</li>
+					<li class="list-group-item">
+						<a asp-action="Details" asp-controller="Product" asp-route-id="@productMaterial.ProductId" class="text-decoration-none">
+							@productMaterial.Product.Name
+						</a>
+					</li>
 				}
 			}
 			else

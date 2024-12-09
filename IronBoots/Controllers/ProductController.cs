@@ -105,7 +105,7 @@ namespace IronBoots.Controllers
                 ProductMaterials = new List<ProductMaterial>()
             };
 
-            List<Guid> materialsIds = model.SelectedMaterialsIds;
+            IList<Guid> materialsIds = model.SelectedMaterialsIds;
             List<ProductMaterial> productMaterials = new List<ProductMaterial>();
             foreach (var id in materialsIds)
             {
