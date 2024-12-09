@@ -1,6 +1,10 @@
 ﻿@using IronBoots.Models.Vehicles
 @model VehicleViewModel
 
+@{
+    ViewData["Title"] = "Add Vehicle";
+}
+
 <div class="container mt-4">
     <h1>Add New Vehicle</h1>
     <form asp-action="Add" method="post">

@@ -45,9 +45,9 @@ namespace IronBoots.Models.Products
         public bool IsDeleted { get; set; }
 
         [Required]
-		public List<Guid> SelectedMaterialsIds { get; set; } = new();
+		public IList<Guid> SelectedMaterialsIds { get; set; } = new List<Guid>();
 
         [Required]
-        public List<Material> Materials { get; set; } = new();
+        public IList<Material> Materials { get; set; } = new List<Material>();
 	}
 }

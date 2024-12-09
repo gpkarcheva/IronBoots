@@ -13,7 +13,7 @@ namespace IronBoots.Models.Orders
         public Guid ClientId { get; set; }
 
         [Required]
-        public Client Client { get; set; }
+        public Client Client { get; set; } = null!;
 
         [Required]
         public DateTime PlannedAssignedDate { get; set; }

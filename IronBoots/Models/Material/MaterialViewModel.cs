@@ -26,7 +26,7 @@ namespace IronBoots.Models.Materials
         public string DistributorContact { get; set; } = null!;
 
         [Required]
-        public ICollection<ProductMaterial> MaterialProducts { get; set; } = new List<ProductMaterial>();
+        public IList<ProductMaterial> MaterialProducts { get; set; } = new List<ProductMaterial>();
 
         public List<Guid> SelectedProductIds { get; set; } = new();
 

@@ -43,7 +43,7 @@ namespace IronBoots.Data.Models
 
         [Required]
         [Comment("A list of products that require the current material")]
-        public ICollection<ProductMaterial> MaterialProducts { get; set; } = new List<ProductMaterial>();
+        public IList<ProductMaterial> MaterialProducts { get; set; } = new List<ProductMaterial>();
 
 
         [Required]

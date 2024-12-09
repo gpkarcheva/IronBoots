@@ -1,10 +1,8 @@
 ﻿using IronBoots.Data;
 using IronBoots.Data.Models;
-using IronBoots.Models.Materials;
 using IronBoots.Models.Products;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 namespace IronBoots.Controllers
 {
@@ -83,8 +81,8 @@ namespace IronBoots.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            var materials = await context.Materials.ToListAsync();
-            var model = new ProductViewModel();
+            List<Material> materials = await context.Materials.ToListAsync();
+            ProductViewModel model = new ProductViewModel();
             model.Materials = materials;
             return View(model);
         }
@@ -201,7 +199,7 @@ namespace IronBoots.Controllers
             List<ProductMaterial> editProductMaterials = new List<ProductMaterial>();
             foreach (var materialId in model.SelectedMaterialsIds)
             {
-                var material = await context.Materials.FirstOrDefaultAsync(m => m.Id == materialId);
+                Material? material = await context.Materials.FirstOrDefaultAsync(m => m.Id == materialId);
                 if (material != null)
                 {
                     editProductMaterials.Add(new ProductMaterial
@@ -240,7 +238,7 @@ namespace IronBoots.Controllers
                     .FirstOrDefaultAsync(cpm => cpm.ProductId == pm.ProductId
                     && cpm.MaterialId == pm.MaterialId);
 
-                if (currentPM == null) 
+                if (currentPM == null)
                 {
                     await context.ProductsMaterials.AddAsync(pm);
                 }

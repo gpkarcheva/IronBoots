@@ -19,7 +19,7 @@ namespace IronBoots.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var model = await context.Materials
+            List<MaterialIndexViewModel> model = await context.Materials
                 .Where(m => m.IsDeleted == false)
                 .Select(m => new MaterialIndexViewModel
                 {
@@ -70,8 +70,8 @@ namespace IronBoots.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            var products = await context.Products.ToListAsync();
-            var model = new MaterialViewModel();
+            List<Product> products = await context.Products.ToListAsync();
+            MaterialViewModel model = new MaterialViewModel();
             model.Products = products;
             return View(model);
         }

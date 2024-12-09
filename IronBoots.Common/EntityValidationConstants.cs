@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Contracts;
-
-namespace IronBoots.Common
+﻿namespace IronBoots.Common
 {
     public static class EntityValidationConstants
     {
@@ -57,7 +55,7 @@ namespace IronBoots.Common
             public const decimal CostMin = 0.01m;
             public const decimal CostMax = decimal.MaxValue;
         }
-        
+
         public static class ProductMaterialValidation
         {
             public const int QuantityMin = 1;

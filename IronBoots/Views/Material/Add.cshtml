@@ -2,6 +2,10 @@
 @using IronBoots.Models.Materials
 @model MaterialViewModel
 
+@{
+    ViewData["Title"] = "Add Material";
+}
+
 <div class="container mt-4">
     <h1>Add New Material</h1>
     <form asp-action="Add" method="post">
