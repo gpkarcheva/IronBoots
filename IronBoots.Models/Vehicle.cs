@@ -36,8 +36,7 @@ namespace IronBoots.Data.Models
         public Guid? ShipmentId { get; set; }
 
 
-        [ForeignKey(nameof(ShipmentId))]
-        [Comment("Shipment the order belongs to")]
+        [Comment("Shipment object")]
         public Shipment? Shipment { get; set; }
 
 

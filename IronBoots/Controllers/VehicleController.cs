@@ -60,11 +60,33 @@ namespace IronBoots.Controllers
             return View(model);
         }
 
+        //Add
 		[HttpGet]
 		public IActionResult Add()
 		{
 			VehicleViewModel model = new VehicleViewModel();
 			return View(model);
 		}
+
+        [HttpPost]
+        public async Task<IActionResult> Add(VehicleViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            Vehicle toAdd = new Vehicle()
+            {
+                Name = model.Name,
+                WeightCapacity = model.WeightCapacity,
+                SizeCapacity = model.SizeCapacity,
+                ShipmentId = Guid.Empty,
+                IsAvailable = true
+            };
+
+            await context.Vehicles.AddAsync(toAdd);
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 	}
 }
