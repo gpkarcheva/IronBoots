@@ -6,6 +6,13 @@ namespace IronBoots.Models.Materials
 {
     public class MaterialViewModel
     {
+        public MaterialViewModel()
+        {
+            MaterialProducts = new List<ProductMaterial>();
+            SelectedProductIds = new List<Guid>();
+            Products = new List<Product>();
+        }
+
         [Required]
         public Guid Id { get; set; }
 
@@ -26,10 +33,10 @@ namespace IronBoots.Models.Materials
         public string DistributorContact { get; set; } = null!;
 
         [Required]
-        public IList<ProductMaterial> MaterialProducts { get; set; } = new List<ProductMaterial>();
+        public IList<ProductMaterial> MaterialProducts { get; set; }
 
-        public List<Guid> SelectedProductIds { get; set; } = new();
+        public IList<Guid> SelectedProductIds { get; set; }
 
-        public List<Product> Products { get; set; } = new();
+        public IList<Product> Products { get; set; }
     }
 }
