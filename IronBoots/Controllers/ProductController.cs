@@ -37,28 +37,15 @@ namespace IronBoots.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
-            Product? product = await context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            Product? product = await context.Products
+                .Include(p => p.ProductMaterials)
+                .ThenInclude(pm => pm.Material)
+                .Include(p => p.ProductOrders)
+                .ThenInclude(po => po.Order)
+                .FirstOrDefaultAsync(p => p.Id == id);
             if (product == null || product.IsDeleted == true)
             {
                 return View(nameof(Index));
-            }
-
-            List<ProductMaterial> productMaterials = await context.ProductsMaterials
-                .Where(pm => pm.ProductId == id)
-                .ToListAsync();
-
-            foreach (var pm in productMaterials)
-            {
-                pm.Material = await context.Materials.FirstOrDefaultAsync(m => m.Id == pm.MaterialId);
-            }
-
-            List<OrderProduct> orderProducts = await context.OrdersProducts
-                .Where(op => op.ProductId == id)
-                .ToListAsync();
-
-            foreach (var op in orderProducts)
-            {
-                op.Order = await context.Orders.FirstOrDefaultAsync(o => o.Id == op.OrderId);
             }
 
             ProductViewModel model = new ProductViewModel()
@@ -70,8 +57,8 @@ namespace IronBoots.Controllers
                 Size = product.Size,
                 ProductionCost = product.ProductionCost,
                 ProductionTime = product.ProductionTime,
-                ProductMaterials = productMaterials,
-                ProductOrders = orderProducts,
+                ProductMaterials = product.ProductMaterials,
+                ProductOrders = product.ProductOrders,
                 IsDeleted = product.IsDeleted
             };
             return View(model);
