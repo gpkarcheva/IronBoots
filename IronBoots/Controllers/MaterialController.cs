@@ -45,7 +45,7 @@ namespace IronBoots.Controllers
 
             if (material == null)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
 
             MaterialViewModel model = new()
@@ -115,7 +115,7 @@ namespace IronBoots.Controllers
             Material? toDelete = await context.Materials.FirstOrDefaultAsync(p => p.Id == id);
             if (toDelete == null)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
             toDelete.IsDeleted = true;
             await context.SaveChangesAsync();
@@ -132,7 +132,7 @@ namespace IronBoots.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (currentMaterial == null)
             {
-                return View("NotFound"); //TODO IMPLEMENT NOT FOUND
+                return NotFound();
             }
             MaterialViewModel model = new MaterialViewModel()
             {

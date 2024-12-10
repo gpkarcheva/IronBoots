@@ -45,7 +45,7 @@ namespace IronBoots.Controllers
                 .FirstOrDefaultAsync(p => p.Id == id);
             if (product == null || product.IsDeleted == true)
             {
-                return View(nameof(Index));
+                return NotFound();
             }
 
             ProductViewModel model = new()
@@ -114,7 +114,7 @@ namespace IronBoots.Controllers
             Product? toDelete = await context.Products.FirstOrDefaultAsync(p => p.Id == id);
             if (toDelete == null)
             {
-                return NotFound(); //implement this already pls
+                return NotFound();
             }
             toDelete.IsDeleted = true;
             await context.SaveChangesAsync();
@@ -170,7 +170,7 @@ namespace IronBoots.Controllers
                 .FirstOrDefaultAsync(p => p.Id == id);
             if (toEdit == null)
             {
-                return NotFound();  //TODO IMPLEMENT NOT FOUND
+                return NotFound();
             }
 
             toEdit.Name = model.Name;

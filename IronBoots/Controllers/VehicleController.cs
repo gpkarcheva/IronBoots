@@ -101,8 +101,8 @@ namespace IronBoots.Controllers
 			Vehicle? toDelete = await context.Vehicles.FirstOrDefaultAsync(v => v.Id == id);
 			if (toDelete == null)
 			{
-				return NotFound();
-			}
+                return NotFound();
+            }
 			if (toDelete.IsAvailable == false)
 			{
 				TempData["ErrorMessage"] = "Please complete the shipment before deleting the vehicle.";

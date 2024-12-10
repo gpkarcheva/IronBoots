@@ -38,12 +38,8 @@ namespace IronBoots.Controllers
         public async Task<IActionResult> Details(Guid id)
         {
             Order? current = await context.Orders.FirstOrDefaultAsync(o => o.Id == id);
-            if (current == null)
-            {
-                return NotFound(); //implement pls ms
-            }
             Client? currentClient = await context.Clients.FirstOrDefaultAsync(c => c.Id == current.ClientId);
-            if (currentClient == null)
+            if (current == null || currentClient == null)
             {
                 return NotFound();
             }
@@ -87,7 +83,7 @@ namespace IronBoots.Controllers
             Order? toCancel = await context.Orders.FirstOrDefaultAsync(o => o.Id == id);
             if (toCancel == null)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
             toCancel.IsActive = false;
             if (toCancel.ShipmentId != null)

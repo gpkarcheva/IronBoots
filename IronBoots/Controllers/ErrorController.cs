@@ -11,7 +11,10 @@ namespace IronBoots.Controllers
             {
                 return View("NotFound");
             }
-            // Add other status code handling if needed
+            if (statusCode == 500)
+            {
+                return View("500");
+            }
             return View("Error");
         }
     }

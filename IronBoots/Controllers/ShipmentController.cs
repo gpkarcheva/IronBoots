@@ -41,7 +41,7 @@ namespace IronBoots.Controllers
             Shipment? current = await context.Shipments.FirstOrDefaultAsync(s => s.Id == id);
             if (current == null)
             {
-                return NotFound(); //jesus just implement it already
+                return NotFound();
             }
             ShipmentViewModel model = new ShipmentViewModel()
             {
