@@ -79,8 +79,9 @@ namespace IronBoots.Controllers
             return View(model);
         }
 
-        
+
         //Cancel order
+        [HttpPost]
         public async Task<IActionResult> Cancel(Guid id)
         {
             Order? toCancel = await context.Orders.FirstOrDefaultAsync(o => o.Id == id);

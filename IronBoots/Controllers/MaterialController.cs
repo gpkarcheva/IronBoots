@@ -71,7 +71,7 @@ namespace IronBoots.Controllers
             };
             return View(model);
         }
-
+        //Details
         [HttpPost]
         public async Task<IActionResult> Add(MaterialViewModel model)
         {
@@ -148,7 +148,7 @@ namespace IronBoots.Controllers
             model.SelectedProductIds = model.MaterialProducts.Select(mp => mp.ProductId).ToList();
             return View(model);
         }
-
+        //Edit
         [HttpPost]
         public async Task<IActionResult> Edit(Guid id, MaterialViewModel model)
         {

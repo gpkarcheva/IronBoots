@@ -54,9 +54,9 @@
 		</div>
 	</div>
 
-	<div class="mt-4 d-flex justify-content-between">
+	<div class="mt-4">
 		<a asp-action="Index" class="btn btn-secondary">Back to Vehicles</a>
-		<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit Vehicle</a>
+		<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
 		<form asp-action="Delete" asp-route-id="@Model.Id" method="post" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this vehicle?');">
 			<button type="submit" class="btn btn-danger">Delete</button>
 		</form>

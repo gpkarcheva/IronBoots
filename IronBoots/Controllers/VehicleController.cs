@@ -72,7 +72,7 @@ namespace IronBoots.Controllers
 			VehicleViewModel model = new VehicleViewModel();
 			return View(model);
 		}
-
+        //Add
         [HttpPost]
         public async Task<IActionResult> Add(VehicleViewModel model)
         {
@@ -132,7 +132,7 @@ namespace IronBoots.Controllers
             };
             return View(model);
         }
-
+        //Edit
         [HttpPost]
         public async Task<IActionResult> Edit(VehicleViewModel model)
         {

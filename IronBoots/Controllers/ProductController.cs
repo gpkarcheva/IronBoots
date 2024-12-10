@@ -74,7 +74,7 @@ namespace IronBoots.Controllers
             };
             return View(model);
         }
-
+        //Add
         [HttpPost]
         public async Task<IActionResult> Add(ProductViewModel model)
         {

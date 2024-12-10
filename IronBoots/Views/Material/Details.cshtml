@@ -36,15 +36,12 @@
 		</ul>
 
 		<div style="margin-top: 20px;">
-			<a href="@Url.Action("Edit", "Material", new { id = Model.Id })" class="btn btn-primary" style="margin-right: 10px;">Edit</a>
+			<a asp-action="Index" class="btn btn-secondary">Back to Materials</a>
+			<a href="@Url.Action("Edit", "Material", new { id = Model.Id })" class="btn btn-primary">Edit</a>
 			<form asp-action="Delete" asp-controller="Material" method="post" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this material?');">
 				<input type="hidden" name="id" value="@Model.Id" />
 				<button type="submit" class="btn btn-danger">Delete</button>
 			</form>
 		</div>
-	</div>
-
-	<div class="mt-4">
-		<a asp-action="Index" class="btn btn-secondary">Back to Materials</a>
 	</div>
 </div>
