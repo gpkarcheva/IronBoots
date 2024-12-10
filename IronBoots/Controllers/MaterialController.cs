@@ -77,6 +77,7 @@ namespace IronBoots.Controllers
         {
             if (!ModelState.IsValid)
             {
+                model.Products = await context.Products.Where(p => p.IsDeleted == false).ToListAsync();
                 return View(model);
             }
 
@@ -153,6 +154,7 @@ namespace IronBoots.Controllers
         {
             if (!ModelState.IsValid)
             {
+                model.Products = await context.Products.Where(p => p.IsDeleted == false).ToListAsync();
                 return View(model);
             }
 

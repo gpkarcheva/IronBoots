@@ -48,7 +48,7 @@ namespace IronBoots.Controllers
                 return View(nameof(Index));
             }
 
-            ProductViewModel model = new ProductViewModel()
+            ProductViewModel model = new()
             {
                 Id = product.Id,
                 Name = product.Name,
@@ -68,9 +68,10 @@ namespace IronBoots.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            List<Material> materials = await context.Materials.ToListAsync();
-            ProductViewModel model = new ProductViewModel();
-            model.Materials = materials;
+            ProductViewModel model = new()
+            {
+                Materials = await context.Materials.Where(m => m.IsDeleted == false).ToListAsync()
+            };
             return View(model);
         }
 
@@ -79,9 +80,10 @@ namespace IronBoots.Controllers
         {
             if (!ModelState.IsValid)
             {
+                model.Materials = await context.Materials.Where(m => m.IsDeleted == false).ToListAsync();
                 return View(model);
             }
-            Product product = new Product()
+            Product product = new()
             {
                 Name = model.Name,
                 ImageUrl = model.ImageUrl,
@@ -89,30 +91,18 @@ namespace IronBoots.Controllers
                 Size = model.Size,
                 ProductionCost = model.ProductionCost,
                 ProductionTime = model.ProductionTime,
-                ProductMaterials = new List<ProductMaterial>()
             };
 
-            IList<Guid> materialsIds = model.SelectedMaterialsIds;
-            List<ProductMaterial> productMaterials = new List<ProductMaterial>();
-            foreach (var id in materialsIds)
+            List<ProductMaterial> productMaterials = model.SelectedMaterialsIds.Select(materialId => new ProductMaterial
             {
-                Material? current = await context.Materials.FirstOrDefaultAsync(m => m.Id == id);
-                if (current != null)
-                {
-                    ProductMaterial pm = new ProductMaterial()
-                    {
-                        ProductId = product.Id,
-                        Product = product,
-                        MaterialId = id,
-                        Material = current
-                    };
-                    productMaterials.Add(pm);
-                    current.MaterialProducts.Add(pm);
-                }
-            }
+                ProductId = product.Id,
+                MaterialId = materialId
+            }).ToList();
+
             product.ProductMaterials = productMaterials;
-            await context.ProductsMaterials.AddRangeAsync(productMaterials);
+
             await context.Products.AddAsync(product);
+            await context.ProductsMaterials.AddRangeAsync(productMaterials);
             await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -135,13 +125,17 @@ namespace IronBoots.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            Product? current = await context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            Product? current = await context.Products
+                .Include(p => p.ProductMaterials)
+                .ThenInclude(pm => pm.Material)
+                .Include(p => p.ProductOrders)
+                .ThenInclude(po => po.Order)
+                .FirstOrDefaultAsync(p => p.Id == id);
             if (current == null)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            current.ProductMaterials = await context.ProductsMaterials.Where(pm => pm.ProductId == id).ToListAsync();
-            current.ProductOrders = await context.OrdersProducts.Where(po => po.ProductId == id).ToListAsync();
+
             ProductViewModel model = new ProductViewModel()
             {
                 Id = id,
@@ -154,28 +148,31 @@ namespace IronBoots.Controllers
                 ProductMaterials = current.ProductMaterials,
                 ProductOrders = current.ProductOrders,
                 IsDeleted = current.IsDeleted,
-                SelectedMaterialsIds = new List<Guid>(),
-                Materials = await context.Materials.ToListAsync()
+                Materials = await context.Materials.AsNoTracking().ToListAsync()
             };
-            foreach (var productMaterial in model.ProductMaterials)
-            {
-                model.SelectedMaterialsIds.Add(productMaterial.MaterialId);
-            }
+            model.SelectedMaterialsIds = model.ProductMaterials.Select(mp => mp.MaterialId).ToList();
             return View(model);
         }
-
+        //Edit
         [HttpPost]
         public async Task<IActionResult> Edit(Guid id, ProductViewModel model)
         {
             if (!ModelState.IsValid)
             {
+                model.Materials = await context.Materials.Where(m => m.IsDeleted == false).ToListAsync();
                 return View(model);
             }
-            Product? toEdit = await context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            Product? toEdit = await context.Products
+                .Include(p => p.ProductMaterials)
+                .ThenInclude(pm => pm.Material)
+                .Include(p => p.ProductOrders)
+                .ThenInclude(pm => pm.Order)
+                .FirstOrDefaultAsync(p => p.Id == id);
             if (toEdit == null)
             {
                 return NotFound();  //TODO IMPLEMENT NOT FOUND
             }
+
             toEdit.Name = model.Name;
             toEdit.ImageUrl = model.ImageUrl;
             toEdit.Weight = model.Weight;
@@ -186,50 +183,23 @@ namespace IronBoots.Controllers
             List<ProductMaterial> editProductMaterials = new List<ProductMaterial>();
             foreach (var materialId in model.SelectedMaterialsIds)
             {
-                Material? material = await context.Materials.FirstOrDefaultAsync(m => m.Id == materialId);
-                if (material != null)
+                Material? currentMat = context.Materials.FirstOrDefault(m => m.Id == materialId);
+                if (currentMat != null)
                 {
-                    editProductMaterials.Add(new ProductMaterial
+                    ProductMaterial pm = new()
                     {
                         MaterialId = materialId,
-                        Material = material,
-                        ProductId = model.Id,
-                        Product = toEdit
-                    });
-                }
-            }
-            List<ProductMaterial> allProductMaterials = await context.ProductsMaterials
-                .Where(pm => pm.ProductId == model.Id)
-                .ToListAsync();
-            foreach (var pm in editProductMaterials)
-            {
-                if (!allProductMaterials.Any(ap => ap.MaterialId == pm.MaterialId))
-                {
-                    allProductMaterials.Add(pm);
-                }
-            }
-            toEdit.ProductMaterials = allProductMaterials;
-
-            foreach (var pm in allProductMaterials)
-            {
-                Material? currentMaterial = await context.Materials.FirstOrDefaultAsync(m => m.Id == pm.MaterialId);
-                if (currentMaterial != null)
-                {
-                    if (!currentMaterial.MaterialProducts.Any(mp => mp.ProductId == pm.ProductId))
+                        ProductId = id,
+                    };
+                    model.ProductMaterials.Add(pm);
+                    if (currentMat.MaterialProducts.FirstOrDefault(p => p.MaterialId == materialId) != null)
                     {
-                        currentMaterial.MaterialProducts.Add(pm);
+                        currentMat.MaterialProducts.Add(pm);
                     }
                 }
-
-                ProductMaterial? currentPM = await context.ProductsMaterials
-                    .FirstOrDefaultAsync(cpm => cpm.ProductId == pm.ProductId
-                    && cpm.MaterialId == pm.MaterialId);
-
-                if (currentPM == null)
-                {
-                    await context.ProductsMaterials.AddAsync(pm);
-                }
             }
+            toEdit.ProductMaterials = editProductMaterials;
+
             await context.SaveChangesAsync();
             return RedirectToAction("Details", "Product", new
             {
