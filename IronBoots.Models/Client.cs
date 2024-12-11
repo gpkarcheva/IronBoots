@@ -25,6 +25,10 @@ namespace IronBoots.Data.Models
 
 
         [Required]
+        public IList<ClientProduct> ClientsProducts { get; set; } = new List<ClientProduct>();
+
+
+        [Required]
         [Comment("Orders the client currently has open")]
         public IList<Order> Orders { get; set; } = new List<Order>();
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System.ComponentModel.DataAnnotations;
 using static IronBoots.Common.EntityValidationConstants.ProductValidation;
 
@@ -56,6 +57,10 @@ namespace IronBoots.Data.Models
         [Required]
         [Comment("Time required to produce the product")]
         public TimeSpan ProductionTime { get; set; }
+
+
+        [Required]
+        public IList<ClientProduct> ProductsClients { get; set; }
 
 
         [Required]

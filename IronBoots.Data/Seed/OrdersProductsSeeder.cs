@@ -20,7 +20,6 @@
                         Order = order,
                         ProductId = product.Id,
                         Product = product,
-                        ProductQuantity = random.Next(1, 100)
                     };
                     orderProducts.Add(orderProduct);
             }

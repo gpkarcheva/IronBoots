@@ -15,14 +15,12 @@ namespace IronBoots.Data.Seed
                 foreach (var material in currentMaterials)
                 {
                     Random random = new Random();
-                    int quantity = random.Next(0, 10);
                     productsMaterials.Add(new ProductMaterial()
                     {
                         ProductId = product.Id,
                         Product = product,
                         MaterialId = material.Id,
-                        Material = material,
-                        MaterialQuantity = quantity
+                        Material = material
                     });
                 }
             }
