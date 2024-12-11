@@ -2,7 +2,11 @@
 
 <div class="container mt-5">
     <h1 class="mb-4">Checkout</h1>
-    <form asp-action="CreateOrder" method="post" class="needs-validation" novalidate>
+    <form asp-action="Checkout" method="post" class="needs-validation" novalidate>
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <input type="hidden" name="ClientId" value="@Model.ClientId" />
+        <input type="hidden" name="TotalPrice" value="@Model.TotalPrice" />
+
         <div class="mb-3">
             <label for="address" class="form-label">Shipping Address</label>
             <input type="text" class="form-control" id="address" name="Address" placeholder="Enter your address" required>
@@ -10,9 +14,11 @@
                 Please provide a valid address.
             </div>
         </div>
+
         <div class="mb-4">
             <h3>Order Total: @Model.TotalPrice lv</h3>
         </div>
+
         <div class="text-end">
             <button type="submit" class="btn btn-primary mt-3">Place Order</button>
         </div>

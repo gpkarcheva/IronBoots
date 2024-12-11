@@ -12,13 +12,13 @@ namespace IronBoots.Models.Orders
         [Required]
         public Guid ClientId { get; set; }
 
+
+        public Client? Client { get; set; }
+
         [Required]
-        public Client Client { get; set; } = null!;
+        public string Address { get; set; } = null!;
 
-
-        public string? PlannedAssignedDate { get; set; }
-
-        public string? ActualAssignedDate { get; set; }
+        public string? AssignedDate { get; set; }
 
         public Guid? ShipmentId { get; set; }
 

@@ -14,10 +14,6 @@ namespace IronBoots.Models.Orders
         [Required]
         public string TotalPrice { get; set; } = null!;
 
-        [Required]
-        public string? PlannedAssignedDate { get; set; }
-
-
-        public string? ActualAssignedDate { get; set; }
+        public string? AssignedDate { get; set; }
     }
 }
