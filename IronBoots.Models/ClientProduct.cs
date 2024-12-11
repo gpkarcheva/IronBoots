@@ -6,18 +6,14 @@ namespace IronBoots.Data.Models
 {
     public class ClientProduct
     {
-        [Required]
         public Guid ClientId { get; set; }
 
-        [Required]
         [ForeignKey(nameof(ClientId))]
-        public Client Client { get; set; } = null!;
+        public Client Client { get; set; }
 
-        [Required]
         public Guid ProductId { get; set; }
 
-        [Required]
         [ForeignKey(nameof(ClientId))]
-        public Product Product { get; set; } = null!;
+        public Product Product { get; set; }
     }
 }

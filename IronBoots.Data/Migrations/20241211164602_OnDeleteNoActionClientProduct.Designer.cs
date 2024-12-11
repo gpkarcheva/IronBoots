@@ -4,6 +4,7 @@ using IronBoots.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IronBoots.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241211164602_OnDeleteNoActionClientProduct")]
+    partial class OnDeleteNoActionClientProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -522,14 +525,14 @@ namespace IronBoots.Data.Migrations
 
             modelBuilder.Entity("IronBoots.Data.Models.ClientProduct", b =>
                 {
-                    b.HasOne("IronBoots.Data.Models.Client", "Client")
-                        .WithMany("ClientsProducts")
+                    b.HasOne("IronBoots.Data.Models.Product", "Product")
+                        .WithMany("ProductsClients")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("IronBoots.Data.Models.Product", "Product")
-                        .WithMany("ProductsClients")
+                    b.HasOne("IronBoots.Data.Models.Client", "Client")
+                        .WithMany("ClientsProducts")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();

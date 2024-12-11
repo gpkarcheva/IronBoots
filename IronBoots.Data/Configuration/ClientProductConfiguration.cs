@@ -16,11 +16,13 @@ namespace IronBoots.Data.Configuration
 
             builder.HasOne(cp => cp.Client)
                 .WithMany(cp => cp.ClientsProducts)
-                .HasForeignKey(cp => cp.ProductId);
+                .HasForeignKey(cp => cp.ClientId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(pc => pc.Product)
                 .WithMany(pc => pc.ProductsClients)
-                .HasForeignKey(pc => pc.ClientId);
+                .HasForeignKey(pc => pc.ProductId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -23,6 +23,7 @@ namespace IronBoots.Data
         public DbSet<Shipment> Shipments { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ClientProduct> ClientsProducts { get; set; }
         public DbSet<Material> Materials { get; set; }
         public DbSet<OrderProduct> OrdersProducts { get; set; }
         public DbSet<ProductMaterial> ProductsMaterials { get; set; }

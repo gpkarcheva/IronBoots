@@ -286,11 +286,41 @@ namespace IronBoots.Controllers
             return View(model);
         }
 
+        //Add to cart
+        [Authorize(Roles = "Admin, Client")]
+        [HttpPost]
+        public async Task<IActionResult> AddToCart(Guid id)
+        {
+            string? userId = GetCurrentUserId();
+            Product? product = await context.Products
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            ClientProduct? clientProduct = await context.ClientsProducts
+                .FirstOrDefaultAsync(pc => pc.ProductId == id && pc.Client.UserId.ToString() == userId);
+
+            if (clientProduct != null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            ClientProduct addedProduct = new ClientProduct
+            {
+                ClientId = context.Clients.First(c => c.UserId.ToString() == userId).Id,
+                ProductId = product.Id
+            };
+
+            await context.ClientsProducts.AddAsync(addedProduct);
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
 
 
-
-        //Common
         //Common
         public string? GetCurrentUserId()
         {
