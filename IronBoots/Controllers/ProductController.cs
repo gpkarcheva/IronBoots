@@ -259,5 +259,43 @@ namespace IronBoots.Controllers
                 id = toEdit.Id
             });
         }
+
+
+        //Cart
+        [Authorize(Roles = "Client, Admin")]
+        [HttpGet]
+        public async Task<IActionResult> Cart()
+        {
+            string? currentUser = GetCurrentUserId();
+            if (currentUser == null) 
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            List<ProductIndexViewModel> model = await context.Products
+                .Where(p => p.IsDeleted == false)
+                .Where(p => p.ProductsClients.Any(pc => pc.Client.UserId.ToString() == currentUser))
+                .Select(p => new ProductIndexViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price.ToString(),
+                    PictureUrl = p.ImageUrl
+                })
+                .AsNoTracking()
+                .ToListAsync();
+            return View(model);
+        }
+
+
+
+
+
+        //Common
+        //Common
+        public string? GetCurrentUserId()
+        {
+            string? userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            return userId;
+        }
     }
 }
