@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IronBoots.Data", "IronBoots
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IronBoots.Data.Models", "IronBoots.Models\IronBoots.Data.Models.csproj", "{E9800B3C-8EC7-4C57-A520-B95C68DFC85E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronBoots.Common", "IronBoots.Common\IronBoots.Common.csproj", "{53DFA5AF-0B6F-4960-96CE-F96B26316442}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IronBoots.Common", "IronBoots.Common\IronBoots.Common.csproj", "{53DFA5AF-0B6F-4960-96CE-F96B26316442}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronBoots.Tests", "IronBoots.Tests\IronBoots.Tests.csproj", "{4C53F068-84A4-4B00-8E32-5ECFFEE66AEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{53DFA5AF-0B6F-4960-96CE-F96B26316442}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53DFA5AF-0B6F-4960-96CE-F96B26316442}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53DFA5AF-0B6F-4960-96CE-F96B26316442}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C53F068-84A4-4B00-8E32-5ECFFEE66AEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C53F068-84A4-4B00-8E32-5ECFFEE66AEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C53F068-84A4-4B00-8E32-5ECFFEE66AEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C53F068-84A4-4B00-8E32-5ECFFEE66AEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
