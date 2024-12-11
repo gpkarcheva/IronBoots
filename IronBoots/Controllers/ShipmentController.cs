@@ -2,11 +2,13 @@
 using IronBoots.Data;
 using IronBoots.Data.Models;
 using IronBoots.Models.Shipments;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace IronBoots.Controllers
 {
+    [Authorize(Roles = "Admin, Manager")]
     public class ShipmentController : Controller
     {
         private readonly ApplicationDbContext context;
