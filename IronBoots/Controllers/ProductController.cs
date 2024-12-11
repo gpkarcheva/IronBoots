@@ -319,10 +319,31 @@ namespace IronBoots.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromCart(Guid id)
+        {
+            string? userId = GetCurrentUserId();
+            if (userId == null)
+            {
+                return NotFound();
+            }
+            ClientProduct? toRemove = await context.ClientsProducts 
+                .Include(cp => cp.Client)
+                .FirstOrDefaultAsync(pc => pc.ProductId == id && pc.Client.UserId.ToString() == userId);
+
+            if (toRemove == null) 
+            {
+                return NotFound();
+            }
+
+            context.ClientsProducts.Remove(toRemove);
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(Cart));
+        }
 
 
-        //Common
-        public string? GetCurrentUserId()
+            //Common
+            private string? GetCurrentUserId()
         {
             string? userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
             return userId;
