@@ -1,11 +1,13 @@
 ﻿using IronBoots.Data;
 using IronBoots.Data.Models;
 using IronBoots.Models.Products;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace IronBoots.Controllers
 {
+    [Authorize]
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext context;

@@ -1,11 +1,13 @@
 ﻿using IronBoots.Data;
 using IronBoots.Data.Models;
 using IronBoots.Models.Materials;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace IronBoots.Controllers
 {
+    [Authorize(Roles = "Admin, Manager")]
     public class MaterialController : Controller
     {
         private readonly ApplicationDbContext context;

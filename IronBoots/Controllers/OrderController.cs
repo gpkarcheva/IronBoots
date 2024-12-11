@@ -1,11 +1,14 @@
 ﻿using IronBoots.Data;
 using IronBoots.Data.Models;
 using IronBoots.Models.Orders;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 
 namespace IronBoots.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly ApplicationDbContext context;
@@ -19,7 +22,27 @@ namespace IronBoots.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            List<OrderIndexViewModel> model = await context.Orders
+            if (User.IsInRole("Client"))
+            {
+                string? userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+                List<OrderIndexViewModel> model = await context.Orders
+                    .Where(o => o.IsActive == true && o.Client.UserId.ToString() == userId)
+                    .Select(o => new OrderIndexViewModel()
+                    {
+                        Id = o.Id,
+                        Client = o.Client,
+                        TotalPrice = o.TotalPrice,
+                        PlannedAssignedDate = o.PlannedAssignedDate,
+                        ActualAssignedDate = o.ActualAssignedDate
+                    })
+                    .ToListAsync();
+
+                return View(model);
+            }
+            else
+            {
+                List<OrderIndexViewModel> model = await context.Orders
                 .Where(o => o.IsActive == true)
                 .Select(o => new OrderIndexViewModel()
                 {
@@ -30,7 +53,8 @@ namespace IronBoots.Controllers
                     ActualAssignedDate = o.ActualAssignedDate
                 })
                 .ToListAsync();
-            return View(model);
+                return View(model);
+            }
         }
 
         //Details
@@ -57,7 +81,7 @@ namespace IronBoots.Controllers
             OrderViewModel model = new OrderViewModel()
             {
                 Id = id,
-                ClientId = current.ClientId,  
+                ClientId = current.ClientId,
                 Client = currentClient,
                 TotalPrice = current.TotalPrice,
                 PlannedAssignedDate = current.PlannedAssignedDate,
