@@ -4,6 +4,9 @@ using IronBoots.Models.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static IronBoots.Common.ExtensionMethods;
+using static IronBoots.Common.EntityValidationConstants.DateTimeValidation;
+using System.Globalization;
 
 namespace IronBoots.Controllers
 {
@@ -60,7 +63,7 @@ namespace IronBoots.Controllers
                 Weight = product.Weight,
                 Size = product.Size,
                 ProductionCost = product.ProductionCost,
-                ProductionTime = product.ProductionTime,
+                ProductionTime = product.ProductionTime.ToString(),
                 ProductMaterials = product.ProductMaterials,
                 ProductOrders = product.ProductOrders,
                 IsDeleted = product.IsDeleted
@@ -84,11 +87,18 @@ namespace IronBoots.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(ProductViewModel model)
         {
+            if (!IsTimeValid(model.ProductionTime))
+            {
+                ModelState.AddModelError(nameof(model.ProductionTime), "Invalid time format! Please use hh:mm:ss.");
+            }
             if (!ModelState.IsValid)
             {
                 model.Materials = await context.Materials.Where(m => m.IsDeleted == false).ToListAsync();
                 return View(model);
             }
+
+            TimeSpan parsedTime;
+            TimeSpan.TryParseExact(model.ProductionTime, TimeFormat, CultureInfo.InvariantCulture, TimeSpanStyles.None, out parsedTime);
             Product product = new()
             {
                 Name = model.Name,
@@ -97,7 +107,7 @@ namespace IronBoots.Controllers
                 Weight = model.Weight,
                 Size = model.Size,
                 ProductionCost = model.ProductionCost,
-                ProductionTime = model.ProductionTime,
+                ProductionTime = parsedTime,
             };
 
             List<ProductMaterial> productMaterials = model.SelectedMaterialsIds.Select(materialId => new ProductMaterial
@@ -152,7 +162,7 @@ namespace IronBoots.Controllers
                 Weight = current.Weight,
                 Size = current.Size,
                 ProductionCost = current.ProductionCost,
-                ProductionTime = current.ProductionTime,
+                ProductionTime = current.ProductionTime.ToString(),
                 ProductMaterials = current.ProductMaterials,
                 ProductOrders = current.ProductOrders,
                 IsDeleted = current.IsDeleted,
@@ -166,6 +176,10 @@ namespace IronBoots.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Guid id, ProductViewModel model)
         {
+            if (!IsTimeValid(model.ProductionTime))
+            {
+                ModelState.AddModelError(nameof(model.ProductionTime), "Invalid time format! Please use hh:mm:ss.");
+            }
             if (!ModelState.IsValid)
             {
                 model.Materials = await context.Materials.Where(m => m.IsDeleted == false).ToListAsync();
@@ -181,13 +195,16 @@ namespace IronBoots.Controllers
             {
                 return NotFound();
             }
+            
+            TimeSpan parsedTime;
+            TimeSpan.TryParseExact(model.ProductionTime, TimeFormat, CultureInfo.InvariantCulture, TimeSpanStyles.None, out parsedTime);
 
             toEdit.Name = model.Name;
             toEdit.ImageUrl = model.ImageUrl;
             toEdit.Weight = model.Weight;
             toEdit.Size = model.Size;
             toEdit.ProductionCost = model.ProductionCost;
-            toEdit.ProductionTime = model.ProductionTime;
+            toEdit.ProductionTime = parsedTime;
             toEdit.Price = model.Price;
 
             List<ProductMaterial> editProductMaterials = new List<ProductMaterial>();

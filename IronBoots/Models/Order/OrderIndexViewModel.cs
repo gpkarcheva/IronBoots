@@ -15,9 +15,9 @@ namespace IronBoots.Models.Orders
         public decimal TotalPrice { get; set; }
 
         [Required]
-        public DateTime PlannedAssignedDate { get; set; }
+        public string? PlannedAssignedDate { get; set; }
 
 
-        public DateTime? ActualAssignedDate { get; set; }
+        public string? ActualAssignedDate { get; set; }
     }
 }

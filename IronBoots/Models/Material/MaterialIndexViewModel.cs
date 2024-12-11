@@ -16,6 +16,9 @@ namespace IronBoots.Models.Materials
         public string Name { get; set; } = null!;
 
 
+        public decimal Price { get; set; }
+
+
         public string? PictureUrl { get; set; }
 
 

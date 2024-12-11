@@ -2,6 +2,11 @@
 {
     public static class EntityValidationConstants
     {
+        public static class DateTimeValidation
+        {
+            public const string RequiredDateFormat = "dd-MM-YYYY";
+            public const string TimeFormat = "HH:mm:ss";
+        }
         public static class AddressValidation
         {
             public const int AddressMin = 3;

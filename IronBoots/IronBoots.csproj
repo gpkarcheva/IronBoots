@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IronBoots.Common\IronBoots.Common.csproj" />
     <ProjectReference Include="..\IronBoots.Data\IronBoots.Data.csproj" />
     <ProjectReference Include="..\IronBoots.Models\IronBoots.Data.Models.csproj" />
   </ItemGroup>

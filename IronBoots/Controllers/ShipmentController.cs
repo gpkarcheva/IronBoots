@@ -53,8 +53,8 @@ namespace IronBoots.Controllers
                 VehicleId = current.VehicleId,
                 Vehicle = current.Vehicle,
                 Orders = current.Orders,
-                ShipmentDate = current.ShipmentDate,
-                DeliveryDate = current.DeliveryDate,
+                ShipmentDate = current.ShipmentDate.ToString(),
+                DeliveryDate = current.DeliveryDate.ToString(),
                 ShipmentStatus = current.ShipmentStatus
             };
             return View(model);

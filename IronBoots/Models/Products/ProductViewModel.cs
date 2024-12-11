@@ -35,7 +35,7 @@ namespace IronBoots.Models.Products
         public decimal ProductionCost { get; set; }
 
         [Required]
-        public TimeSpan ProductionTime { get; set; }
+        public string ProductionTime { get; set; } = null!;
 
         [Required]
         public IList<ProductMaterial> ProductMaterials = new List<ProductMaterial>();

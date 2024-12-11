@@ -17,9 +17,9 @@
 
                 <dt class="col-sm-4">Shipment Date</dt>
                 <dd class="col-sm-8">
-                    @if (Model.ShipmentDate.HasValue)
+                    @if (Model.ShipmentDate != null)
                     {
-                        @Model.ShipmentDate.Value.ToShortDateString()
+                        @Model.ShipmentDate
                     }
                     else
                     {
@@ -29,9 +29,9 @@
 
                 <dt class="col-sm-4">Delivery Date</dt>
                 <dd class="col-sm-8">
-                    @if (Model.DeliveryDate.HasValue)
+                    @if (Model.DeliveryDate != null)
                     {
-                        @Model.DeliveryDate.Value.ToShortDateString()
+                        @Model.DeliveryDate
                     }
                     else
                     {

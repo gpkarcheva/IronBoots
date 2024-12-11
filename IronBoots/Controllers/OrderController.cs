@@ -3,7 +3,6 @@ using IronBoots.Data.Models;
 using IronBoots.Models.Orders;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 
 namespace IronBoots.Controllers
@@ -33,8 +32,8 @@ namespace IronBoots.Controllers
                         Id = o.Id,
                         Client = o.Client,
                         TotalPrice = o.TotalPrice,
-                        PlannedAssignedDate = o.PlannedAssignedDate,
-                        ActualAssignedDate = o.ActualAssignedDate
+                        PlannedAssignedDate = o.PlannedAssignedDate.ToString(),
+                        ActualAssignedDate = o.ActualAssignedDate.ToString()
                     })
                     .ToListAsync();
 
@@ -49,8 +48,8 @@ namespace IronBoots.Controllers
                     Id = o.Id,
                     Client = o.Client,
                     TotalPrice = o.TotalPrice,
-                    PlannedAssignedDate = o.PlannedAssignedDate,
-                    ActualAssignedDate = o.ActualAssignedDate
+                    PlannedAssignedDate = o.PlannedAssignedDate.ToString(),
+                    ActualAssignedDate = o.ActualAssignedDate.ToString()
                 })
                 .ToListAsync();
                 return View(model);
@@ -67,8 +66,10 @@ namespace IronBoots.Controllers
                 .Include(o => o.Client)
                 .FirstOrDefaultAsync(o => o.Id == id);
 
-            if (current == null 
-                || User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value != current.Client.UserId.ToString())
+            if (current == null
+                || !User.IsInRole("Admin")
+                && !User.IsInRole("Manager")
+                && User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value != current.Client.UserId.ToString())
             {
                 return NotFound();
             }
@@ -79,7 +80,7 @@ namespace IronBoots.Controllers
                 ClientId = current.ClientId,
                 Client = current.Client,
                 TotalPrice = current.TotalPrice,
-                PlannedAssignedDate = current.PlannedAssignedDate,
+                PlannedAssignedDate = current.PlannedAssignedDate.ToString(),
                 ActualAssignedDate = current.ActualAssignedDate.ToString(),
                 ShipmentId = current.ShipmentId,
                 Shipment = current.Shipment,
@@ -115,6 +116,16 @@ namespace IronBoots.Controllers
             }
             await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+
+
+
+        //Common
+        public string? GetCurrentUserId()
+        {
+            string? userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            return userId;
         }
     }
 }

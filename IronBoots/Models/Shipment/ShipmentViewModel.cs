@@ -21,10 +21,10 @@ namespace IronBoots.Models.Shipments
         public IList<Order> Orders { get; set; } = new List<Order>();
 
 
-        public DateTime? ShipmentDate { get; set; }
+        public string? ShipmentDate { get; set; }
 
 
-        public DateTime? DeliveryDate { get; set; }
+        public string? DeliveryDate { get; set; }
 
 
         [Required]

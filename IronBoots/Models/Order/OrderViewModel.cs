@@ -15,8 +15,8 @@ namespace IronBoots.Models.Orders
         [Required]
         public Client Client { get; set; } = null!;
 
-        [Required]
-        public DateTime PlannedAssignedDate { get; set; }
+
+        public string? PlannedAssignedDate { get; set; }
 
         public string? ActualAssignedDate { get; set; }
 
