@@ -30,7 +30,7 @@ namespace IronBoots.Models.Orders
         public decimal TotalPrice { get; set; }
 
         [Required]
-        public List<OrderProduct> OrdersProducts { get; set; } = new List<OrderProduct>();
+        public IList<OrderProduct> OrdersProducts { get; set; } = new List<OrderProduct>();
 
         [Required]
         public bool IsActive { get; set; }

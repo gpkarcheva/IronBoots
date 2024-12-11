@@ -39,7 +39,9 @@ namespace IronBoots.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
-            Vehicle? currentVehicle = await context.Vehicles.FirstOrDefaultAsync(v => v.Id == id);
+            Vehicle? currentVehicle = await context.Vehicles
+                .Include(v => v.Shipment)
+                .FirstOrDefaultAsync(v => v.Id == id);
             if (currentVehicle == null)
             {
                 return NotFound();
@@ -49,21 +51,16 @@ namespace IronBoots.Controllers
 				ViewData["ErrorMessage"] = TempData["ErrorMessage"];
 			}
 
-			VehicleViewModel model = new VehicleViewModel()
+			VehicleViewModel model = new()
             {
                 Id = currentVehicle.Id,
                 Name = currentVehicle.Name,
                 WeightCapacity = currentVehicle.WeightCapacity,
                 SizeCapacity = currentVehicle.SizeCapacity,
                 ShipmentId = currentVehicle.ShipmentId,
+                Shipment = currentVehicle.Shipment,
                 IsAvailable = currentVehicle.IsAvailable
             };
-            Shipment? currentShipment = await context.Shipments.FirstOrDefaultAsync(s => s.Id == model.ShipmentId);
-            if (currentShipment != null)
-            {
-                model.Shipment = currentShipment;
-            }
-
             return View(model);
         }
 
@@ -71,7 +68,7 @@ namespace IronBoots.Controllers
 		[HttpGet]
 		public IActionResult Add()
 		{
-			VehicleViewModel model = new VehicleViewModel();
+            VehicleViewModel model = new();
 			return View(model);
 		}
         //Add
@@ -82,7 +79,7 @@ namespace IronBoots.Controllers
             {
                 return View(model);
             }
-            Vehicle toAdd = new Vehicle()
+            Vehicle toAdd = new()
             {
                 Name = model.Name,
                 WeightCapacity = model.WeightCapacity,
@@ -108,7 +105,7 @@ namespace IronBoots.Controllers
 			if (toDelete.IsAvailable == false)
 			{
 				TempData["ErrorMessage"] = "Please complete the shipment before deleting the vehicle.";
-				return RedirectToAction(nameof(Details), new {id = id});
+                return RedirectToAction(nameof(Details), new { id = id });
 			}
 			toDelete.IsDeleted = true;
 			await context.SaveChangesAsync();
@@ -125,7 +122,7 @@ namespace IronBoots.Controllers
             {
                 return NotFound();
             }
-            VehicleViewModel model = new VehicleViewModel()
+            VehicleViewModel model = new()
             {
                 Id = id,
                 Name = toEdit.Name,

@@ -24,7 +24,7 @@ namespace IronBoots.Controllers
         {
             if (User.IsInRole("Client"))
             {
-                string? userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+                string? userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value; //extract extension
 
                 List<OrderIndexViewModel> model = await context.Orders
                     .Where(o => o.IsActive == true && o.Client.UserId.ToString() == userId)
@@ -61,34 +61,29 @@ namespace IronBoots.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
-            Order? current = await context.Orders.FirstOrDefaultAsync(o => o.Id == id);
-            Client? currentClient = await context.Clients.FirstOrDefaultAsync(c => c.Id == current.ClientId);
-            if (current == null || currentClient == null)
+            Order? current = await context.Orders
+                .Include(o => o.OrderProducts)
+                .ThenInclude(op => op.Product)
+                .Include(o => o.Client)
+                .FirstOrDefaultAsync(o => o.Id == id);
+
+            if (current == null 
+                || User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value != current.Client.UserId.ToString())
             {
                 return NotFound();
             }
 
-            List<OrderProduct> orderProducts = await context.OrdersProducts
-                .Where(op => op.OrderId == id)
-                .ToListAsync();
-
-            foreach (var op in orderProducts)
-            {
-                op.Order = await context.Orders.FirstOrDefaultAsync(o => o.Id == op.OrderId);
-                op.Product = await context.Products.FirstOrDefaultAsync(p => p.Id == op.ProductId);
-            }
-
-            OrderViewModel model = new OrderViewModel()
+            OrderViewModel model = new()
             {
                 Id = id,
                 ClientId = current.ClientId,
-                Client = currentClient,
+                Client = current.Client,
                 TotalPrice = current.TotalPrice,
                 PlannedAssignedDate = current.PlannedAssignedDate,
                 ActualAssignedDate = current.ActualAssignedDate.ToString(),
                 ShipmentId = current.ShipmentId,
                 Shipment = current.Shipment,
-                OrdersProducts = orderProducts,
+                OrdersProducts = current.OrderProducts,
                 IsActive = current.IsActive
             };
 
@@ -104,19 +99,19 @@ namespace IronBoots.Controllers
         [HttpPost]
         public async Task<IActionResult> Cancel(Guid id)
         {
-            Order? toCancel = await context.Orders.FirstOrDefaultAsync(o => o.Id == id);
+            Order? toCancel = await context.Orders
+                .Include(o => o.Shipment)
+                .FirstOrDefaultAsync(o => o.Id == id);
             if (toCancel == null)
             {
                 return NotFound();
             }
             toCancel.IsActive = false;
+            toCancel.PlannedAssignedDate = default;
+            toCancel.ActualAssignedDate = null;
             if (toCancel.ShipmentId != null)
             {
-                Shipment? currentShipment = await context.Shipments.FirstOrDefaultAsync(s => s.Id == toCancel.ShipmentId);
-                if (currentShipment != null)
-                {
-                    currentShipment.Orders.Remove(toCancel);
-                }
+                toCancel.Shipment?.Orders.Remove(toCancel);
             }
             await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

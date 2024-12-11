@@ -40,16 +40,18 @@ namespace IronBoots.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
-            Shipment? current = await context.Shipments.FirstOrDefaultAsync(s => s.Id == id);
+            Shipment? current = await context.Shipments
+                .Include(s => s.Vehicle)
+                .FirstOrDefaultAsync(s => s.Id == id);
             if (current == null)
             {
                 return NotFound();
             }
-            ShipmentViewModel model = new ShipmentViewModel()
+            ShipmentViewModel model = new()
             {
                 Id = id,
                 VehicleId = current.VehicleId,
-                Vehicle = await context.Vehicles.FirstOrDefaultAsync(v => v.Id == current.VehicleId),
+                Vehicle = current.Vehicle,
                 Orders = current.Orders,
                 ShipmentDate = current.ShipmentDate,
                 DeliveryDate = current.DeliveryDate,

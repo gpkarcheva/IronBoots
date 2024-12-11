@@ -136,7 +136,7 @@ namespace IronBoots.Controllers
             {
                 return NotFound();
             }
-            MaterialViewModel model = new MaterialViewModel()
+            MaterialViewModel model = new()
             {
                 Id = id,
                 Name = currentMaterial.Name,
