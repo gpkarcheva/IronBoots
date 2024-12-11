@@ -5,80 +5,59 @@
     ViewData["Title"] = "Add Product";
 }
 
-<div>
-    <h2>Add New Product</h2>
+<div class="container mt-4">
+    <h1>Add New Product</h1>
+    <form asp-action="Add" method="post">
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="ImageUrl" class="form-label">Image URL</label>
+            <input asp-for="ImageUrl" type="url" class="form-control" />
+            <span asp-validation-for="ImageUrl" class="text-danger"></span>
 
-    <form asp-action="Add">
-        <div class="form-group">
-            <label for="Name">Name</label>
-            <input type="text" id="Name" name="Name" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Price" class="form-label">Price</label>
+            <input asp-for="Price" type="text" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+
+        </div>
+        <div class="mb-3">
+            <label asp-for="Weight" class="form-label">Weight (kg)</label>
+            <input asp-for="Weight" type="number" step="0.01" class="form-control" />
+            <span asp-validation-for="Weight" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Size" class="form-label">Size (cm²)</label>
+            <input asp-for="Size" type="number" step="0.01" class="form-control" />
+            <span asp-validation-for="Size" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="ProductionCost" class="form-label">Production Cost</label>
+            <input asp-for="ProductionCost" type="text" class="form-control" />
+            <span asp-validation-for="ProductionCost" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="ProductionTime" class="form-label">Production Time (hh:mm:ss)</label>
+            <input asp-for="ProductionTime" type="text" class="form-control" />
+            <span asp-validation-for="ProductionTime" class="text-danger"></span>
         </div>
 
-        <div class="form-group">
-            <label for="ImageUrl">Image URL</label>
-            <input type="text" id="ImageUrl" name="ImageUrl" class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label for="Price">Price</label>
-            <input type="text" id="Price" name="Price" class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label for="Weight">Weight (kg)</label>
-            <input type="number" id="Weight" name="Weight" class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label for="Size">Size (cm³)</label>
-            <input type="number" id="Size" name="Size" class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label for="ProductionCost">Production Cost</label>
-            <input type="text" id="ProductionCost" name="ProductionCost" class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label for="ProductionTime">Production Time (hh:mm:ss)</label>
-            <input type="text" id="ProductionTime" name="ProductionTime" class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <h3>Materials Required</h3>
-            <ul class="list-unstyled">
-                @foreach (var material in Model.Materials)
-                {
-                    <li>
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input material-checkbox" data-material-id="@material.Id" id="material-@material.Id" />
-                            <label class="form-check-label" for="material-@material.Id">@material.Name</label>
-                        </div>
-                        <input type="number" class="form-control mt-2" id="quantity-@material.Id" name="MaterialQuantities[@material.Id]" placeholder="Quantity" disabled />
-                    </li>
-                }
-            </ul>
+        <h3>Materials Required</h3>
+        <div class="form-check">
+            @foreach (var material in Model.Materials)
+            {
+                <div class="mb-2">
+                    <input type="checkbox" class="form-check-input" name="SelectedMaterialsIds" value="@material.Id" />
+                    <label class="form-check-label">@material.Name</label>
+                </div>
+            }
         </div>
 
         <button type="submit" class="btn btn-primary">Save</button>
-        <button type="button" class="btn btn-secondary">Cancel</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
-
-@section Scripts {
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.material-checkbox').forEach(function (checkbox) {
-                checkbox.addEventListener('change', function () {
-                    const quantityBox = document.querySelector(`#quantity-${this.dataset.materialId}`);
-                    if (this.checked) {
-                        quantityBox.removeAttribute('disabled');
-                    } else {
-                        quantityBox.setAttribute('disabled', 'true');
-                        quantityBox.value = '';
-                    }
-                });
-            });
-        });
-    </script>
-}
