@@ -47,14 +47,14 @@
 
     <h3 class="mt-5">Orders in this Shipment</h3>
     <div class="row">
-        @if (Model.Orders == null || !Model.Orders.Any())
+        @if (Model.AllOrders == null || !Model.AllOrders.Any())
         {
             <p class="text-muted">No orders are associated with this shipment.</p>
         }
         else
         {
             <ul class="list-group">
-                @foreach (var order in Model.Orders)
+                @foreach (var order in Model.AllOrders)
                 {
                     <li class="list-group-item">
                         <a asp-action="Details" asp-controller="Order" asp-route-id="@order.Id" class="text-decoration-none">
@@ -66,6 +66,9 @@
         }
     </div>
 
+    <div class="mt-4">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+    </div>
     <div class="mt-4">
         <a asp-action="Index" class="btn btn-secondary">Back to Shipments</a>
     </div>

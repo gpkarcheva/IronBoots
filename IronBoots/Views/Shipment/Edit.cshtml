@@ -1,0 +1,57 @@
+﻿@using IronBoots.Models.Shipments
+@model ShipmentViewModel
+
+@{
+    ViewData["Title"] = "Edit Shipment";
+}
+
+<div class="container mt-4">
+    <h1>Edit Shipment</h1>
+    <form asp-action="Edit" method="post">
+
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label asp-for="VehicleId" class="form-label">Vehicle</label>
+            <select asp-for="VehicleId" class="form-control">
+                <option value="">-- Select Vehicle --</option>
+                <option value="@Model.Vehicle.Id" selected>@Model.Vehicle.Name</option>
+            </select>
+            <span asp-validation-for="VehicleId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ShipmentDate" class="form-label">Shipment Date</label>
+            <input asp-for="ShipmentDate" type="text" class="form-control" placeholder="yyyy-MM-dd" />
+            <span asp-validation-for="ShipmentDate" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="DeliveryDate" class="form-label">Delivery Date</label>
+            <input asp-for="DeliveryDate" type="text" class="form-control" placeholder="yyyy-MM-dd" />
+            <span asp-validation-for="DeliveryDate" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <div class="mb-3">
+                <label class="form-label">Shipment Status</label>
+                <p class="form-control-plaintext">@Model.ShipmentStatus</p>
+            </div>
+        </div>
+
+        <h3>Orders</h3>
+        <div class="form-check">
+            @foreach (var order in Model.AllOrders)
+            {
+                <div class="mb-2">
+                    <input type="checkbox" class="form-check-input" name="SelectedOrdersIds" value="@order.Id"
+                    @(Model.SelectedOrdersIds.Contains(order.Id) ? "checked" : "") />
+                    <label class="form-check-label">Order #@order.Id</label>
+                </div>
+            }
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

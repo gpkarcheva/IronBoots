@@ -18,7 +18,9 @@ namespace IronBoots.Models.Shipments
 
 
         [Required]
-        public IList<Order> Orders { get; set; } = new List<Order>();
+        public IList<Order> AllOrders { get; set; } = new List<Order>();
+
+        public IList<Guid> SelectedOrdersIds { get; set; } = new List<Guid>();
 
 
         public string? ShipmentDate { get; set; }

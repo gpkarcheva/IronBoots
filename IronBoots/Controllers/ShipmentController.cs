@@ -52,11 +52,38 @@ namespace IronBoots.Controllers
                 Id = id,
                 VehicleId = current.VehicleId,
                 Vehicle = current.Vehicle,
-                Orders = current.Orders,
+                AllOrders = current.Orders,
                 ShipmentDate = current.ShipmentDate.ToString(),
                 DeliveryDate = current.DeliveryDate.ToString(),
                 ShipmentStatus = current.ShipmentStatus
             };
+            return View(model);
+        }
+
+        //Edit
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            Shipment? current = await context.Shipments
+                .Include(s => s.Vehicle)
+                .Include(s => s.Orders)
+                .FirstOrDefaultAsync(s => s.Id == id);
+            if (current == null)
+            {
+                return NotFound();
+            }
+            ShipmentViewModel model = new()
+            {
+                Id = id,
+                VehicleId = current.VehicleId,
+                Vehicle = current.Vehicle,
+                ShipmentDate = current.ShipmentDate.ToString(),
+                DeliveryDate = current.DeliveryDate.ToString(),
+                ShipmentStatus = current.ShipmentStatus,
+                AllOrders = context.Orders.ToList()
+            };
+            model.SelectedOrdersIds = current.Orders.Select(o => o.Id).ToList();
+
             return View(model);
         }
     }
