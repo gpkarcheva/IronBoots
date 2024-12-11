@@ -18,9 +18,6 @@ namespace IronBoots.Data
         }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<ApplicationRole> ApplicationRoles { get; set; }
-        public DbSet<Town> Towns { get; set; }
-        public DbSet<Address> Addresses { get; set; }
-        public DbSet<AddressTown> AddressesTowns { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Shipment> Shipments { get; set; }

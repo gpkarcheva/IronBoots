@@ -25,11 +25,6 @@ namespace IronBoots.Data.Models
 
 
         [Required]
-        [Comment("Address object")]
-        public IList<AddressTown> AddressTown { get; set; } = new List<AddressTown>();
-
-
-        [Required]
         [Comment("Orders the client currently has open")]
         public IList<Order> Orders { get; set; } = new List<Order>();
 

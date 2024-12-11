@@ -28,6 +28,10 @@ namespace IronBoots.Data.Models
         public Client Client { get; set; } = null!;
 
 
+        [Required]
+        public string Address { get; set; } = null!;
+
+
         [Comment("When is the order supposed to be assigned to a shipment")]
         public DateTime PlannedAssignedDate { get; set; }
 

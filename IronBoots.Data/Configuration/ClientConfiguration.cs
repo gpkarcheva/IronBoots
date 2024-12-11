@@ -8,10 +8,6 @@ namespace IronBoots.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Client> builder)
         {
-            builder.HasMany(c => c.AddressTown)
-                .WithOne(c => c.Client)
-                .OnDelete(DeleteBehavior.NoAction);
-            
             builder
                 .HasOne(c => c.User)
                 .WithMany()          // No navigation property on ApplicationUser
