@@ -5,6 +5,7 @@ using IronBoots.Models.Shipments;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 
 namespace IronBoots.Controllers
 {
@@ -162,6 +163,62 @@ namespace IronBoots.Controllers
                 VehicleList = await context.Vehicles.Where(v => v.IsAvailable == true && v.IsDeleted == false).ToListAsync()
             };
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(ShipmentViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.VehicleList = await context.Vehicles
+                    .Where(v => v.IsAvailable == true && v.IsDeleted == false)
+                    .ToListAsync();
+                model.AllOrders = await context.Orders
+                    .Where(o => o.IsActive == true)
+                    .ToListAsync();
+                return View(model);
+            }
+
+            Shipment shipment = new Shipment
+            {
+                Id = Guid.NewGuid(),
+                VehicleId = model.VehicleId,
+                ShipmentDate = string.IsNullOrWhiteSpace(model.ShipmentDate) ? null : DateTime.Parse(model.ShipmentDate),
+                Orders = await context.Orders
+                    .Where(o => model.SelectedOrdersIds.Contains(o.Id))
+                    .ToListAsync()
+            };
+
+            if (shipment.ShipmentDate.HasValue)
+            {
+                if (shipment.ShipmentDate.Value.Date == DateTime.Today)
+                {
+                    shipment.ShipmentStatus = Status.InTransit;
+                }
+                else if (shipment.ShipmentDate.Value.Date < DateTime.Today)
+                {
+                    shipment.ShipmentStatus = Status.Delivered;
+                }
+                else
+                {
+                    shipment.ShipmentStatus = Status.PendingShipment;
+                }
+            }
+            else
+            {
+                shipment.ShipmentStatus = Status.PendingShipment;
+            }
+
+            Vehicle? vehicle = await context.Vehicles.FirstOrDefaultAsync(v => v.Id == shipment.VehicleId);
+            if (vehicle != null)
+            {
+                vehicle.IsAvailable = shipment.ShipmentStatus != Status.InTransit;
+            }
+
+            await context.Shipments.AddAsync(shipment);
+            await context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
         }
     }
 }
