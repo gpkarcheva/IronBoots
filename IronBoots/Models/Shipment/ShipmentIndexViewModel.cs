@@ -9,8 +9,8 @@ namespace IronBoots.Models.Shipments
         [Required]
         public Guid Id { get; set; }
 
-        [Required]
-        public Vehicle Vehicle { get; set; } = null!;
+
+        public Vehicle? Vehicle { get; set; }
 
         [Required]
         public Status ShipmentStatus { get; set; }

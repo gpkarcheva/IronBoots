@@ -22,10 +22,9 @@ namespace IronBoots.Data.Models
         public Guid VehicleId { get; set; }
 
 
-        [Required]
         [ForeignKey(nameof(VehicleId))]
         [Comment("Vehicle object")]
-        public Vehicle Vehicle { get; set; } = null!;
+        public Vehicle? Vehicle { get; set; }
 
 
         [Required]
@@ -37,10 +36,6 @@ namespace IronBoots.Data.Models
         [Comment("The date the shipment started")]
         public DateTime? ShipmentDate { get; set; }
 
-
-
-        [Comment("The date the shipment was completed")]
-        public DateTime? DeliveryDate { get; set; }
 
         [Required]
         [Comment("The current status of the order")]

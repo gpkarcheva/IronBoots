@@ -13,8 +13,7 @@ namespace IronBoots.Models.Shipments
         public Guid VehicleId { get; set; }
 
 
-        [Required]
-        public Vehicle Vehicle { get; set; } = null!;
+        public Vehicle? Vehicle { get; set; }
 
 
         [Required]
@@ -24,9 +23,6 @@ namespace IronBoots.Models.Shipments
 
 
         public string? ShipmentDate { get; set; }
-
-
-        public string? DeliveryDate { get; set; }
 
 
         [Required]
