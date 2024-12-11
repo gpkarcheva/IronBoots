@@ -30,7 +30,7 @@
 
         <div class="mt-4">
             <h3>Order Total: @Model.Sum(p => decimal.Parse(p.Price)) lv</h3>
-            <a asp-action="Checkout" class="btn btn-primary">Checkout</a>
+            <a asp-action="Checkout" asp-controller="Order" class="btn btn-primary">Checkout</a>
         </div>
     }
 }

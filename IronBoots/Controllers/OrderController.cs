@@ -114,15 +114,19 @@ namespace IronBoots.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //Checkout
+        [HttpGet]
+        public async Task<IActionResult> Checkout()
+        {
+            List<decimal> productPrices = await context.ClientsProducts.Select(cp => cp.Product.Price).ToListAsync();
+            decimal totalPrice = productPrices.Sum();
 
-        //Create order
-        //[HttpPost]
-        //public async Task<IActionResult> CreateOrder()
-        //{
-
-        //}
-
-
+            OrderViewModel model = new OrderViewModel()
+            {
+                TotalPrice = totalPrice.ToString()
+            };
+            return View(model);
+        }
 
         //Common
         public string? GetCurrentUserId()
