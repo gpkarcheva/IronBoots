@@ -12,7 +12,7 @@ namespace IronBoots.Models.Orders
         public Client Client { get; set; } = null!;
 
         [Required]
-        public decimal TotalPrice { get; set; }
+        public string TotalPrice { get; set; } = null!;
 
         [Required]
         public string? PlannedAssignedDate { get; set; }

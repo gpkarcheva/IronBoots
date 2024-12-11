@@ -14,8 +14,7 @@ namespace IronBoots.Models.Products
         public string Name { get; set; } = null!;
 
         [Required]
-        [Range(typeof(decimal), "0.01", "100000000.00")] //TODO FIX MAGIC NUMBERS
-        public decimal Price { get; set; }
+        public string Price { get; set; } = null!;
 
         [Url]
         public string? PictureUrl { get; set; }

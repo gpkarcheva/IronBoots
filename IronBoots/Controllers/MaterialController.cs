@@ -4,6 +4,7 @@ using IronBoots.Models.Materials;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static IronBoots.Common.ExtensionMethods;
 
 namespace IronBoots.Controllers
 {
@@ -54,7 +55,7 @@ namespace IronBoots.Controllers
             {
                 Id = material.Id,
                 Name = material.Name,
-                Price = material.Price,
+                Price = material.Price.ToString("F2"),
                 PictureUrl = material.PictureUrl,
                 DistributorContact = material.DistributorContact,
                 MaterialProducts = material.MaterialProducts
@@ -73,20 +74,27 @@ namespace IronBoots.Controllers
             };
             return View(model);
         }
-        //Details
+        //Add
         [HttpPost]
         public async Task<IActionResult> Add(MaterialViewModel model)
         {
+            if(!IsPriceValid(model.Price))
+            {
+                ModelState.AddModelError(nameof(model.Price), "Please enter a valid price.");
+            }
             if (!ModelState.IsValid)
             {
                 model.Products = await context.Products.Where(p => p.IsDeleted == false).ToListAsync();
                 return View(model);
             }
 
+            decimal parsedPrice;
+            decimal.TryParse(model.Price, out parsedPrice);
+
             Material material = new()
             {
                 Name = model.Name,
-                Price = model.Price,
+                Price = parsedPrice,
                 PictureUrl = model.PictureUrl,
                 DistributorContact = model.DistributorContact
             };
@@ -140,7 +148,7 @@ namespace IronBoots.Controllers
             {
                 Id = id,
                 Name = currentMaterial.Name,
-                Price = currentMaterial.Price,
+                Price = currentMaterial.Price.ToString("F2"),
                 PictureUrl = currentMaterial.PictureUrl,
                 DistributorContact = currentMaterial.DistributorContact,
                 MaterialProducts = currentMaterial.MaterialProducts.Where(mp => mp.Product.IsDeleted == false).ToList(),
@@ -154,6 +162,10 @@ namespace IronBoots.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Guid id, MaterialViewModel model)
         {
+            if (!IsPriceValid(model.Price))
+            {
+                ModelState.AddModelError(nameof(model.Price), "Please enter a valid price.");
+            }
             if (!ModelState.IsValid)
             {
                 model.Products = await context.Products.Where(p => p.IsDeleted == false).ToListAsync();
@@ -169,8 +181,11 @@ namespace IronBoots.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            decimal parsedPrice;
+            decimal.TryParse(model.Price, out parsedPrice);
+
             toEdit.Name = model.Name;
-            toEdit.Price = model.Price;
+            toEdit.Price = parsedPrice;
             toEdit.PictureUrl = model.PictureUrl;
             toEdit.DistributorContact = model.DistributorContact;
 

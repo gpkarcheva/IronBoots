@@ -30,7 +30,7 @@
 				@if(User.Identity.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("Manager"))
 				{
 					<dt class="col-sm-4">Production Cost</dt>
-					<dd class="col-sm-8">@Model.ProductionCost.ToString("F2")</dd>
+					<dd class="col-sm-8">@Model.ProductionCost</dd>
 
 					<dt class="col-sm-4">Production Time</dt>
 					<dd class="col-sm-8">@Model.ProductionTime</dd>

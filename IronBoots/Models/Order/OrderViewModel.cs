@@ -25,9 +25,7 @@ namespace IronBoots.Models.Orders
         public Shipment? Shipment { get; set; }
 
         [Required]
-        [Range(typeof(decimal), "0.01", "10000000.00")] //TODO FIX MAGIC NUMBERS
-        [Precision(18, 2)]
-        public decimal TotalPrice { get; set; }
+        public string TotalPrice { get; set; } = null!;
 
         [Required]
         public IList<OrderProduct> OrdersProducts { get; set; } = new List<OrderProduct>();

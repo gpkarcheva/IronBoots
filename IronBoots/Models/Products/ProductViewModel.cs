@@ -15,8 +15,7 @@ namespace IronBoots.Models.Products
         public string Name { get; set; } = null!;
 
         [Required]
-        [Range(typeof(decimal), "0.01", "100000000.00")] //TODO FIX MAGIC NUMBERS
-        public decimal Price { get; set; }
+        public string Price { get; set; } = null!;
 
         public string? ImageUrl { get; set; }
 
@@ -30,9 +29,7 @@ namespace IronBoots.Models.Products
         public double Size { get; set; }
 
         [Required]
-        [Range(typeof(decimal), "0.01", "100000000.00")] //TODO FIX MAGIC NUMBERS
-        [Precision(18, 2)]
-        public decimal ProductionCost { get; set; }
+        public string ProductionCost { get; set; } = null!;
 
         [Required]
         public string ProductionTime { get; set; } = null!;

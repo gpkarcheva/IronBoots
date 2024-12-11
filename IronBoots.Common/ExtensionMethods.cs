@@ -16,5 +16,16 @@ namespace IronBoots.Common
             DateTime parsedTime;
             return DateTime.TryParseExact(time, TimeFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedTime);
         }
+
+        public static bool IsPriceValid(string price)
+        {
+            decimal parsedPrice;
+            if (decimal.TryParse(price, out parsedPrice) == false
+                || parsedPrice <= 0)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

@@ -31,7 +31,7 @@ namespace IronBoots.Controllers
                     {
                         Id = o.Id,
                         Client = o.Client,
-                        TotalPrice = o.TotalPrice,
+                        TotalPrice = o.TotalPrice.ToString(),
                         PlannedAssignedDate = o.PlannedAssignedDate.ToString(),
                         ActualAssignedDate = o.ActualAssignedDate.ToString()
                     })
@@ -47,7 +47,7 @@ namespace IronBoots.Controllers
                 {
                     Id = o.Id,
                     Client = o.Client,
-                    TotalPrice = o.TotalPrice,
+                    TotalPrice = o.TotalPrice.ToString("F2"),
                     PlannedAssignedDate = o.PlannedAssignedDate.ToString(),
                     ActualAssignedDate = o.ActualAssignedDate.ToString()
                 })
@@ -79,7 +79,7 @@ namespace IronBoots.Controllers
                 Id = id,
                 ClientId = current.ClientId,
                 Client = current.Client,
-                TotalPrice = current.TotalPrice,
+                TotalPrice = current.TotalPrice.ToString("F2"),
                 PlannedAssignedDate = current.PlannedAssignedDate.ToString(),
                 ActualAssignedDate = current.ActualAssignedDate.ToString(),
                 ShipmentId = current.ShipmentId,

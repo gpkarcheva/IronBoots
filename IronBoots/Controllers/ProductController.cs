@@ -31,7 +31,7 @@ namespace IronBoots.Controllers
                     Id = p.Id,
                     Name = p.Name,
                     PictureUrl = p.ImageUrl,
-                    Price = p.Price
+                    Price = p.Price.ToString("F2")
                 })
                 .AsNoTracking()
                 .ToListAsync();
@@ -58,11 +58,11 @@ namespace IronBoots.Controllers
             {
                 Id = product.Id,
                 Name = product.Name,
-                Price = product.Price,
+                Price = product.Price.ToString("F2"),
                 ImageUrl = product.ImageUrl,
                 Weight = product.Weight,
                 Size = product.Size,
-                ProductionCost = product.ProductionCost,
+                ProductionCost = product.ProductionCost.ToString("F2"),
                 ProductionTime = product.ProductionTime.ToString(),
                 ProductMaterials = product.ProductMaterials,
                 ProductOrders = product.ProductOrders,
@@ -87,6 +87,14 @@ namespace IronBoots.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(ProductViewModel model)
         {
+            if (!IsPriceValid(model.ProductionCost))
+            {
+                ModelState.AddModelError(nameof(model.ProductionCost), "Please enter a valid price.");
+            }
+            if (!IsPriceValid(model.Price))
+            {
+                ModelState.AddModelError(nameof(model.Price), "Please enter a valid price.");
+            }
             if (!IsTimeValid(model.ProductionTime))
             {
                 ModelState.AddModelError(nameof(model.ProductionTime), "Invalid time format! Please use hh:mm:ss.");
@@ -99,14 +107,19 @@ namespace IronBoots.Controllers
 
             TimeSpan parsedTime;
             TimeSpan.TryParseExact(model.ProductionTime, TimeFormat, CultureInfo.InvariantCulture, TimeSpanStyles.None, out parsedTime);
+            decimal parsedPrice;
+            decimal.TryParse(model.Price, out parsedPrice);
+            decimal parsedCost;
+            decimal.TryParse(model.Price, out parsedCost);
+
             Product product = new()
             {
                 Name = model.Name,
                 ImageUrl = model.ImageUrl,
-                Price = model.Price,
+                Price = parsedPrice,
                 Weight = model.Weight,
                 Size = model.Size,
-                ProductionCost = model.ProductionCost,
+                ProductionCost = parsedPrice,
                 ProductionTime = parsedTime,
             };
 
@@ -157,11 +170,11 @@ namespace IronBoots.Controllers
             {
                 Id = id,
                 Name = current.Name,
-                Price = current.Price,
+                Price = current.Price.ToString("F2"),
                 ImageUrl = current.ImageUrl,
                 Weight = current.Weight,
                 Size = current.Size,
-                ProductionCost = current.ProductionCost,
+                ProductionCost = current.ProductionCost.ToString("F2"),
                 ProductionTime = current.ProductionTime.ToString(),
                 ProductMaterials = current.ProductMaterials,
                 ProductOrders = current.ProductOrders,
@@ -176,6 +189,14 @@ namespace IronBoots.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Guid id, ProductViewModel model)
         {
+            if (!IsPriceValid(model.Price))
+            {
+                ModelState.AddModelError(nameof(model.Price), "Please enter a valid price.");
+            }
+            if (!IsPriceValid(model.ProductionCost))
+            {
+                ModelState.AddModelError(nameof(model.ProductionCost), "Please enter a valid cost.");
+            }
             if (!IsTimeValid(model.ProductionTime))
             {
                 ModelState.AddModelError(nameof(model.ProductionTime), "Invalid time format! Please use hh:mm:ss.");
@@ -198,14 +219,19 @@ namespace IronBoots.Controllers
             
             TimeSpan parsedTime;
             TimeSpan.TryParseExact(model.ProductionTime, TimeFormat, CultureInfo.InvariantCulture, TimeSpanStyles.None, out parsedTime);
+            decimal parsedPrice;
+            decimal.TryParse(model.Price, out parsedPrice);
+            decimal parsedCost;
+            decimal.TryParse(model.ProductionCost, out parsedCost);
+
 
             toEdit.Name = model.Name;
             toEdit.ImageUrl = model.ImageUrl;
             toEdit.Weight = model.Weight;
             toEdit.Size = model.Size;
-            toEdit.ProductionCost = model.ProductionCost;
+            toEdit.ProductionCost = parsedCost;
             toEdit.ProductionTime = parsedTime;
-            toEdit.Price = model.Price;
+            toEdit.Price = parsedPrice;
 
             List<ProductMaterial> editProductMaterials = new List<ProductMaterial>();
             foreach (var materialId in model.SelectedMaterialsIds)
