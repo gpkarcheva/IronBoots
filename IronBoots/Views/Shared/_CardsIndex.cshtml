@@ -4,5 +4,10 @@
     <div class="card-body">
         <h5 class="card-title">@Model.Name</h5>
         <img src="@Model.PictureUrl" class="card-img-top" alt="OPRAVI SI KARTINKITE!" />
+
+        @if(Model.Price != null)
+        {
+            <p class="card-text">Price: $@Model.Price.ToString("F2")</p>
+        }
     </div>
 </div>

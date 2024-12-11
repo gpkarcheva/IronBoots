@@ -23,10 +23,13 @@
             }
 
         }
-        <div class="row mt-4">
-            <div class="col-12 text-end">
-                <a asp-action="Add" asp-controller="Product" class="btn btn-success mb-3">Add Product</a>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("Manager"))
+        {
+            <div class="row mt-4">
+                <div class="col-12 text-end">
+                    <a asp-action="Add" asp-controller="Product" class="btn btn-success mb-3">Add Product</a>
+                </div>
             </div>
-        </div>
+        }
     </div>
 </div>

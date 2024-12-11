@@ -14,6 +14,10 @@ namespace IronBoots.Models.Products
         [MaxLength(NameMax)]
         public string Name { get; set; } = null!;
 
+        [Required]
+        [Range(typeof(decimal), "0.01", "100000000.00")] //TODO FIX MAGIC NUMBERS
+        public decimal Price { get; set; }
+
         public string? ImageUrl { get; set; }
 
         [Required]

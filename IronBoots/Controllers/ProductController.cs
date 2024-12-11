@@ -27,7 +27,8 @@ namespace IronBoots.Controllers
                 {
                     Id = p.Id,
                     Name = p.Name,
-                    PictureUrl = p.ImageUrl
+                    PictureUrl = p.ImageUrl,
+                    Price = p.Price
                 })
                 .AsNoTracking()
                 .ToListAsync();
@@ -54,6 +55,7 @@ namespace IronBoots.Controllers
             {
                 Id = product.Id,
                 Name = product.Name,
+                Price = product.Price,
                 ImageUrl = product.ImageUrl,
                 Weight = product.Weight,
                 Size = product.Size,
@@ -66,6 +68,7 @@ namespace IronBoots.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin, Manager")]
         //Add
         [HttpGet]
         public async Task<IActionResult> Add()
@@ -76,6 +79,7 @@ namespace IronBoots.Controllers
             };
             return View(model);
         }
+        [Authorize(Roles = "Admin, Manager")]
         //Add
         [HttpPost]
         public async Task<IActionResult> Add(ProductViewModel model)
@@ -89,6 +93,7 @@ namespace IronBoots.Controllers
             {
                 Name = model.Name,
                 ImageUrl = model.ImageUrl,
+                Price = model.Price,
                 Weight = model.Weight,
                 Size = model.Size,
                 ProductionCost = model.ProductionCost,
@@ -108,7 +113,7 @@ namespace IronBoots.Controllers
             await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        [Authorize(Roles = "Admin, Manager")]
         //Delete
         [HttpPost]
         public async Task<IActionResult> Delete(Guid id)
@@ -122,7 +127,7 @@ namespace IronBoots.Controllers
             await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        [Authorize(Roles = "Admin, Manager")]
         //Edit
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
@@ -142,6 +147,7 @@ namespace IronBoots.Controllers
             {
                 Id = id,
                 Name = current.Name,
+                Price = current.Price,
                 ImageUrl = current.ImageUrl,
                 Weight = current.Weight,
                 Size = current.Size,
@@ -155,6 +161,7 @@ namespace IronBoots.Controllers
             model.SelectedMaterialsIds = model.ProductMaterials.Select(mp => mp.MaterialId).ToList();
             return View(model);
         }
+        [Authorize(Roles = "Admin, Manager")]
         //Edit
         [HttpPost]
         public async Task<IActionResult> Edit(Guid id, ProductViewModel model)
@@ -181,6 +188,7 @@ namespace IronBoots.Controllers
             toEdit.Size = model.Size;
             toEdit.ProductionCost = model.ProductionCost;
             toEdit.ProductionTime = model.ProductionTime;
+            toEdit.Price = model.Price;
 
             List<ProductMaterial> editProductMaterials = new List<ProductMaterial>();
             foreach (var materialId in model.SelectedMaterialsIds)

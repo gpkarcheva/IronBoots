@@ -25,6 +25,12 @@ namespace IronBoots.Data.Models
         public string Name { get; set; } = null!;
 
 
+        [Required]
+        [Range(typeof(decimal), nameof(CostMin), nameof(CostMax)), Precision(18, 2)]
+        [Comment("Market price of the product")]
+        public decimal Price { get; set; }
+
+
         [Comment("Url of product image")]
         public string? ImageUrl { get; set; }
 
