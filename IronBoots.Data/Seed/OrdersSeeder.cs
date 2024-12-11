@@ -19,7 +19,6 @@ namespace IronBoots.Data.Seed
                 {
                     ClientId = client.Id,
                     Client = client,
-                    PlannedAssignedDate = DateTime.UtcNow,
                     TotalPrice = 123.45m,
                     IsActive = true
                 };

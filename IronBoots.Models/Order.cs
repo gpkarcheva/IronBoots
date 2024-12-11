@@ -32,12 +32,8 @@ namespace IronBoots.Data.Models
         public string Address { get; set; } = null!;
 
 
-        [Comment("When is the order supposed to be assigned to a shipment")]
-        public DateTime PlannedAssignedDate { get; set; }
-
-
         [Comment("When is the order actually assigned to a shipment")]
-        public DateTime? ActualAssignedDate { get; set; }
+        public DateTime? AssignedDate { get; set; }
 
 
         [Comment("Id of the shipment the order belongs to")]

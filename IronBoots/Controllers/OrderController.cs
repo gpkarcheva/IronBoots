@@ -32,8 +32,7 @@ namespace IronBoots.Controllers
                         Id = o.Id,
                         Client = o.Client,
                         TotalPrice = o.TotalPrice.ToString(),
-                        PlannedAssignedDate = o.PlannedAssignedDate.ToString(),
-                        ActualAssignedDate = o.ActualAssignedDate.ToString()
+                        ActualAssignedDate = o.AssignedDate.ToString()
                     })
                     .ToListAsync();
 
@@ -48,8 +47,7 @@ namespace IronBoots.Controllers
                     Id = o.Id,
                     Client = o.Client,
                     TotalPrice = o.TotalPrice.ToString("F2"),
-                    PlannedAssignedDate = o.PlannedAssignedDate.ToString(),
-                    ActualAssignedDate = o.ActualAssignedDate.ToString()
+                    ActualAssignedDate = o.AssignedDate.ToString()
                 })
                 .ToListAsync();
                 return View(model);
@@ -80,8 +78,7 @@ namespace IronBoots.Controllers
                 ClientId = current.ClientId,
                 Client = current.Client,
                 TotalPrice = current.TotalPrice.ToString("F2"),
-                PlannedAssignedDate = current.PlannedAssignedDate.ToString(),
-                ActualAssignedDate = current.ActualAssignedDate.ToString(),
+                ActualAssignedDate = current.AssignedDate.ToString(),
                 ShipmentId = current.ShipmentId,
                 Shipment = current.Shipment,
                 OrdersProducts = current.OrderProducts,
@@ -108,8 +105,7 @@ namespace IronBoots.Controllers
                 return NotFound();
             }
             toCancel.IsActive = false;
-            toCancel.PlannedAssignedDate = default;
-            toCancel.ActualAssignedDate = null;
+            toCancel.AssignedDate = null;
             if (toCancel.ShipmentId != null)
             {
                 toCancel.Shipment?.Orders.Remove(toCancel);
@@ -118,6 +114,13 @@ namespace IronBoots.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        //Create order
+        //[HttpPost]
+        //public async Task<IActionResult> CreateOrder()
+        //{
+
+        //}
 
 
 

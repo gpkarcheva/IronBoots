@@ -216,7 +216,7 @@ namespace IronBoots.Controllers
             {
                 return NotFound();
             }
-            
+
             TimeSpan parsedTime;
             TimeSpan.TryParseExact(model.ProductionTime, TimeFormat, CultureInfo.InvariantCulture, TimeSpanStyles.None, out parsedTime);
             decimal parsedPrice;
@@ -267,7 +267,7 @@ namespace IronBoots.Controllers
         public async Task<IActionResult> Cart()
         {
             string? currentUser = GetCurrentUserId();
-            if (currentUser == null) 
+            if (currentUser == null)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -327,11 +327,11 @@ namespace IronBoots.Controllers
             {
                 return NotFound();
             }
-            ClientProduct? toRemove = await context.ClientsProducts 
+            ClientProduct? toRemove = await context.ClientsProducts
                 .Include(cp => cp.Client)
                 .FirstOrDefaultAsync(pc => pc.ProductId == id && pc.Client.UserId.ToString() == userId);
 
-            if (toRemove == null) 
+            if (toRemove == null)
             {
                 return NotFound();
             }
@@ -342,8 +342,8 @@ namespace IronBoots.Controllers
         }
 
 
-            //Common
-            private string? GetCurrentUserId()
+        //Common
+        private string? GetCurrentUserId()
         {
             string? userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
             return userId;
