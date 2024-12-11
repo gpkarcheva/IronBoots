@@ -21,6 +21,7 @@ namespace IronBoots.Models.Shipments
 
         public IList<Guid> SelectedOrdersIds { get; set; } = new List<Guid>();
 
+        public IList<Vehicle> VehicleList { get; set; } = new List<Vehicle>();
 
         public string? ShipmentDate { get; set; }
 

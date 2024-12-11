@@ -82,7 +82,8 @@ namespace IronBoots.Controllers
                 ShipmentDate = current.ShipmentDate?.ToString("yyyy-MM-dd"),
                 ShipmentStatus = current.ShipmentStatus,
                 AllOrders = await context.Orders.ToListAsync(),
-                SelectedOrdersIds = current.Orders.Select(o => o.Id).ToList()
+                SelectedOrdersIds = current.Orders.Select(o => o.Id).ToList(),
+                VehicleList = await context.Vehicles.Where(v => v.IsDeleted == false && v.IsAvailable == true).ToListAsync()
             };
 
             return View(model);
@@ -148,6 +149,19 @@ namespace IronBoots.Controllers
             await context.SaveChangesAsync();
 
             return RedirectToAction("Details", new { id = shipment.Id });
+        }
+
+
+        //Add
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            ShipmentViewModel model = new()
+            {
+                AllOrders = await context.Orders.Where(o => o.IsActive == true).ToListAsync(),
+                VehicleList = await context.Vehicles.Where(v => v.IsAvailable == true && v.IsDeleted == false).ToListAsync()
+            };
+            return View(model);
         }
     }
 }

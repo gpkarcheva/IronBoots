@@ -3,7 +3,6 @@
     public enum Status
     {
         PendingShipment,
-        Shipped,
         InTransit,
         Delivered
     }
